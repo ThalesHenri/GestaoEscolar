@@ -1,0 +1,39 @@
+# Python
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+*.swp
+*.swo
+
+# Django
+*.sqlite3
+db.sqlite3
+/media/
+.env
+
+# Virtual environments
+venv/
+env/
+
+# IDEs/Editors
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# Byte-compiled / optimized / DLL files
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+
+# Logs
+*.log
+*.pot
+
+# OS-generated files
+.DS_Store
+Thumbs.db
+*.bak
+*.tmp
