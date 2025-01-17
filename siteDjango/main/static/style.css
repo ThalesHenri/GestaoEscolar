@@ -1,0 +1,146 @@
+:root {
+    --background-color: #f8f9fa;
+    --text-color: #343a40;
+    --primary-color: #007bff;
+    --secondary-color: #343a40;
+    --white-color: #ffffff;
+    --errorColor:#FF2929;
+    --successColor:#00C851;
+    --warningColor:#ffbb33;
+    --infoColor:#33b5e5;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
+}
+body p{
+    font-size: 20px;
+}
+body 
+header {
+    background-color: var(--primary-color);
+    color: var(--white-color);
+    padding: 1rem 0;
+    text-align: center;
+}
+header h1 {
+    font-size: 2rem;
+}
+nav {
+    display: flex;
+    justify-content: center;
+    background-color: var(--secondary-color);
+}
+nav a {
+    color: var(--white-color);
+    text-decoration: none;
+    padding: 1rem;
+    font-weight: 500;
+}
+nav a:hover {
+    background-color: var(--primary-color);
+}
+main {
+    padding: 2rem;
+    text-align: center;
+}
+.comece {
+    background-color: var(--white-color);
+    padding: 2rem;
+    margin-top: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.comece p{
+    margin-top: 2.5rem;
+}
+button {
+    margin-top: 2.5rem;
+    background-color: var(--secondary-color);
+    color: var(--white-color);
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 500;
+    width: 200px;
+    height: 50px;
+}
+button:hover {
+    background-color: var(--primary-color);
+}
+.Sobre {
+    background-color: var(--white-color);
+    padding: 2rem;
+    margin-top: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.Sobre p{
+    margin-top: 2.5rem;
+}
+footer {
+    background-color: var(--secondary-color);
+    color: var(--white-color);
+    text-align: center;
+    padding: 1rem 0;
+    margin-top: 2rem;
+}
+.login{
+    background-color: var(--white-color);
+    padding: 2rem;
+    margin-left: 20%;
+    margin-right: 20%;
+    margin-top: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    height: 500px;
+}
+.Box{
+    background-color: var(--white-color);
+    padding: 2rem;
+    margin-left: 20%;
+    margin-right: 20%;
+    margin-top: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    height: 500px;
+} 
+.erroButton{
+    margin-top: 2.5rem;
+    background-color: var(--secondary-color);
+    color: var(--white-color);
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 500;
+    width: 200px;
+    height: 50px;
+}
+.erroButton:hover{
+    background-color: var(--errorColor);
+}
+.sucessoButton{
+    margin-top: 2.5rem;
+    background-color: var(--secondary-color);
+    color: var(--white-color);
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;    
+    font-weight: 500;
+    width: 200px;
+    height: 50px;
+}
+.sucessoButton:hover{
+    background-color: var(--successColor);
+}

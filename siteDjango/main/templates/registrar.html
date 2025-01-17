@@ -1,0 +1,23 @@
+{% extends "index.html" %}
+
+{% block content %}
+
+<form action="{% url "registrar" %}" method="post" class="registrarForm">
+    <h1>Crie uma conta!</h1>
+    <h3>Seja bem-vindo ao Gestão Escolar</h3>
+    {% csrf_token %}
+    <label for="usuario">Usuário: </label>
+    <input type="text" name="usuario" placeholder="Nome de Usuário">
+    <br>
+    <label for="email">Email: </label>
+    <input type="email" name="email" placeholder="Email">
+    <br>
+    <label for="senha">Senha: </label>
+    <input type="password" name="senha" placeholder="Senha">
+    <br>
+    <button type="submit">Registrar</button>
+
+</form>
+
+
+{% endblock content %}
