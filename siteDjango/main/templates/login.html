@@ -1,0 +1,20 @@
+{% extends "index.html" %}
+
+
+{% block content %}
+
+
+    <form method="post" class="login" action="{% url 'login' %}">
+        <h1>Login</h1>
+        {% csrf_token %}
+        <label for="username" style="font-size: 20px">Usuário: </label>
+        <input type="text" name="nome" placeholder="Nome de Usuário" style="margin-top: 5%; font-size: 20px">
+        <br>
+        <label for="password" style="font-size: 20px">Senha: </label>
+        <input type="password" name="senha" placeholder="Senha" style="font-size: 20px">
+        <br>
+        <button type="submit" style="font-size: 20px">Entrar</button>
+    </form>
+
+<h2>Ainda não tem uma conta?<a href={% url "registrar" %}>  Registre-se</a></h2>
+{% endblock content %}
