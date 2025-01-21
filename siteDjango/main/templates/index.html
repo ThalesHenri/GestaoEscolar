@@ -1,6 +1,7 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,9 +9,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <title>Gestão Escolar</title>
 </head>
+
 <body>
     <nav>
-        <a href="#">Início</a>
+        <a href="{% url 'adminDashboard' %}">Início</a>
         <a href="#Sobre">Sobre</a>
         <a href="#">Contato</a>
     </nav>
@@ -25,25 +27,27 @@
         </div>
         <div class="Sobre">
             <h2>Sobre o Sistema</h2>
-            <p>Bem-vindo ao Sistema de Gestão Escolar, uma plataforma desenvolvida para transformar a maneira como as escolas gerenciam suas operações diárias. Nosso objetivo é fornecer uma solução prática, eficiente e intuitiva para atender às necessidades de instituições de ensino de todos os tamanhos.
+            <p>Bem-vindo ao Sistema de Gestão Escolar, uma plataforma desenvolvida para transformar a maneira como as
+                escolas gerenciam suas operações diárias. Nosso objetivo é fornecer uma solução prática, eficiente e
+                intuitiva para atender às necessidades de instituições de ensino de todos os tamanhos.
 
                 Com nosso sistema, você pode:
-                
-                    Organizar informações de alunos, professores e turmas em um único lugar.
-                    Simplificar processos administrativos e acadêmicos.
-                    Garantir maior agilidade e precisão no controle de dados escolares.
-                
-                Nosso compromisso é ajudar escolas a focarem no que realmente importa: a educação de qualidade. Trabalhamos continuamente para oferecer as melhores ferramentas e funcionalidades para facilitar o seu dia a dia.
-                
+
+                Organizar informações de alunos, professores e turmas em um único lugar.
+                Simplificar processos administrativos e acadêmicos.
+                Garantir maior agilidade e precisão no controle de dados escolares.
+
+                Nosso compromisso é ajudar escolas a focarem no que realmente importa: a educação de qualidade.
+                Trabalhamos continuamente para oferecer as melhores ferramentas e funcionalidades para facilitar o seu
+                dia a dia.
+
                 Junte-se a nós nessa jornada de inovação e excelência na gestão escolar!</p>
         </div>
         {% endblock %}
     </main>
     <footer>
         <p>&copy; 2025 Gestão Escolar. Todos os direitos reservados.</p>
-    </footer>    
+    </footer>
 </body>
+
 </html>
-
-
-

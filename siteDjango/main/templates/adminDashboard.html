@@ -1,11 +1,11 @@
 {% extends "index.html" %}
 {% block content %}
-<h1>Seja bem vindo, {{ usuario }}</h1>
-<div class ="adminDashboard">
+<h1>Seja bem-vindo, {{ usuario }}</h1>
+<div class="adminDashboard">
     <ul>
         <li><a href="#">Gerenciar Alunos</a></li>
         <li><a href="#">Gerenciar Pagamentos</a></li>
-        <li><a href="#">Gerenciar Turmas</a></li>
+        <li><a href="{% url 'turmasDashboard' %}">Gerenciar Turmas</a></li>
         <li><a href="#">Visualizar Relatórios </a></li>
     </ul>
 </div>

@@ -88,11 +88,15 @@ button:hover {
     margin-top: 2.5rem;
 }
 footer {
-    background-color: var(--secondary-color);
-    color: var(--white-color);
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #333;  
+    color: white;            
     text-align: center;
-    padding: 1rem 0;
-    margin-top: 2rem;
+    padding: 10px 0;
+    font-size: 14px;
 }
 .login{
     background-color: var(--white-color);
@@ -170,4 +174,30 @@ li a{
     text-decoration: none;
     color: var(--white-color);
     font-size: 20px;
+}
+
+/* Ajuste específico para o botão "Close" */
+.btn-close {
+    font-size: 12px; /* Diminui o tamanho da fonte */
+    padding: 4px;    /* Reduz o preenchimento interno */
+    width: 20px;     /* Define uma largura fixa */
+    height: 20px;    /* Define uma altura fixa */
+    line-height: 1;  /* Ajusta o espaçamento interno */
+    background: none; /* Remove qualquer fundo padrão */
+    border: none;    /* Remove a borda padrão */
+    outline: none;   /* Remove o contorno ao clicar */
+    cursor: pointer; /* Adiciona o cursor de "mão" ao passar por cima */
+}
+
+/* Ajuste do ícone de fechamento, se necessário */
+.btn-close::before {
+    content: "×"; /* Adiciona o símbolo de fechamento (alternativo ao ícone padrão) */
+    font-weight: bold;
+}
+
+/* Personaliza a aparência do botão ao passar o mouse */
+.btn-close:hover {
+    color: #ff0000; /* Muda a cor ao passar o mouse */
+    background-color: #f0f0f0; /* Fundo sutil ao passar o mouse */
+    border-radius: 50%; /* Botão arredondado */
 }

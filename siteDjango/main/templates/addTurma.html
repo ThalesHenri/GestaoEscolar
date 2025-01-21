@@ -1,0 +1,14 @@
+{% extends "index.html" %}
+{% block content %}
+
+<h1 class="h3 mb-3">Adicionar Nova Turma:</h1>
+
+<form action="{% url 'addTurma' %}" method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Adicionar Turma</button>
+</form>
+
+
+<a href="{% url 'turmasDashboard' %}" class="btn btn-secondary mt-3">Voltar</a>
+{% endblock %}

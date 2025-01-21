@@ -1,0 +1,18 @@
+{% extends "index.html" %}
+{% block content %}
+
+
+<body>
+    <div class="container mt-5">
+        <h1 class="h3 mb-3">Adicionar Aluno:</h1>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Salvar</button>
+        </form>
+        <a href="{% url 'turmasDashBoard' turma.id %}" class="btn btn-secondary mt-3">Voltar</a>
+    </div>
+    </body>
+
+    
+{% endblock %}
