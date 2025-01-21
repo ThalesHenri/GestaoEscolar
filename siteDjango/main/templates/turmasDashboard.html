@@ -1,0 +1,21 @@
+{% extends "index.html" %}
+{% block content %}
+
+<h1 class="h3 mb-3">Lista de Turmas</h1>
+
+<ul class="list-group mb-3">
+    {% for turma in turmas %}
+        <li class="list-group-item">
+            <a href="{% url 'turmaDetalhes' turma.id %}">{{ turma.nome }}</a>
+        </li>
+    {% endfor %}
+</ul>
+
+<h2 class="h5 mb-3">Adicionar Nova Turma</h2>
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Adicionar</button>
+</form>
+
+{% endblock %}
