@@ -8,7 +8,7 @@
     {% for aluno in alunos %}
     <a href="{% url 'alunoDetalhes' aluno_id=aluno.id %}">{{ aluno.nome }}</a>
     {% empty %}
-        <li2>Não há alunos cadastrados nesta turma.</li>
+        <li>Não há alunos cadastrados nesta turma.</li>
     {% endfor %}
 </ul>
 

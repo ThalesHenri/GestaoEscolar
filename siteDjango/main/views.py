@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404, redirect
-from django.contrib.auth import authenticate, login as auth_login
+from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib.auth.models import User
 from django.contrib import messages
 from .models import Turma, Aluno, Mensalidade
 from .forms import TurmaForm, AlunoForm
 from .forms import *
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
@@ -52,6 +53,11 @@ def login(request):
     return render(request, 'login.html')
 
 
+def logout(request):
+    auth_logout(request)
+    return redirect('login')
+
+@login_required
 def adminDashboard(request):
     usuario = request.user
     context = {
