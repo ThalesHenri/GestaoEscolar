@@ -6,7 +6,7 @@
 <ul>
     {% for turma in turmas %}
         <li>
-            <button><a href="{% url 'turmaDetalhes' turma.id %}">{{ turma.nome }}</a></button>
+            <a href="{% url 'turmaDetalhes' turma.id %}"><button>{{ turma.nome }}</button></a>
         </li>
     {% endfor %}
 </ul>

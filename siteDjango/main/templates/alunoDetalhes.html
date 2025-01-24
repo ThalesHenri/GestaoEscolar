@@ -1,45 +1,42 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Perfil do Aluno</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-</head>
-<body>
-    <div class="container mt-4">
-        <h1>Perfil de {{ aluno.nome }}</h1>
-        <p>Idade: {{ aluno.idade }}</p>
-        <p>Responsável:</p>
+{% extends "index.html" %}
+{% block content %}
+    <body>
+        <div class="container mt-4">
+            <h1>Perfil de {{ aluno.nome }}</h1>
+            <p>Idade: {{ aluno.idade }}</p>
+            <p>Responsável:{{ aluno.responsavel }}</p>
 
-        <h2>Mensalidades</h2>
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Mês</th>
-                    <th>Valor</th>
-                    <th>Data de Vencimento</th>
-                    <th>Status</th>
-                    <th>Ações</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for mensalidade in mensalidades %}
-                <tr>
-                    <td>{{ mensalidade.mes_nome }}</td>
-                    <td>{{ mensalidade.valor }}</td>
-                    <td>{{ mensalidade.data_vencimento }}</td>
-                    <td>{{ mensalidade.status }}</td>
-                    <td>
-                        <form method="POST">
-                            {% csrf_token %}
-                            <button type="submit" name="mensalidade_id" value="{{ mensalidade.id }}" class="btn btn-success">
-                                Marcar como Pago
-                            </button>
-                        </form>
-                    </td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
-</body>
-</html>
+            <h2>Mensalidades</h2>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Mês</th>
+                        <th>Valor</th>
+                        <th>Data de Vencimento</th>
+                        <th>Status</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for mensalidade in mensalidades %}
+                    <tr class="{% if mensalidade.status == 'Pago' %}status-pago{% elif mensalidade.status == 'Em Atraso' %}status-atrasado{% else %}status-pendente{% endif %}">
+                        <td>{{ mensalidade.mes_nome }}</td>
+                        <td>{{ mensalidade.valor }}</td>
+                        <td>{{ mensalidade.data_vencimento }}</td>
+                        <td>{{ mensalidade.status }}</td>
+                        <td>
+                            <form method="POST">
+                                {% csrf_token %}
+                                <button type="submit" name="mensalidade_id" value="{{ mensalidade.id }}" class="btn btn-success">
+                                    Marcar como Pago
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <a href="{% url 'turmaDetalhes' aluno.turma.id %}" style="text-decoration: none;color: var(--white-color);"><button class="erroButton" style="margin-bottom: 50px">Voltar</button></a>
+        </div>
+    </body>
+{% endblock content %}

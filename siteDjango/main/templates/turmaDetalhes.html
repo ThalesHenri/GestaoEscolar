@@ -3,10 +3,10 @@
 
 <h1> {{ turma.nome }}</h1>
 
-<h2>Alunos Cadastrados:</h2>
+<h2>Alunos Cadastrados: {{ alunos.count }}</h2>
 <ul>
     {% for aluno in alunos %}
-    <a href="{% url 'alunoDetalhes' aluno_id=aluno.id %}">{{ aluno.nome }}</a>
+    <a href="{% url 'alunoDetalhes' aluno_id=aluno.id %}"><button>{{ aluno.nome }}</button></a>
     {% empty %}
         <li>Não há alunos cadastrados nesta turma.</li>
     {% endfor %}
@@ -18,5 +18,9 @@
     {{ form.as_p }}
     <button type="submit">Adicionar Aluno</button>
 </form>
+<a href="{% url 'turmasDashboard' %}" style="text-decoration: none;">
+    <button>Voltar</button>
+</a>
+
 
 {% endblock %}

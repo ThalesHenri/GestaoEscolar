@@ -1,0 +1,14 @@
+{% extends "index.html" %}
+{% block content %}
+<div class="container mt-5">
+    <h1 class="h3 mb-3">Editar Alunos:</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Salvar</button>
+    </form>
+    <a href="{% url 'alunosDashboard' %}" class="btn btn-secondary mt-3">Voltar</a>
+</div>
+</body>
+
+{% endblock content %}
