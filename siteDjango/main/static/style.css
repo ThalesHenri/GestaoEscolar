@@ -154,21 +154,7 @@ ul{
     align-items: center;
 }
 li{
-    list-style: none;
-    line-height: normal;
-    align-items: center;
-    margin-top: 2.5rem;
-    background-color: var(--secondary-color);
-    padding: 0.5rem 1rem;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;    
-    font-weight: 500;
-    width: 200px;
-    height: 75px;
-}
-li:hover{
-    background-color: var(--primary-color);
+   list-style: none;
 }
 li a{
     text-decoration: none;
@@ -201,3 +187,116 @@ li a{
     background-color: #f0f0f0; /* Fundo sutil ao passar o mouse */
     border-radius: 50%; /* Botão arredondado */
 }
+
+/* Estilos para os diferentes status de pagamento */
+.status-pago {
+    background-color: var(--successColor);
+    color: var(--white-color);
+}
+
+.status-atrasado {
+    background-color: var(--errorColor);
+    color: var(--white-color);
+}
+
+.status-pendente {
+    background-color: var(--warningColor);
+    color: var(--white-color);
+}
+
+/* Estilo adicional para hover nas linhas */
+.status-pago:hover,
+.status-atrasado:hover,
+.status-pendente:hover {
+    opacity: 0.9;
+    cursor: pointer;
+}
+
+/* Ajustes gerais para tabelas */
+.table {
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.table th, .table td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+.table th {
+    background-color: var(--primary-color);
+    color: var(--white-color);
+}
+
+.alunosTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 2rem;
+    background-color: var(--white-color);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.alunosTable th {
+    background-color: var(--secondary-color);
+    color: var(--white-color);
+    padding: 15px;
+    text-align: left;
+    font-weight: bold;
+}
+
+.alunosTable td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    color: var(--text-color);
+}
+
+.alunosTable tr:hover {
+    background-color: rgba(0, 123, 255, 0.1); /* Leve destaque ao passar o mouse */
+}
+
+.alunosTable a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.alunosTable a:hover {
+    text-decoration: underline;
+}
+
+.alunosTable .acoes {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.alunosTable .acoes a {
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    text-align: center;
+    transition: all 0.3s;
+}
+
+.alunosTable .acoes a:nth-child(1) {
+    background-color: var(--errorColor);
+    color: var(--white-color);
+}
+
+.alunosTable .acoes a:nth-child(1):hover {
+    background-color: rgba(255, 41, 41, 0.8);
+}
+
+.alunosTable .acoes a:nth-child(2) {
+    background-color: var(--primary-color);
+    color: var(--white-color);
+}
+
+.alunosTable .acoes a:nth-child(2):hover {
+    background-color: rgba(0, 123, 255, 0.8);
+}
+

@@ -9,6 +9,7 @@ from django.utils import timezone
 
 class Aluno(models.Model):
     nome = models.CharField(max_length=100)
+    responsavel = models.CharField(max_length=100)
     idade = models.PositiveIntegerField()
     dia_pagamento = models.PositiveIntegerField()  # Agora é o dia de pagamento (1-31)
     turma = models.ForeignKey('Turma', on_delete=models.CASCADE, related_name='alunos')
@@ -82,17 +83,13 @@ class Usuario(models.Model):
         return self.nome
 
 
-class Pagamento(models.Model):
-    aluno = models.ForeignKey(Aluno, on_delete=models.CASCADE)
-    valor = models.DecimalField(max_digits=10, decimal_places=2)
-    dataPagamentoRealizado = models.DateField()
-
 
 class Mensalidade(models.Model):
     aluno = models.ForeignKey(Aluno, on_delete=models.CASCADE, related_name='mensalidades')
     mes = models.IntegerField()
     status = models.CharField(max_length=20, choices=[('Em Aberto', 'Em Aberto'), ('Pago', 'Pago'), ('Em Atraso', 'Em Atraso')])
-    dia_pagamento = models.IntegerField()  # Exemplo de campo de dia de pagamento
+    dia_pagamento = models.IntegerField() # Exemplo de campo de dia de pagamento
+    dia_pagamento_realizado = models.DateField(null=True, blank=True)
     valor = models.DecimalField(max_digits=8, decimal_places=2, null=True, blank=True)  # Novo campo
 
     def __str__(self):

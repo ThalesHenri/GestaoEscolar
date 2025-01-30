@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404, redirect
-from django.contrib.auth import authenticate, login as auth_login
+from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib.auth.models import User
 from django.contrib import messages
 from .models import Turma, Aluno, Mensalidade
 from .forms import TurmaForm, AlunoForm
 from .forms import *
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
@@ -52,6 +53,11 @@ def login(request):
     return render(request, 'login.html')
 
 
+def logout(request):
+    auth_logout(request)
+    return redirect('login')
+
+@login_required
 def adminDashboard(request):
     usuario = request.user
     context = {
@@ -61,6 +67,7 @@ def adminDashboard(request):
     return render(request, 'adminDashboard.html', context=context)
 
 
+@login_required
 def addTurma(request):
     if request.method == 'POST':
         form = TurmaForm(request.POST)
@@ -74,6 +81,7 @@ def addTurma(request):
     return render(request, 'addTurma.html', {'form': form})
 
 
+@login_required
 def turmasDashboard(request):
     if request.method == 'POST':
         form = TurmaForm(request.POST)
@@ -86,6 +94,8 @@ def turmasDashboard(request):
     turmas = Turma.objects.all()
     return render(request, 'turmasDashboard.html', {'turmas': turmas, 'form': form})
 
+
+@login_required
 def turmaDetalhes(request, turma_id):
     turma = get_object_or_404(Turma, id=turma_id)
     
@@ -109,6 +119,29 @@ def turmaDetalhes(request, turma_id):
     return render(request, 'turmaDetalhes.html', {'turma': turma, 'alunos': alunos, 'form': form})
 
 
+@login_required
+def alunosDashboard(request):
+    alunos = Aluno.objects.all()
+    return render(request, 'alunosDashboard.html', {'alunos': alunos})
+
+
+
+@login_required
+def editarAluno(request, aluno_id):
+    aluno = get_object_or_404(Aluno, id=aluno_id)
+
+    if request.method == 'POST':
+        form = AlunoForm(request.POST, instance=aluno)
+        if form.is_valid():
+            form.save()
+            messages.success(request, f'Aluno {aluno.nome} editado com sucesso!')
+            return redirect('alunosDashboard')
+    else:
+        form = AlunoForm(instance=aluno)
+
+    return render(request, 'editarAluno.html', {'form': form, 'aluno': aluno})
+
+@login_required
 def addAluno(request, turma_id):
     turma = get_object_or_404(Turma, id=turma_id)
     
@@ -144,6 +177,7 @@ def addAluno(request, turma_id):
 
 
 
+@login_required
 def alunoDetalhes(request, aluno_id):
     aluno = get_object_or_404(Aluno, id=aluno_id)
     mensalidades = aluno.mensalidades.order_by("mes").all()
@@ -193,6 +227,7 @@ def alunoDetalhes(request, aluno_id):
         mensalidade_id = request.POST.get("mensalidade_id")
         mensalidade = get_object_or_404(Mensalidade, id=mensalidade_id)
         mensalidade.status = "Pago"
+        mensalidade.dia_pagamento_realizado = now().date()
         mensalidade.save()
         return redirect("alunoDetalhes", aluno_id=aluno.id)
 
@@ -206,8 +241,28 @@ def alunoDetalhes(request, aluno_id):
     )
 
 
+@login_required
 def excluirAluno(request, aluno_id):
     aluno = get_object_or_404(Aluno, id=aluno_id)
-    if request.method == 'POST':
+    
+    if request.method == 'POST':  # Garante que a exclusão só ocorre via POST
         aluno.delete()
-        return redirect('turmaDetalhes', aluno.turma.id)  # Redireciona para a turma do aluno
+        messages.success(request, f'Aluno {aluno.nome} excluído com sucesso!')
+        return redirect('alunosDashboard')  # Redireciona para o dashboard dos alunos
+    
+    # Caso o método não seja POST, redirecione ou mostre erro
+    messages.error(request, 'Método inválido para exclusão!')
+    return redirect('alunosDashboard')
+
+
+@login_required
+def pagamentoDashboard(request):
+    mensalidades_aberto = Mensalidade.objects.filter(status='Em Aberto')
+    mensalidades_atraso = Mensalidade.objects.filter(status='Em Atraso')
+    mensalidades_pagas = Mensalidade.objects.filter(status='Pago')
+    context = {
+        'mensalidades_aberto': mensalidades_aberto,
+        'mensalidades_atraso': mensalidades_atraso,
+        'mensalidades_pagas': mensalidades_pagas
+    }
+    return render(request, 'pagamentosDashboard.html', context=context)

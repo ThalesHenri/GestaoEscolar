@@ -3,10 +3,11 @@
 <h1>Seja bem-vindo, {{ usuario }}</h1>
 <div class="adminDashboard">
     <ul>
-        <li><a href="#">Gerenciar Alunos</a></li>
-        <li><a href="#">Gerenciar Pagamentos</a></li>
-        <li><a href="{% url 'turmasDashboard' %}">Gerenciar Turmas</a></li>
-        <li><a href="#">Visualizar Relatórios </a></li>
+        <li><a href="{% url 'alunosDashboard'%}"><button>Gerenciar Alunos</button></a></li>
+        <li><a href="{% url 'pagamentoDashboard'%}"><button>Gerenciar Pagamentos</button></a></li>
+        <li><a href="{% url 'turmasDashboard' %}"><button>Gerenciar Turmas</button></a></li>
+        <li><a href="#"><button>Visualizar Relatórios </button></a></li>
+        <li><a href="{% url 'logout' %}"><button>Logout</button></a></li>
     </ul>
 </div>
 {% endblock content %}

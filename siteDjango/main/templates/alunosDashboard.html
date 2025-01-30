@@ -1,0 +1,36 @@
+{% extends "index.html" %}
+
+{% block content %}
+<table class="alunosTable">
+    <tr>
+        <th>Nome</th>
+        <th>Telefone</th>
+        <th>Idade</th>
+        <th>Responsável</th>
+        <th>Ações</th>
+    </tr>
+    {% for aluno in alunos %}
+    <tr>
+        <td><a href="{% url 'alunoDetalhes' aluno_id=aluno.id %}">{{ aluno.nome }}</a></td>
+        <td>{{ aluno.telefone }}</td>
+        <td>{{ aluno.idade }}</td>
+        <td>{{ aluno.responsavel }}</td></td>
+        <td>
+            <form action="{% url 'excluirAluno' aluno_id=aluno.id %}" method="POST" style="display: inline; background: none;text-decoration: none ;cursor: pointer;">
+                {% csrf_token %}
+                <button type="submit" onclick="return confirm('Tem certeza que deseja excluir {{ aluno.nome }}?');" style="background: none; color: var(--primary-color); border: none; cursor: pointer; text-decoration: none; font-weight: bold;font-size: 16px;">
+                    Excluir
+                </button>
+            </form>
+            <a href="{% url 'editarAluno' aluno_id=aluno.id %}">Editar</a>
+        </td>
+    </tr>
+    {% if messages %}
+    {% for message in messages %}
+    <p>{{ message }}</p>
+    {% endfor %}
+    {% endif %}
+    {% endfor %}
+</table>
+<a href="{% url 'adminDashboard' %}"><button>Voltar</button></a>
+{% endblock content %}

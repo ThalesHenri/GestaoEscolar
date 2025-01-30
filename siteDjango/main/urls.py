@@ -12,5 +12,8 @@ urlpatterns = [
     path('addAluno/', views.addAluno, name='addAluno'),
     path('alunoDetalhes/<int:aluno_id>/', views.alunoDetalhes, name='alunoDetalhes'),
     path('excluirAluno/<int:aluno_id>/', views.excluirAluno, name='excluirAluno'),
-
+    path('alunosDashboard/', views.alunosDashboard, name='alunosDashboard'),
+    path('editarAluno/<int:aluno_id>/', views.editarAluno, name='editarAluno'),
+    path('logout/', views.logout, name='logout'),
+    path('pagamentoDashboard/', views.pagamentoDashboard, name='pagamentoDashboard'),
 ]
