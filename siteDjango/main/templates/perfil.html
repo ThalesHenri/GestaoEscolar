@@ -1,0 +1,24 @@
+{% extends "index.html" %}
+{% block inicio %}
+    <a href="{% url 'adminDashboard' %}"><i class="fas fa-home"></i> Início</a>
+    <a href="{% url 'perfil' %}"><i class="fas fa-user"></i> Perfil</a>
+{% endblock inicio %}
+{% block content %}
+
+<head>
+    <title>Página de Perfil</title>
+
+</head>
+<body>
+
+    <div class="content">
+        <h1>Essa página deve conter as opções de perfil.</h1>
+    </div>
+    <div><p>Editar Perfil / Alterar Nome de Usuário / Alterar Senha e email.</p></div>
+    <div><p>O Fale Conosco/Contato pode ficar no rodapé.</p></div>
+
+</body>
+</html>
+
+
+{% endblock content %}

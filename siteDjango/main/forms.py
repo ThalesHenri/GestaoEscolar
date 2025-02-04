@@ -6,11 +6,13 @@ from .models import *
 class AlunoForm(forms.ModelForm):
     class Meta:
         model = Aluno
-        fields = ['nome', 'idade', 'dia_pagamento','responsavel']  # Altere para 'dia_pagamento'
+        fields = ['nome', 'idade', 'dia_pagamento',
+                  'responsavel']  # Altere para 'dia_pagamento'
         widgets = {
             'nome': forms.TextInput(attrs={'maxlength': 100}),
             'idade': forms.NumberInput(attrs={'min': 1}),
-            'dia_pagamento': forms.NumberInput(attrs={'min': 1, 'max': 25}),  # Limite entre 1 e 31
+            # Limite entre 1 e 31
+            'dia_pagamento': forms.NumberInput(attrs={'min': 1, 'max': 25,}),
             'responsavel': forms.TextInput(attrs={'maxlength': 100})
         }
 
@@ -20,12 +22,15 @@ class TurmaForm(forms.ModelForm):
         model = Turma
         fields = ['nome', 'turno', 'valorMensalidade']
         widgets = {
-            'nome': forms.TextInput(attrs={'maxlength': 100, 'class': 'form-control'}),
+            'nome': forms.TextInput(attrs={'maxlength': 50, 'class': 'form-control', 'placeholder': 'Nome da turma'}),
             'turno': forms.Select(attrs={'class': 'form-control'}),
-            'valorMensalidade': forms.NumberInput(attrs={'min': 0, 'max': 1000, 'step': 0.01})
+            'valorMensalidade': forms.NumberInput(attrs={'min': 0, 'max': 10000, 'step': 0.01, 'maxlength': 10, 'placeholder': 'R$ 0,00'})
         }
+
 
 class UsuarioForm(forms.ModelForm):
     class Meta:
         model = Usuario
         fields = ['nome', 'email', 'senha']
+
+

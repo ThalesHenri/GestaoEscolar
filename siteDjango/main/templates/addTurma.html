@@ -1,4 +1,8 @@
 {% extends "index.html" %}
+{% block inicio %}
+    <a href="{% url 'adminDashboard' %}"><i class="fas fa-home"></i> Início</a>
+    <a href="{% url 'perfil' %}"><i class="fas fa-user"></i> Perfil</a>
+{% endblock inicio %}
 {% block content %}
 
 <h1 class="h3 mb-3">Adicionar Nova Turma:</h1>

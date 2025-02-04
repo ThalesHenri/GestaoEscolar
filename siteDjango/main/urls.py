@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from .views import excluir_turma
 
 urlpatterns = [
     path('', views.home, name='home'),
@@ -12,8 +13,11 @@ urlpatterns = [
     path('addAluno/', views.addAluno, name='addAluno'),
     path('alunoDetalhes/<int:aluno_id>/', views.alunoDetalhes, name='alunoDetalhes'),
     path('excluirAluno/<int:aluno_id>/', views.excluirAluno, name='excluirAluno'),
+    path("turma/<int:turma_id>/excluir/", excluir_turma, name="excluirTurma"),
     path('alunosDashboard/', views.alunosDashboard, name='alunosDashboard'),
     path('editarAluno/<int:aluno_id>/', views.editarAluno, name='editarAluno'),
     path('logout/', views.logout, name='logout'),
     path('pagamentoDashboard/', views.pagamentoDashboard, name='pagamentoDashboard'),
+    path('limparFeed/', views.limparFeed, name='limparFeed'),
+    path('perfil/', views.perfil, name="perfil"),
 ]

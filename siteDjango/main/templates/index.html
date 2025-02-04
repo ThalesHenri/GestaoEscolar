@@ -12,9 +12,10 @@
 
 <body>
     <nav>
-        <a href="{% url 'home' %}">Início</a>
-        <a href="#Sobre">Sobre</a>
-        <a href="#">Contato</a>
+        {% block inicio %}<a href="{% url 'home' %}"><i class="fas fa-home"></i> Início</a>{% endblock inicio %}
+        <a href="#Sobre"><i class="fas fa-info-circle"></i> Sobre</a>
+        <a href="#">Configurações</a>
+        <a href="#">Sair</a>
     </nav>
     <main>
         {% block content %}
@@ -49,5 +50,4 @@
         <p>&copy; 2025 Gestão Escolar. Todos os direitos reservados.</p>
     </footer>
 </body>
-
 </html>

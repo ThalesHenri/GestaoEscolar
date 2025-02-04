@@ -11,7 +11,7 @@ class Aluno(models.Model):
     nome = models.CharField(max_length=100)
     responsavel = models.CharField(max_length=100)
     idade = models.PositiveIntegerField()
-    dia_pagamento = models.PositiveIntegerField()  # Agora é o dia de pagamento (1-31)
+    dia_pagamento = models.PositiveIntegerField() 
     turma = models.ForeignKey('Turma', on_delete=models.CASCADE, related_name='alunos')
 
     def save(self, *args, **kwargs):
@@ -27,20 +27,26 @@ class Aluno(models.Model):
                     dia_pagamento=self.dia_pagamento  # Define o dia de pagamento para a mensalidade
                 )
 
+    def possui_pendencias(self):
+        """Verifica se o aluno possui mensalidades em atraso."""
+        hoje = timezone.now().date()
+        return self.mensalidades.filter(status='Em Atraso').exists()
+
     def __str__(self):
         return self.nome
 
 
 class Turma(models.Model):
     TURNO_CHOICES = [
-        ('manha', 'Manhã'),
-        ('tarde', 'Tarde'),
+        ('Manhã', 'Manhã'),
+        ('Tarde', 'Tarde'),
     ]
     nome = models.CharField(max_length=100)
     turno = models.CharField(max_length=5, choices=TURNO_CHOICES)
-    valorMensalidade = models.DecimalField(max_digits=8, decimal_places=2)
-    
+    valorMensalidade = models.DecimalField(max_digits=8, decimal_places=2, verbose_name="Valor Mensalidade")
 
+    def saldo_total(self):
+        return self.valorMensalidade * self.alunos.count()
     def __str__(self):
         return self.nome
 
@@ -58,6 +64,7 @@ def validar_senha_forte(senha):
         raise ValidationError(
             'A senha deve conter pelo menos um caractere especial (@, $, !, %, *, ?, &).')
     return True
+
 
 class Usuario(models.Model):
     nome = models.CharField(max_length=100)
@@ -82,18 +89,34 @@ class Usuario(models.Model):
     def __str__(self):
         return self.nome
 
-
+class Feed(models.Model):
+    acao = models.CharField(max_length=100)
+    data = models.DateTimeField(default=now)
 
 class Mensalidade(models.Model):
+    FORMA_PAGAMENTO_CHOICES = [
+        ('Dinheiro', 'Dinheiro'),
+        ('Cartão', 'Cartão'),
+        ('PIX', 'PIX'),
+    ]
+        
     aluno = models.ForeignKey(Aluno, on_delete=models.CASCADE, related_name='mensalidades')
     mes = models.IntegerField()
-    status = models.CharField(max_length=20, choices=[('Em Aberto', 'Em Aberto'), ('Pago', 'Pago'), ('Em Atraso', 'Em Atraso')])
-    dia_pagamento = models.IntegerField() # Exemplo de campo de dia de pagamento
+    status = models.CharField(max_length=20, choices=[(
+        'Em Aberto', 'Em Aberto'), ('Pago', 'Pago'), ('Em Atraso', 'Em Atraso')])
+    dia_pagamento = models.IntegerField()  
     dia_pagamento_realizado = models.DateField(null=True, blank=True)
-    valor = models.DecimalField(max_digits=8, decimal_places=2, null=True, blank=True)  # Novo campo
+    valor = models.DecimalField(max_digits=8, decimal_places=2, null=True, blank=True) 
+    forma_pagamento = models.CharField(max_length=10, choices=FORMA_PAGAMENTO_CHOICES, null=True, blank=True)  # Novo campo
+
+
+    
+    def save(self, *args, **kwargs):
+        """Atualiza o status da mensalidade ao salvar."""
+        hoje = timezone.now().date()
+        if self.status == 'Em Aberto' and hoje.day > self.dia_pagamento:
+            self.status = 'Em Atraso'
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f"Mensalidade {self.mes}/{self.aluno.nome}"
-
-
-

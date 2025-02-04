@@ -1,3 +1,4 @@
+
 :root {
     --background-color: #f8f9fa;
     --text-color: #343a40;
@@ -8,6 +9,7 @@
     --successColor:#00C851;
     --warningColor:#ffbb33;
     --infoColor:#33b5e5;
+    
 }
 
 * {
@@ -17,14 +19,23 @@
 }
 body {
     font-family: 'Roboto', sans-serif;
-    background-color: var(--background-color);
+    background: rgb(34,193,195);
+    background: linear-gradient(0deg, rgba(34,193,195,1) 0%, rgb(219, 250, 80) 65%);
     color: var(--text-color);
     line-height: 1.6;
+    margin: 0; /* Remove margens padrão */
+    min-height: 100vh; /* Garante que o body ocupe toda a altura da tela */
+    display: flex;
+    flex-direction: column; /* Útil para layouts com footer */
+    padding-bottom: 20px;
 }
+
+
 body p{
     font-size: 20px;
 }
-body 
+
+ 
 header {
     background-color: var(--primary-color);
     color: var(--white-color);
@@ -34,10 +45,12 @@ header {
 header h1 {
     font-size: 2rem;
 }
+
 nav {
     display: flex;
     justify-content: center;
-    background-color: var(--secondary-color);
+    background-color: #1384a7c5;
+    box-shadow: #0056b3;
 }
 nav a {
     color: var(--white-color);
@@ -48,37 +61,30 @@ nav a {
 nav a:hover {
     background-color: var(--primary-color);
 }
+
+.nav a.active {
+    font-weight: bold; /* Destaque o link ativo */
+    border-bottom: 2px solid #ffdd57; /* Linha abaixo do link ativo */
+}
+
 main {
     padding: 2rem;
     text-align: center;
 }
 .comece {
-    background-color: var(--white-color);
+    background-color:#2fb3bd5d;
     padding: 2rem;
     margin-top: 2rem;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 10px rgba(165, 31, 31, 0.1);
 }
 .comece p{
     margin-top: 2.5rem;
 }
-button {
-    margin-top: 2.5rem;
-    background-color: var(--secondary-color);
-    color: var(--white-color);
-    padding: 0.5rem 1rem;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: 500;
-    width: 200px;
-    height: 50px;
-}
-button:hover {
-    background-color: var(--primary-color);
-}
+
 .Sobre {
-    background-color: var(--white-color);
+    background-color: #2fb3bda1;
+    color: rgba(0, 0, 0, 0.774);
     padding: 2rem;
     margin-top: 2rem;
     border-radius: 10px;
@@ -87,16 +93,117 @@ button:hover {
 .Sobre p{
     margin-top: 2.5rem;
 }
-footer {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    background-color: #333;  
-    color: white;            
+.adminDashboard{
+    display: flex;     
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    margin-top: 2rem;
+    
+}
+.adminDashboard ul{ 
+    flex-direction: row;
+    gap: 30px;
+
+}
+.feed {
+    width: 80%;
+    margin: 20px auto;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
     text-align: center;
-    padding: 10px 0;
-    font-size: 14px;
+}
+
+.feed h2 {
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+.feed table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #f9f9f9;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.feed th {
+    background: #007bff;
+    color: white;
+    font-size: 18px;
+    padding: 12px;
+    text-transform: uppercase;
+}
+
+.feed td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    color: #555;
+    font-size: 16px;
+}
+
+.feed tr:nth-child(even) {
+    background: #f1f1f1;
+}
+
+.feed tr:hover {
+    background: #d6e4ff;
+    transition: 0.3s;
+}
+
+button {
+    margin-top: 2.5rem;
+    background-color: #128091;
+    color: var(--white-color);
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 500;
+    width: 200px;
+    height: 50px;
+    transition: 500ms linear; 
+    
+}
+button:hover {
+    background-color: #0f6b79;
+}
+
+.excluirButton{
+    background-color: #c50e0e;
+    color: rgb(255, 255, 255);
+    margin-inline: flex;
+
+}
+.excluirButton:hover {
+    background-color: #970707;
+}
+
+
+.blueButton {
+    background-color: #128091;
+    border-radius: 5px;
+}
+
+.blueButton:hover {
+    background-color: #106e7c;
+}
+
+
+/* -------------------------------------------->>>>>>>>>>> FOOTER FOOTER FOOTER <<<<<<<< --------------------*/
+footer {
+    position: fixed; /* Fixa o footer na tela */
+    bottom: 0; /* Posiciona o footer na parte inferior */
+    left: 0; /* Alinha o footer à esquerda */
+    width: 100%; /* Ocupa toda a largura da tela */
+    background-color: #1384a7c5; /* Cor de fundo do footer */
+    padding: 10px 0; /* Espaçamento interno */
+    text-align: center; /* Centraliza o texto */
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); /* Sombra para efeito visual */
+    z-index: 1000; /* Garante que o footer fique acima de outros elementos */
 }
 .login{
     background-color: var(--white-color);
@@ -162,6 +269,10 @@ li a{
     font-size: 20px;
 }
 
+.lista-alunos {
+    background-color: #ced4da;
+}
+
 /* Ajuste específico para o botão "Close" */
 .btn-close {
     font-size: 12px; /* Diminui o tamanho da fonte */
@@ -190,18 +301,18 @@ li a{
 
 /* Estilos para os diferentes status de pagamento */
 .status-pago {
-    background-color: var(--successColor);
-    color: var(--white-color);
+    background-color: #ffffff;
+    color: #086d30;
 }
 
 .status-atrasado {
-    background-color: var(--errorColor);
-    color: var(--white-color);
+    background-color: #ff0000a6;
+    color: var(--lback-color);
 }
 
 .status-pendente {
-    background-color: var(--warningColor);
-    color: var(--white-color);
+    background-color: #ffffff;
+    color: var(--black-color);
 }
 
 /* Estilo adicional para hover nas linhas */
@@ -298,5 +409,377 @@ li a{
 
 .alunosTable .acoes a:nth-child(2):hover {
     background-color: rgba(0, 123, 255, 0.8);
+}
+
+/* Contêiner principal */
+#turmas-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+/* Estilos para as seções */
+#form-wrapper, #turmas-list {
+    background: #fdfbfb;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#form-wrapper, #aluno-list {
+    background: #fffcfc;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Títulos */
+.titulo-secao {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+/* Formulário */
+#form-turma {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Alinhamento dos campos do formulário */
+.form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.form-row p {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+}
+
+.form-group input {
+    padding: 10px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    width: 100%;
+}
+
+/* ------------------------- FORMULÁRIO DO REGISTRO -------------------------- */
+
+/* Estilos para o formulário */
+
+/* Estilo do contêiner do formulário */
+.login {
+    max-width: 400px;
+    margin: 0 auto;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    padding: 50px 20px;
+
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    min-height: 200px; /* Define uma altura mínima */
+    max-height: 440px; /* Define uma altura máxima */
+    text-align: center; /* Centraliza o texto */
+    opacity: 0; /* Inicialmente invisível */
+    transform: translateY(20px); /* Move o formulário 20px para baixo */
+    animation: fadeInUp 0.5s ease-out forwards; /* Animação de aparecer */
+}
+
+/* Animação de aparecer */
+@keyframes fadeInUp {
+    to {
+        opacity: 1; /* Torna o formulário visível */
+        transform: translateY(0); /* Move o formulário para a posição original */
+    }
+}
+
+/* Estilo do título "Login" */
+.login h2 {
+    margin-bottom: 15px; /* Reduz o espaçamento abaixo do título */
+    font-size: 34px; /* Tamanho da fonte */
+    color: #333; /* Cor do texto */
+}
+
+
+
+/* Estilo dos labels (Usuário e Senha) */
+.login label {
+    display: flex; /* Faz o label ocupar a linha inteira */
+    margin-bottom: 0px; /* Reduz o espaçamento abaixo do label */
+    font-size: 16px; /* Tamanho da fonte */
+    color: #555; /* Cor do texto */
+    text-align: left; /* Alinha o texto à esquerda */
+    
+}
+
+.login .usuario-label {
+    font-size: 20px; /* Tamanho da fonte */
+    margin-bottom: -17px; /* Ajuste do espaçamento */
+}
+
+
+/* Estilo dos campos de entrada (input) */
+.login input {
+    width: 100%; /* Ocupa toda a largura disponível */
+    padding: 8px; /* Reduz o padding interno */
+    margin-bottom: 05px; /* Reduz o espaçamento abaixo do campo */
+    border: 1px solid #ccc; /* Borda do campo */
+    border-radius: 4px; /* Cantos arredondados */
+    font-size: 6px; /* Tamanho da fonte */
+    box-sizing: border-box; /* Garante que o padding não aumente a largura */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Transição suave */
+}
+
+/* Efeito hover e focus nos campos de entrada */
+.login input:hover,
+.login input:focus {
+    border-color: #007bff; /* Muda a cor da borda ao passar o mouse ou focar */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Adiciona uma sombra suave */
+}
+
+/* Estilo do botão "Entrar" */
+.loginButton {
+    width: 57%; /* Ocupa toda a largura disponível */
+    padding: 5px; /* Reduz o padding interno */
+    margin-top: 50px;
+    margin-bottom: 20px;
+    background-color: #007bff; /* Cor de fundo do botão */
+    color: white; /* Cor do texto */
+    border: none; /* Remove a borda */
+    border-radius: 4px; /* Cantos arredondados */
+    font-size: 16px; /* Tamanho da fonte */
+    cursor: pointer; /* Muda o cursor para pointer */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Transição suave */
+}
+
+/* Efeito hover no botão */
+.loginButton:hover {
+    background-color: #0056b3; /* Cor de fundo ao passar o mouse */
+    transform: scale(1.02); /* Aumenta ligeiramente o tamanho do botão */
+}
+
+/* Efeito ativo (quando o botão é clicado) */
+.loginButton:active {
+    transform: scale(0.98); /* Reduz ligeiramente o tamanho do botão */
+}
+
+
+.registrarForm {
+    max-width: 400px; /* Largura máxima do formulário */
+    margin: 0 auto; /* Centraliza o formulário na tela */
+    margin-top: 30px;
+    margin-bottom: 20px;
+    padding: 20px;
+    padding-bottom: 40px;
+    background-color: #f9f9f9; /* Cor de fundo do formulário */
+    border: 1px solid #ddd; /* Borda ao redor do formulário */
+    border-radius: 8px; /* Cantos arredondados */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    text-align: center; /* Centraliza o texto */
+    padding-top: 30px;
+    opacity: 0; /* Inicialmente invisível */
+    transform: translateY(20px); /* Move o formulário 20px para baixo */
+    animation: fadeInUp 0.5s ease-out forwards; /* Animação de aparecer */
+}
+
+/* Animação de aparecer */
+@keyframes fadeInUp {
+    to {
+        opacity: 1; /* Torna o formulário visível */
+        transform: translateY(0); /* Move o formulário para a posição original */
+    }
+}
+
+.registrarForm label {
+    display: flex; /* Faz o label ocupar a linha inteira */
+    margin-bottom: 5px; /* Reduz o espaçamento abaixo do label */
+    font-size: 16px; /* Tamanho da fonte */
+    color: #555; /* Cor do texto */
+    text-align: left; /* Alinha o texto à esquerda */
+    
+}
+
+
+/* Estilos para os campos de input */
+.registrarForm input {
+    width: 100%; /* Ocupa toda a largura disponível */
+    padding: 10px; /* Espaçamento interno */
+    margin-bottom: 15px; /* Espaçamento abaixo do campo */
+    border: 1px solid #ccc; /* Borda do campo */
+    border-radius: 4px; /* Cantos arredondados */
+    font-size: 16px; /* Tamanho da fonte */
+    box-sizing: border-box; /* Garante que o padding não aumente a largura */
+}
+
+.h3 {
+    padding-top: 20px;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table th, .table td {
+    padding: 10px;
+    border: 1px solid #dee2e6;
+    text-align: left;
+}
+
+.table-table-striped{
+    background-color: #343a40;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: #e0dede;
+}
+
+/* Botões */
+.btn {
+    padding: 8px 12px;
+    font-size: 14px;
+    border-radius: 5px;
+    cursor: pointer;
+    border: none;
+}
+
+.btn-adicionar {
+    padding: 10px 20px;         /* Adiciona um pouco de espaço interno ao botão */
+    background-color: #007bff;  /* Cor de fundo do botão */
+    color: white;               /* Cor do texto */
+    border: none;               /* Remove a borda padrão */
+    border-radius: 5px;         /* Borda arredondada */
+    font-size: 16px;            /* Tamanho da fonte */
+    cursor: pointer;           /* Mostra um ponteiro ao passar o mouse */
+    transition: background-color 0.3s;  /* Transição suave para cor de fundo */
+}
+
+#btn-adicionar:hover {
+    background-color: #0056b3;
+}
+
+.btn-info {
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.btn-info:hover {
+    background-color: #064991;
+}
+
+#btn-voltar {
+    display: block;
+    margin-top: 10px;
+    background-color: #6c757d;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    width: 100%;
+}
+
+#btn-voltar:hover {
+    background-color: #444a4e;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    #turmas-container {
+        width: 100%;
+        padding: 10px;
+    }
+
+    .form-row {
+        flex-direction: column;
+    }
+}
+
+
+/* EDIÇÃO DOS CAMPOS CHOICES --------------------------------------------------------------------------- */
+/* Estiliza o select para ficar alinhado com os inputs */
+
+.form-group select {
+    padding: 10px;
+    border: 1px solid #ced4da;
+    border-radius: 5px;
+    width: 100%;
+    background-color: white;
+    font-size: 16px;
+    appearance: none; /* Remove o estilo padrão do navegador */
+    -webkit-appearance: none; /* Remove o estilo padrão no Safari */
+    -moz-appearance: none; /* Remove o estilo padrão no Firefox */
+}
+
+/* Adiciona um ícone de seta personalizado */
+.form-group {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Garante que os selects fiquem do mesmo tamanho dos inputs */
+.form-row select {
+    flex: 1;
+}
+
+/* Ajuste no hover e focus */
+.form-group select:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+.text-danger {
+    color: rgb(197, 14, 14);
+    background-color: var(--erroColor);
+    font-weight: bold;
+}
+
+.text-success {
+    color: rgba(10, 141, 10, 0.74);
+    font-weight: bold;
+}
+
+/* Estilização apenas para o select de pagamento */
+.pagamento-select {
+    position: relative;
+    display: flex;
+    width: 57%;
+    padding: 10px;
+    border: 2px solid var(--primary-color);
+    border-radius: 5px;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+/* Efeito ao passar o mouse */
+.pagamento-select:hover {
+    border-color: var(--secondary-color);
+}
+
+/* Efeito ao focar */
+.pagamento-select:focus {
+    outline: none;
+    border-color: var(--highlight-color);
+    box-shadow: 0 0 5px var(--highlight-color);
 }
 

@@ -1,14 +1,21 @@
 {% extends "index.html" %}
+{% block inicio %}
+    <a href="{% url 'adminDashboard' %}"><i class="fas fa-home"></i> Início</a>
+    <a href="{% url 'perfil' %}"><i class="fas fa-user"></i> Perfil</a>
+{% endblock inicio %}
 {% block content %}
-<div class="container mt-5">
+<div class="registrarForm">
     <h1 class="h3 mb-3">Editar Alunos:</h1>
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
         <button type="submit" class="btn btn-primary">Salvar</button>
     </form>
-    <a href="{% url 'alunosDashboard' %}" class="btn btn-secondary mt-3">Voltar</a>
 </div>
 </body>
+
+<div>
+    <a href="{% url 'alunosDashboard' %}"><button class="blueButton"> Voltar</button></a>
+</div>
 
 {% endblock content %}
