@@ -7,13 +7,13 @@
     <form method="post" class="login" action="{% url 'login' %}">
         <h2>Login</h2>
         {% csrf_token %}
-        <label for="username" style="font-size: 20px">Usuário: </label>
-        <input type="text" name="nome" placeholder="Nome de Usuário" style="margin-top: 5%; font-size: 20px">
+        <label for="username" class="usuario-label">Usuário:</label>
+        <input type="text" name="nome" placeholder="Nome de Usuário" style="margin-top: 5%; font-size: 15px">
         <br>
         <label for="password" style="font-size: 20px">Senha: </label>
-        <input type="password" name="senha" placeholder="Senha" style="font-size: 20px">
+        <input type="password" name="senha" placeholder="Senha" style="font-size: 15px">
         <br>
-        <button type="submit" style="font-size: 20px">Entrar</button>
+        <button class="loginButton" style="font-size: 20px">Entrar</button>
     </form>
 
     <div style="padding-top: 20px; font-size: 120%;"

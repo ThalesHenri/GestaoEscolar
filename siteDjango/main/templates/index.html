@@ -12,9 +12,11 @@
 
 <body>
     <nav>
-        <a href="{% url 'adminDashboard' %}">Início</a>
-        <a href="#Sobre">Sobre</a>
-        <a href="#">Contato</a>
+        <a href="{% url 'adminDashboard' %}"><i class="fas fa-home"></i> Início</a>
+        <a href="{% url 'perfil' %}"><i class="fas fa-user"></i> Perfil</a>
+        <a href="#Sobre"><i class="fas fa-info-circle"></i> Sobre</a>
+        <a href="#">Configurações</a>
+        <a href="#">Sair</a>
     </nav>
     <main>
         {% block content %}

@@ -13,7 +13,8 @@ from django.contrib.auth.decorators import login_required
 def home(request):
     return render(request, 'index.html')
 
-
+def perfil(request):
+    return render(request, 'perfil.html')
 
 def registrar(request):
     if request.method == 'POST':

@@ -45,10 +45,12 @@ header {
 header h1 {
     font-size: 2rem;
 }
+
 nav {
     display: flex;
     justify-content: center;
-    background-color: var(--secondary-color);
+    background-color: #1384a7c5;
+    box-shadow: #0056b3;
 }
 nav a {
     color: var(--white-color);
@@ -59,6 +61,12 @@ nav a {
 nav a:hover {
     background-color: var(--primary-color);
 }
+
+.nav a.active {
+    font-weight: bold; /* Destaque o link ativo */
+    border-bottom: 2px solid #ffdd57; /* Linha abaixo do link ativo */
+}
+
 main {
     padding: 2rem;
     text-align: center;
@@ -125,14 +133,13 @@ button:hover {
 }
 
 
-
-
+/* -------------------------------------------->>>>>>>>>>> FOOTER FOOTER FOOTER <<<<<<<< --------------------*/
 footer {
     position: fixed; /* Fixa o footer na tela */
     bottom: 0; /* Posiciona o footer na parte inferior */
     left: 0; /* Alinha o footer à esquerda */
     width: 100%; /* Ocupa toda a largura da tela */
-    background-color: #22849c; /* Cor de fundo do footer */
+    background-color: #1384a7c5; /* Cor de fundo do footer */
     padding: 10px 0; /* Espaçamento interno */
     text-align: center; /* Centraliza o texto */
     box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); /* Sombra para efeito visual */
@@ -412,55 +419,140 @@ li a{
 
 /* Estilos para o formulário */
 
+/* Estilo do contêiner do formulário */
 .login {
-    max-width: 400px; /* Largura máxima do formulário */
-    margin: 0 auto; /* Centraliza o formulário na tela */
-    padding: 40px 20px;
-    margin-bottom: 15px;
-    background-color: #f9f9f9; /* Cor de fundo do formulário */
-    border: 1px solid #ddd; /* Borda ao redor do formulário */
-    border-radius: 8px; /* Cantos arredondados */
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    max-width: 400px;
+    margin: 0 auto;
+    margin-top: 30px;
+    margin-bottom: 20px;
+    padding: 50px 20px;
+
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    min-height: 200px; /* Define uma altura mínima */
+    max-height: 440px; /* Define uma altura máxima */
     text-align: center; /* Centraliza o texto */
+    opacity: 0; /* Inicialmente invisível */
+    transform: translateY(20px); /* Move o formulário 20px para baixo */
+    animation: fadeInUp 0.5s ease-out forwards; /* Animação de aparecer */
+}
+
+/* Animação de aparecer */
+@keyframes fadeInUp {
+    to {
+        opacity: 1; /* Torna o formulário visível */
+        transform: translateY(0); /* Move o formulário para a posição original */
+    }
 }
 
 /* Estilo do título "Login" */
 .login h2 {
-    margin-bottom: 20px; /* Espaçamento abaixo do título */
-    font-size: 40px; /* Tamanho da fonte */
+    margin-bottom: 15px; /* Reduz o espaçamento abaixo do título */
+    font-size: 34px; /* Tamanho da fonte */
     color: #333; /* Cor do texto */
 }
 
+
+
+/* Estilo dos labels (Usuário e Senha) */
 .login label {
-    margin-bottom: 8px; /* Espaçamento abaixo do label */
+    display: flex; /* Faz o label ocupar a linha inteira */
+    margin-bottom: 0px; /* Reduz o espaçamento abaixo do label */
     font-size: 16px; /* Tamanho da fonte */
     color: #555; /* Cor do texto */
     text-align: left; /* Alinha o texto à esquerda */
+    
 }
 
+.login .usuario-label {
+    font-size: 20px; /* Tamanho da fonte */
+    margin-bottom: -17px; /* Ajuste do espaçamento */
+}
+
+
+/* Estilo dos campos de entrada (input) */
 .login input {
     width: 100%; /* Ocupa toda a largura disponível */
-    padding: 10px; /* Espaçamento interno */
-    margin-bottom: 15px; /* Espaçamento abaixo do campo */
+    padding: 8px; /* Reduz o padding interno */
+    margin-bottom: 05px; /* Reduz o espaçamento abaixo do campo */
     border: 1px solid #ccc; /* Borda do campo */
     border-radius: 4px; /* Cantos arredondados */
-    font-size: 16px; /* Tamanho da fonte */
+    font-size: 6px; /* Tamanho da fonte */
     box-sizing: border-box; /* Garante que o padding não aumente a largura */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Transição suave */
 }
 
+/* Efeito hover e focus nos campos de entrada */
+.login input:hover,
+.login input:focus {
+    border-color: #007bff; /* Muda a cor da borda ao passar o mouse ou focar */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Adiciona uma sombra suave */
+}
+
+/* Estilo do botão "Entrar" */
+.loginButton {
+    width: 57%; /* Ocupa toda a largura disponível */
+    padding: 5px; /* Reduz o padding interno */
+    margin-top: 50px;
+    margin-bottom: 20px;
+    background-color: #007bff; /* Cor de fundo do botão */
+    color: white; /* Cor do texto */
+    border: none; /* Remove a borda */
+    border-radius: 4px; /* Cantos arredondados */
+    font-size: 16px; /* Tamanho da fonte */
+    cursor: pointer; /* Muda o cursor para pointer */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Transição suave */
+}
+
+/* Efeito hover no botão */
+.loginButton:hover {
+    background-color: #0056b3; /* Cor de fundo ao passar o mouse */
+    transform: scale(1.02); /* Aumenta ligeiramente o tamanho do botão */
+}
+
+/* Efeito ativo (quando o botão é clicado) */
+.loginButton:active {
+    transform: scale(0.98); /* Reduz ligeiramente o tamanho do botão */
+}
 
 
 .registrarForm {
     max-width: 400px; /* Largura máxima do formulário */
     margin: 0 auto; /* Centraliza o formulário na tela */
+    margin-top: 30px;
+    margin-bottom: 20px;
     padding: 20px;
+    padding-bottom: 40px;
     background-color: #f9f9f9; /* Cor de fundo do formulário */
     border: 1px solid #ddd; /* Borda ao redor do formulário */
     border-radius: 8px; /* Cantos arredondados */
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
     text-align: center; /* Centraliza o texto */
     padding-top: 30px;
+    opacity: 0; /* Inicialmente invisível */
+    transform: translateY(20px); /* Move o formulário 20px para baixo */
+    animation: fadeInUp 0.5s ease-out forwards; /* Animação de aparecer */
 }
+
+/* Animação de aparecer */
+@keyframes fadeInUp {
+    to {
+        opacity: 1; /* Torna o formulário visível */
+        transform: translateY(0); /* Move o formulário para a posição original */
+    }
+}
+
+.registrarForm label {
+    display: flex; /* Faz o label ocupar a linha inteira */
+    margin-bottom: 5px; /* Reduz o espaçamento abaixo do label */
+    font-size: 16px; /* Tamanho da fonte */
+    color: #555; /* Cor do texto */
+    text-align: left; /* Alinha o texto à esquerda */
+    
+}
+
 
 /* Estilos para os campos de input */
 .registrarForm input {
