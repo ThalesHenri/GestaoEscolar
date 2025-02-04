@@ -1,21 +1,74 @@
 {% extends "index.html" %}
 {% block content %}
 
-<h1 class="h3 mb-3">Lista de Turmas</h1>
+<div id="turmas-container">
+    <div id="form-wrapper">
+        <h2 class="titulo-secao">Adicionar Nova Turma</h2>
+        <form method="POST" id="form-turma">
+            {% csrf_token %}
+            <div class="form-group">
+                <div class="form-row">
+                    {{ form.as_p }}
+                </div>
+            </div>
+            <div class="container">
+            <button type="submit" class="btn btn-primary" id="btn-adicionar">Adicionar</button></div>
+        </form>
+    </div>
 
-<ul>
-    {% for turma in turmas %}
-        <li>
-            <a href="{% url 'turmaDetalhes' turma.id %}"><button>{{ turma.nome }}</button></a>
-        </li>
-    {% endfor %}
-</ul>
 
-<h2 class="h5 mb-3">Adicionar Nova Turma</h2>
-<form method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit" class="btn btn-primary">Adicionar</button>
-</form>
-<a href="{% url 'adminDashboard' %}"><button>Voltar</button></a>
+    <div id="turmas-list">
+        <h1 class="titulo-secao">Turmas Cadastradas: {{ turmas.count }}</h1>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome da Turma</th>
+                    <th>Turno</th>
+                    <th>Mensalidade</th>
+                    <th>Qtd Alunos</th>
+                    <th>Saldo Total</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for turma in turmas %}
+                
+                <tr>
+                    <td>{{ forloop.counter }}</td>  <!-- ID Sequencial -->
+                    <td>{{ turma.nome }}</td>
+                    <td>{{ turma.turno }}</td> <!-- ADD Colunas em branco pra inserir novos dados futuramente -->
+                    <td> R$ {{ turma.valorMensalidade }}</td>
+                    <td>{{ turma.alunos.count }}</td>
+                    <td>R$ {{ turma.saldo_total|floatformat:2 }}</td>
+                    <td>
+                        <a href="{% url 'turmaDetalhes' turma.id %}" class="btn btn-info btn-sm">Detalhes</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <a href="{% url 'adminDashboard' %}" style="text-decoration: none;color: var(--white-color);"><button
+            class="blueButton" style="margin-bottom: 50px">Voltar</button></a>
+</div>
+
+<!-- SCRIPT PARA O VALOR DA MENSALIDADE NO FORMULÁRIO -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const moneyInputs = document.querySelectorAll(".money-mask");
+
+        moneyInputs.forEach(input => {
+            input.addEventListener("input", function () {
+                let value = this.value.replace(/\D/g, ""); // Remove tudo que não for número
+                value = (parseFloat(value) / 100).toLocaleString("pt-BR", {
+                    style: "currency",
+                    currency: "BRL"
+                });
+                this.value = value;
+            });
+        });
+    });
+</script>
 {% endblock %}

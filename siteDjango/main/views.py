@@ -14,6 +14,7 @@ def home(request):
     return render(request, 'index.html')
 
 
+
 def registrar(request):
     if request.method == 'POST':
         usuario = request.POST.get('usuario')
@@ -115,6 +116,7 @@ def turmaDetalhes(request, turma_id):
     # Obtém os alunos da turma utilizando o `related_name='alunos'`
     alunos = turma.alunos.all()
     
+    
     # Renderiza a página com os dados da turma, alunos e formulário
     return render(request, 'turmaDetalhes.html', {'turma': turma, 'alunos': alunos, 'form': form})
 
@@ -183,62 +185,48 @@ def alunoDetalhes(request, aluno_id):
     mensalidades = aluno.mensalidades.order_by("mes").all()
 
     MESES = {
-        1: "1 - Janeiro",
-        2: "2 - Fevereiro",
-        3: "3 - Março",
-        4: "4 - Abril",
-        5: "5 - Maio",
-        6: "6 - Junho",
-        7: "7 - Julho",
-        8: "8 - Agosto",
-        9: "9 - Setembro",
-        10: "10 - Outubro",
-        11: "11 - Novembro",
-        12: "12 -Dezembro",
+        1: "1 - Janeiro", 2: "2 - Fevereiro", 3: "3 - Março", 4: "4 - Abril",
+        5: "5 - Maio", 6: "6 - Junho", 7: "7 - Julho", 8: "8 - Agosto",
+        9: "9 - Setembro", 10: "10 - Outubro", 11: "11 - Novembro", 12: "12 - Dezembro",
     }
 
     hoje = now().date()
 
-    # Atualiza o status das mensalidades
+    # Atualiza status das mensalidades
     for mensalidade in mensalidades:
-        # Calcula a data completa de vencimento
         if mensalidade.valor is None:
             mensalidade.valor = mensalidade.aluno.turma.valorMensalidade
             mensalidade.save()
 
-        # Atualizar a data de vencimento
         dia_vencimento = mensalidade.dia_pagamento
-        data_vencimento = hoje.replace(
-            day=dia_vencimento,
-            month=mensalidade.mes,
-            year=hoje.year,
-        )
+        data_vencimento = hoje.replace(day=dia_vencimento, month=mensalidade.mes, year=hoje.year)
         mensalidade.data_vencimento = data_vencimento
 
-        # Atualizar o status
         if data_vencimento < hoje and mensalidade.status == "Em Aberto":
             mensalidade.status = "Em Atraso"
             mensalidade.save()
 
-        # Nome do mês
         mensalidade.mes_nome = MESES[mensalidade.mes]
 
     if request.method == "POST":
         mensalidade_id = request.POST.get("mensalidade_id")
+        forma_pagamento = request.POST.get("forma_pagamento")
+        acao = request.POST.get("acao")
         mensalidade = get_object_or_404(Mensalidade, id=mensalidade_id)
-        mensalidade.status = "Pago"
-        mensalidade.dia_pagamento_realizado = now().date()
+
+        if acao == "marcar_pago":
+            mensalidade.status = "Pago"
+            mensalidade.dia_pagamento_realizado = now().date()  # ✅ Salvar data
+            mensalidade.forma_pagamento = forma_pagamento
+        elif acao == "desmarcar_pago":
+            mensalidade.status = "Em Aberto"
+            mensalidade.dia_pagamento_realizado = None  # ✅ Limpar data
+
         mensalidade.save()
         return redirect("alunoDetalhes", aluno_id=aluno.id)
 
-    return render(
-        request,
-        "alunoDetalhes.html",
-        {
-            "aluno": aluno,
-            "mensalidades": mensalidades,
-        },
-    )
+    return render(request, "alunoDetalhes.html", {"aluno": aluno, "mensalidades": mensalidades})
+
 
 
 @login_required
@@ -253,6 +241,17 @@ def excluirAluno(request, aluno_id):
     # Caso o método não seja POST, redirecione ou mostre erro
     messages.error(request, 'Método inválido para exclusão!')
     return redirect('alunosDashboard')
+
+@login_required
+def excluir_turma(request, turma_id):
+    turma = get_object_or_404(Turma, id=turma_id)
+    
+    if request.method == "POST":
+        turma.delete()
+        messages.success(request, "Turma excluída com sucesso!")
+        return redirect("turmasDashboard")  # Redireciona para a lista de turmas
+
+    return redirect("turmaDetalhes", turma_id=turma.id)
 
 
 @login_required

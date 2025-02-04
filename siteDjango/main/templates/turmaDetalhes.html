@@ -1,26 +1,72 @@
 {% extends "index.html" %}
+
 {% block content %}
 
-<h1> {{ turma.nome }}</h1>
+<div id="alunos-container">
+    <div id="form-wrapper">
+        <h2 class="titulo-secao">Adicionar Novo Aluno</h2>
+        <form method="POST" id="form-aluno">
+            {% csrf_token %}
+            <div class="form-group">
+                <div class="form-row">
+                    {{ form.as_p }}
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary" id="btn-adicionar">Adicionar</button>
+        </form>
+    </div>
 
-<h2>Alunos Cadastrados: {{ alunos.count }}</h2>
-<ul>
-    {% for aluno in alunos %}
-    <a href="{% url 'alunoDetalhes' aluno_id=aluno.id %}"><button>{{ aluno.nome }}</button></a>
-    {% empty %}
-        <li>Não há alunos cadastrados nesta turma.</li>
-    {% endfor %}
-</ul>
-
-<h2>Adicionar Novo Aluno</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Adicionar Aluno</button>
-</form>
-<a href="{% url 'turmasDashboard' %}" style="text-decoration: none;">
-    <button>Voltar</button>
-</a>
+    <div id="aluno-list">
+        <h2 class="titulo-secao">Alunos Cadastrados: {{ alunos.count }}</h2>
+        {% if alunos %}
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th> ID </th>
+                    <th>Nome</th>
+                    <th>Status</th>
+                    <th>Ações</th>  <!-- Mantendo para futuras funcionalidades -->
+                </tr>
+            </thead>
+            <tbody>
+                {% for aluno in alunos %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>  <!-- ID Sequencial -->
+                    <td>{{ aluno.nome }}</td>
+                    <td>
+                        {% if aluno.possui_pendencias %}
+                            <span class="text-danger">Possui Pendência</span>
+                        {% else %}
+                            <span class="text-success">Em Dia</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{% url 'alunoDetalhes' aluno_id=aluno.id %}" class="btn btn-info btn-sm">Detalhes</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p class="text-muted">Não há alunos cadastrados nesta turma.</p>
+        {% endif %}
+    </div>
+    
+    <div style="display: flex; justify-content: center; gap: 10px; padding-top: 50px;">
+    <a href="{% url 'turmasDashboard' %}" style="text-decoration: none;color: var(--white-color);"><button class="blueButton" style="margin-bottom: 50px">Voltar</button></a>
+        <!-- Botão de Excluir Turma -->
+        <form method="POST" action="{% url 'excluirTurma' turma.id %}" onsubmit="return confirmarExclusao();">
+            {% csrf_token %}
+            <button type="submit" class="excluirButton">Excluir Turma</button>
+        </form>
+    </div>
+    
+    <script>
+        function confirmarExclusao() {
+            return confirm("Tem certeza que deseja excluir esta turma? Esta ação não pode ser desfeita.");
+        }
+    </script>
+</div>
 
 
 {% endblock %}

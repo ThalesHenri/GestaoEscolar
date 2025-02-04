@@ -5,7 +5,7 @@
 
 
     <form method="post" class="login" action="{% url 'login' %}">
-        <h1>Login</h1>
+        <h2>Login</h2>
         {% csrf_token %}
         <label for="username" style="font-size: 20px">Usuário: </label>
         <input type="text" name="nome" placeholder="Nome de Usuário" style="margin-top: 5%; font-size: 20px">
@@ -16,5 +16,9 @@
         <button type="submit" style="font-size: 20px">Entrar</button>
     </form>
 
-<h2>Ainda não tem uma conta?<a href={% url "registrar" %}>  Registre-se</a></h2>
+    <div style="padding-top: 20px; font-size: 120%;"
+        <h2>Não possui conta?<a href={% url "registrar" %}> Registre-se</a></h2>
+
+    <div>
+        <a href="{% url "home" %}"><button class="blueButton"> Voltar</button></a></div>
 {% endblock content %}
