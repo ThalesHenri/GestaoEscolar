@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404, redirect
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib.auth.models import User
 from django.contrib import messages
-from .models import Turma, Aluno, Mensalidade
+from .models import Turma, Aluno, Mensalidade,Feed
 from .forms import TurmaForm, AlunoForm
 from .forms import *
 from django.contrib.auth.decorators import login_required
@@ -28,6 +28,8 @@ def registrar(request):
         try:
             User.objects.create_user(
                 username=usuario, email=email, password=senha)
+            feed = Feed(acao="Usuário registrado com sucesso!", data=timezone.now())
+            feed.save()
             return render(request, 'sucesso.html')
         except Exception as e:
             return render(request, 'erro.html', {'mensagem': str(e)})
@@ -46,6 +48,8 @@ def login(request):
             # Realiza o login do usuário e redireciona para o dashboard
             auth_login(request, usuario)
             # Substitua pelo nome da URL do dashboard
+            feed = Feed(acao="Usuário logado com sucesso!", data= timezone.now())
+            feed.save()
             return redirect('adminDashboard')
         else:
             # Renderiza a página de erro em caso de falha na autenticação
@@ -57,13 +61,17 @@ def login(request):
 
 def logout(request):
     auth_logout(request)
+    feed = Feed(acao="Usuário deslogado com sucesso!", data=timezone.now())
+    feed.save()  
     return redirect('login')
 
 @login_required
 def adminDashboard(request):
     usuario = request.user
+    feeds = Feed.objects.all()
     context = {
-        'usuario': usuario
+        'usuario': usuario,
+        'feeds': feeds
     }
     print(f"aqui está o {usuario}")
     return render(request, 'adminDashboard.html', context=context)
@@ -75,7 +83,8 @@ def addTurma(request):
         form = TurmaForm(request.POST)
         if form.is_valid():
             form.save()
-            messages.success(request, 'Turma adicionada com sucesso!')
+            feed = Feed(acao=f"Turma {form.cleaned_data['nome']} adicionada com sucesso!", data=timezone.now()) 
+            feed.save()
             return redirect('turmasDashboard')
     else:
         form = TurmaForm()
@@ -108,7 +117,9 @@ def turmaDetalhes(request, turma_id):
             aluno = form.save(commit=False)
             # Associa o aluno à turma atual
             aluno.turma = turma
-            aluno.save()  # Salva o aluno no banco de dados
+            aluno.save()# Salva o aluno no banco de dados
+            feed = Feed(acao=f"Aluno {aluno.nome} adicionado com sucesso!", data=timezone.now())
+            feed.save()
             return redirect('turmaDetalhes', turma_id=turma.id)  # Redireciona para a mesma página
     else:
         # Inicializa o formulário vazio para a adição de novos alunos
@@ -128,6 +139,10 @@ def alunosDashboard(request):
     return render(request, 'alunosDashboard.html', {'alunos': alunos})
 
 
+def limparFeed(request):
+    Feed.objects.all().delete()
+    return redirect('adminDashboard')
+
 
 @login_required
 def editarAluno(request, aluno_id):
@@ -137,7 +152,8 @@ def editarAluno(request, aluno_id):
         form = AlunoForm(request.POST, instance=aluno)
         if form.is_valid():
             form.save()
-            messages.success(request, f'Aluno {aluno.nome} editado com sucesso!')
+            feed = Feed(acao=f"Aluno {aluno.nome} editado com sucesso!", data=timezone.now())
+            feed.save()
             return redirect('alunosDashboard')
     else:
         form = AlunoForm(instance=aluno)
@@ -160,6 +176,7 @@ def addAluno(request, turma_id):
             else:
                 aluno.save()
                 
+                
                 # Criação das mensalidades com base no dia de pagamento
                 for mes in range(1, 13):  # Assumindo a criação de mensalidades para todos os meses do ano
                     data_vencimento = timezone.now().replace(month=mes, day=aluno.dia_pagamento, year=timezone.now().year).date()
@@ -170,7 +187,8 @@ def addAluno(request, turma_id):
                         data_vencimento=data_vencimento,  # Data de vencimento com o ano vigente
                         pago=False
                     )
-                messages.success(request, 'Aluno adicionado com sucesso!')
+                feed = Feed(acao=f"Aluno {aluno.nome} adicionado com sucesso!", data=timezone.now())
+                feed.save()
                 return redirect('addAluno', turma_id=turma.id)
     else:
         form = AlunoForm()
@@ -205,6 +223,8 @@ def alunoDetalhes(request, aluno_id):
 
         if data_vencimento < hoje and mensalidade.status == "Em Aberto":
             mensalidade.status = "Em Atraso"
+            feed = Feed(acao=f"Mensalidade {mensalidade.mes} do aluno {aluno.nome} em atraso!", data=timezone.now())
+            feed.save()
             mensalidade.save()
 
         mensalidade.mes_nome = MESES[mensalidade.mes]
@@ -218,6 +238,8 @@ def alunoDetalhes(request, aluno_id):
         if acao == "marcar_pago":
             mensalidade.status = "Pago"
             mensalidade.dia_pagamento_realizado = now().date()  # ✅ Salvar data
+            feed = Feed(acao=f"Mensalidade {mensalidade.mes} do aluno {aluno.nome} pago com sucesso!", data=timezone.now())
+            feed.save()
             mensalidade.forma_pagamento = forma_pagamento
         elif acao == "desmarcar_pago":
             mensalidade.status = "Em Aberto"
@@ -236,7 +258,8 @@ def excluirAluno(request, aluno_id):
     
     if request.method == 'POST':  # Garante que a exclusão só ocorre via POST
         aluno.delete()
-        messages.success(request, f'Aluno {aluno.nome} excluído com sucesso!')
+        feed = Feed(acao=f"Aluno {aluno.nome} excluído com sucesso!", data=timezone.now())
+        feed.save()
         return redirect('alunosDashboard')  # Redireciona para o dashboard dos alunos
     
     # Caso o método não seja POST, redirecione ou mostre erro
@@ -249,7 +272,8 @@ def excluir_turma(request, turma_id):
     
     if request.method == "POST":
         turma.delete()
-        messages.success(request, "Turma excluída com sucesso!")
+        feed = Feed(acao=f"Turma {turma.nome} excluida com sucesso!", data=timezone.now())
+        feed.save()
         return redirect("turmasDashboard")  # Redireciona para a lista de turmas
 
     return redirect("turmaDetalhes", turma_id=turma.id)

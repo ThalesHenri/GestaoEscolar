@@ -1,11 +1,16 @@
 {% extends "index.html" %}
+{% block inicio %}
+    <a href="{% url 'adminDashboard' %}"><i class="fas fa-home"></i> Início</a>
+    <a href="{% url 'perfil' %}"><i class="fas fa-user"></i> Perfil</a>
+{% endblock inicio %}
 {% block content %}
     <body>
         <div class="container mt-4">
-            <h1>Aluno - {{ aluno.nome }}</h1>
-            <p>Idade: {{ aluno.idade }} anos</p>
-            <p>Responsável: {{ aluno.responsavel }}</p>
-        
+            <div class="alunoDetalhes">
+                <h1>Aluno - {{ aluno.nome }}</h1>
+                <p>Idade: {{ aluno.idade }} anos</p>
+                <p>Responsável: {{ aluno.responsavel }}</p>
+            </div>
             <h2>Mensalidades</h2>
             <table class="table table-striped2">
                 <thead>

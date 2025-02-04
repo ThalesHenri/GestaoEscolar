@@ -18,5 +18,6 @@ urlpatterns = [
     path('editarAluno/<int:aluno_id>/', views.editarAluno, name='editarAluno'),
     path('logout/', views.logout, name='logout'),
     path('pagamentoDashboard/', views.pagamentoDashboard, name='pagamentoDashboard'),
+    path('limparFeed/', views.limparFeed, name='limparFeed'),
     path('perfil/', views.perfil, name="perfil"),
 ]

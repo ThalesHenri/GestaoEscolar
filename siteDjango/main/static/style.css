@@ -93,6 +93,66 @@ main {
 .Sobre p{
     margin-top: 2.5rem;
 }
+.adminDashboard{
+    display: flex;     
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    margin-top: 2rem;
+    
+}
+.adminDashboard ul{ 
+    flex-direction: row;
+    gap: 30px;
+
+}
+.feed {
+    width: 80%;
+    margin: 20px auto;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+}
+
+.feed h2 {
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 15px;
+}
+
+.feed table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #f9f9f9;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.feed th {
+    background: #007bff;
+    color: white;
+    font-size: 18px;
+    padding: 12px;
+    text-transform: uppercase;
+}
+
+.feed td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    color: #555;
+    font-size: 16px;
+}
+
+.feed tr:nth-child(even) {
+    background: #f1f1f1;
+}
+
+.feed tr:hover {
+    background: #d6e4ff;
+    transition: 0.3s;
+}
 
 button {
     margin-top: 2.5rem;
@@ -722,3 +782,4 @@ li a{
     border-color: var(--highlight-color);
     box-shadow: 0 0 5px var(--highlight-color);
 }
+

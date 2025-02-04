@@ -1,4 +1,8 @@
 {% extends "index.html" %}
+{% block inicio %}
+    <a href="{% url 'adminDashboard' %}"><i class="fas fa-home"></i> Início</a>
+    <a href="{% url 'perfil' %}"><i class="fas fa-user"></i> Perfil</a>
+{% endblock inicio %}
 
 {% block content %}
 <table class="alunosTable">
@@ -25,13 +29,9 @@
             <a href="{% url 'editarAluno' aluno_id=aluno.id %}">Editar</a>
         </td>
     </tr>
-    {% if messages %}
-    {% for message in messages %}
-    <p>{{ message }}</p>
-    {% endfor %}
-    {% endif %}
     {% endfor %}
 </table>
+
 <div style="padding-bottom: 40px;">
     <a href="{% url 'adminDashboard' %}"><button class="blueButton"> Voltar</button></a>
 </div>

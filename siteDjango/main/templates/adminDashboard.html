@@ -1,4 +1,8 @@
 {% extends "index.html" %}
+{% block inicio %}
+    <a href="{% url 'adminDashboard' %}"><i class="fas fa-home"></i> Início</a>
+    <a href="{% url 'perfil' %}"><i class="fas fa-user"></i> Perfil</a>
+{% endblock inicio %}
 {% block content %}
 <h1>Seja bem-vindo, {{ usuario }}</h1>
 <div class="adminDashboard">
@@ -10,4 +14,21 @@
         <li><a href="{% url 'logout' %}"><button>Logout</button></a></li>
     </ul>
 </div>
+<div class="feed">
+    <h2>Feed de Notícias</h2>
+    <table>
+        <tr>
+            <th>Ação</th>
+            <th>Data</th>
+        </tr>
+        {% for feed in feeds %}
+        <tr>
+            <td>{{ feed.acao }}</td>
+            <td>{{ feed.data }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <a href="{% url "limparFeed" %}"><button onclick="return confirm('Tem certeza que deseja limpar o feed?');">Limpar feed</button></a>
+</div>
+
 {% endblock content %}

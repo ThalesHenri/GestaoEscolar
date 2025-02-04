@@ -89,6 +89,9 @@ class Usuario(models.Model):
     def __str__(self):
         return self.nome
 
+class Feed(models.Model):
+    acao = models.CharField(max_length=100)
+    data = models.DateTimeField(default=now)
 
 class Mensalidade(models.Model):
     FORMA_PAGAMENTO_CHOICES = [
