@@ -34,3 +34,11 @@ class UsuarioForm(forms.ModelForm):
         fields = ['nome', 'email', 'senha']
 
 
+
+class DescontoForm(forms.ModelForm):
+    class Meta:
+        model = Mensalidade
+        fields = ['desconto']
+        widgets = {
+            'desconto': forms.NumberInput(attrs={'min': 0, 'max': 100, 'step': 0.01, 'maxlength': 10, 'placeholder': '00%'}),
+        }

@@ -20,4 +20,6 @@ urlpatterns = [
     path('pagamentoDashboard/', views.pagamentoDashboard, name='pagamentoDashboard'),
     path('limparFeed/', views.limparFeed, name='limparFeed'),
     path('perfil/', views.perfil, name="perfil"),
+    path('aplicarDesconto/<int:aluno_id>/<int:mensalidade_id>/', views.aplicarDesconto, name="aplicarDesconto"),
+    
 ]
