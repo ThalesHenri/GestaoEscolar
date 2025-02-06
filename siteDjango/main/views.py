@@ -48,7 +48,7 @@ def login(request):
             # Realiza o login do usuário e redireciona para o dashboard
             auth_login(request, usuario)
             # Substitua pelo nome da URL do dashboard
-            feed = Feed(acao="Usuário logado com sucesso!", data= timezone.now())
+            feed = Feed(acao="Usuário logado!", data= timezone.now())
             feed.save()
             return redirect('adminDashboard')
         else:
@@ -61,7 +61,7 @@ def login(request):
 
 def logout(request):
     auth_logout(request)
-    feed = Feed(acao="Usuário deslogado com sucesso!", data=timezone.now())
+    feed = Feed(acao="Usuário foi deslogado!", data=timezone.now())
     feed.save()  
     return redirect('login')
 
@@ -83,7 +83,7 @@ def addTurma(request):
         form = TurmaForm(request.POST)
         if form.is_valid():
             form.save()
-            feed = Feed(acao=f"Turma {form.cleaned_data['nome']} adicionada com sucesso!", data=timezone.now()) 
+            feed = Feed(acao=f"Turma {form.cleaned_data['nome']} foi adicionada!", data=timezone.now()) 
             feed.save()
             return redirect('turmasDashboard')
     else:
@@ -118,7 +118,7 @@ def turmaDetalhes(request, turma_id):
             # Associa o aluno à turma atual
             aluno.turma = turma
             aluno.save()# Salva o aluno no banco de dados
-            feed = Feed(acao=f"Aluno {aluno.nome} adicionado com sucesso!", data=timezone.now())
+            feed = Feed(acao=f"Aluno(a) {aluno.nome} foi adicionado(a)!", data=timezone.now())
             feed.save()
             return redirect('turmaDetalhes', turma_id=turma.id)  # Redireciona para a mesma página
     else:
@@ -187,7 +187,7 @@ def addAluno(request, turma_id):
                         data_vencimento=data_vencimento,  # Data de vencimento com o ano vigente
                         pago=False
                     )
-                feed = Feed(acao=f"Aluno {aluno.nome} adicionado com sucesso!", data=timezone.now())
+                feed = Feed(acao=f"Aluno(a) {aluno.nome} adicionado(a)!", data=timezone.now())
                 feed.save()
                 return redirect('addAluno', turma_id=turma.id)
     else:
@@ -223,7 +223,7 @@ def alunoDetalhes(request, aluno_id):
 
         if data_vencimento < hoje and mensalidade.status == "Em Aberto":
             mensalidade.status = "Em Atraso"
-            feed = Feed(acao=f"Mensalidade {mensalidade.mes} do aluno {aluno.nome} em atraso!", data=timezone.now())
+            feed = Feed(acao=f"AVISO! Mensalidade {mensalidade.mes} do aluno(a) {aluno.nome} em atraso!", data=timezone.now())
             feed.save()
             mensalidade.save()
 
@@ -238,7 +238,7 @@ def alunoDetalhes(request, aluno_id):
         if acao == "marcar_pago":
             mensalidade.status = "Pago"
             mensalidade.dia_pagamento_realizado = now().date()  # ✅ Salvar data
-            feed = Feed(acao=f"Mensalidade {mensalidade.mes} do aluno {aluno.nome} pago com sucesso!", data=timezone.now())
+            feed = Feed(acao=f"Mensalidade {mensalidade.mes} do aluno(a) {aluno.nome} foi paga!", data=timezone.now())
             feed.save()
             mensalidade.forma_pagamento = forma_pagamento
         elif acao == "desmarcar_pago":
@@ -272,7 +272,7 @@ def excluir_turma(request, turma_id):
     
     if request.method == "POST":
         turma.delete()
-        feed = Feed(acao=f"Turma {turma.nome} excluida com sucesso!", data=timezone.now())
+        feed = Feed(acao=f"Turma {turma.nome} foi excluida!", data=timezone.now())
         feed.save()
         return redirect("turmasDashboard")  # Redireciona para a lista de turmas
 

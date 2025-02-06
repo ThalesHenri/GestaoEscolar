@@ -18,11 +18,13 @@
     <h2>Feed de Notícias</h2>
     <table>
         <tr>
+            <th>Nº</th>
             <th>Ação</th>
             <th>Data</th>
         </tr>
         {% for feed in feeds %}
         <tr>
+            <td>{{ forloop.counter }}</td>  <!-- ID Sequencial -->
             <td>{{ feed.acao }}</td>
             <td>{{ feed.data }}</td>
         </tr>
