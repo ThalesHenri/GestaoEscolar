@@ -108,8 +108,15 @@ class Mensalidade(models.Model):
     dia_pagamento_realizado = models.DateField(null=True, blank=True)
     valor = models.DecimalField(max_digits=8, decimal_places=2, null=True, blank=True) 
     forma_pagamento = models.CharField(max_length=10, choices=FORMA_PAGAMENTO_CHOICES, null=True, blank=True)  # Novo campo
+    desconto = models.DecimalField(max_digits=8, decimal_places=2, null=True, blank=True)
 
-
+    
+    def calcular_valor_desconto(self,desconto):
+        #implementa o calculo do disconto
+        self.valor = self.valor - (desconto/100 * self.valor)
+        super().save(
+            update_fields=['valor']
+        )
     
     def save(self, *args, **kwargs):
         """Atualiza o status da mensalidade ao salvar."""

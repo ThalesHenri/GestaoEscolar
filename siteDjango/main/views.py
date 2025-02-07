@@ -1,9 +1,9 @@
+from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404, redirect
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib.auth.models import User
 from django.contrib import messages
 from .models import Turma, Aluno, Mensalidade,Feed
-from .forms import TurmaForm, AlunoForm
 from .forms import *
 from django.contrib.auth.decorators import login_required
 
@@ -250,6 +250,26 @@ def alunoDetalhes(request, aluno_id):
 
     return render(request, "alunoDetalhes.html", {"aluno": aluno, "mensalidades": mensalidades})
 
+
+@login_required
+def aplicarDesconto(request, aluno_id, mensalidade_id):
+    aluno = get_object_or_404(Aluno, id=aluno_id)
+    mensalidade = get_object_or_404(Mensalidade, id=mensalidade_id)
+    
+    if request.method == "POST":
+        form = DescontoForm(request.POST)
+        if form.is_valid():
+            desconto = form.cleaned_data['desconto']
+            mensalidade.calcular_valor_desconto(desconto)
+            feed = Feed(acao=f"Desconto de {desconto}% para o aluno {aluno.nome} aplicado com sucesso!", data=timezone.now()) # Aplica o desconto
+            feed.save()
+            # Salva a mensalidade com o valor atualizado
+            return redirect('alunoDetalhes', aluno_id=aluno.id)  # Redireciona de volta para a página do aluno
+    else:
+        form = DescontoForm()
+
+    context = {'aluno': aluno, 'mensalidade': mensalidade, 'form': form}
+    return render(request, 'desconto.html', context=context)
 
 
 @login_required

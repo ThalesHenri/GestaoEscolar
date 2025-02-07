@@ -7,11 +7,35 @@
     <body>
         <div class="container mt-4">
             <div class="alunoDetalhes">
-                <h1>Aluno - {{ aluno.nome }}</h1>
-                <p>Idade: {{ aluno.idade }} anos</p>
-                <p>Responsável: {{ aluno.responsavel }}</p>
+                <table>
+                    <tr>
+                        <td><strong>Aluno:</strong></td>
+                        <td>{{ aluno.nome }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Idade:</strong></td>
+                        <td>{{ aluno.idade }} anos</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Responsável:</strong></td>
+                        <td>{{ aluno.responsavel }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Ações:</strong></td>
+                        <td>
+                            {% for mensalidade in mensalidades %}
+                            <a href="{% url 'aplicarDesconto' aluno.id mensalidade.id %}">
+                                <button style="width: 150px;">Aplicar desconto</button>
+                            </a>
+                            <p>mês {{ mensalidade.mes }}</p>
+                            {% empty %}
+                            <p>Sem mensalidades para aplicar desconto.</p>
+                            {% endfor %}
+                        </td>
+                    </tr>
+                </table>
             </div>
-            <h2>Mensalidades</h2>
+            <h2 style="font-size: 30px;">Mensalidades</h2>
             <table class="table table-striped2">
                 <thead>
                     <tr>

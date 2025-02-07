@@ -67,6 +67,45 @@ nav a:hover {
     border-bottom: 2px solid #ffdd57; /* Linha abaixo do link ativo */
 }
 
+.alunoDetalhes {
+    max-width: 500px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+}
+
+.alunoDetalhes table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.alunoDetalhes td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    font-size: 20px; /* Increased font size */
+}
+
+.alunoDetalhes td:first-child {
+    font-weight: bold;
+    color: #333;
+    width: 40%;
+}
+
+.alunoDetalhes td:last-child {
+    color: #555;
+}
+
+.alunoDetalhes tr:last-child td {
+    border-bottom: none;
+}
+
+.alunoDetalhes table tr:hover {
+    background: #f9f9f9;
+}
+
 main {
     padding: 2rem;
     text-align: center;
