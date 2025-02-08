@@ -6,6 +6,7 @@
 {% block content %}
     <body>
         <div class="container mt-4">
+            <div class="parteCima">
             <div class="alunoDetalhes">
                 <table>
                     <tr>
@@ -21,7 +22,8 @@
                         <td>{{ aluno.responsavel }}</td>
                     </tr>
                     <tr>
-                        <td><strong>Ações:</strong></td>
+            <div class="tabelaDesconto">
+            <table class="table table-striped2"><tr><td><strong>Ações:</strong></td>
                         <td>
                             {% for mensalidade in mensalidades %}
                             <a href="{% url 'aplicarDesconto' aluno.id mensalidade.id %}">
@@ -35,6 +37,8 @@
                     </tr>
                 </table>
             </div>
+        </div>
+        </div>
             <h2 style="font-size: 30px;">Mensalidades</h2>
             <table class="table table-striped2">
                 <thead>
@@ -51,9 +55,9 @@
                 <tbody>
                     {% for mensalidade in mensalidades %}
                     <tr class="{% if mensalidade.status == 'Pago' %}status-pago{% elif mensalidade.status == 'Em Atraso' %}status-atrasado{% else %}status-pendente{% endif %}">
-                        <td>{{ mensalidade.mes_nome }}</td>
+                        <td>{{ mensalidade.data_vencimento|date:"F" }}</td>
                         <td>R$ {{ mensalidade.valor }}</td>
-                        <td>{{ mensalidade.data_vencimento }}</td>
+                        <td>{{ mensalidade.data_vencimento|date:"d/m/Y" }}</td>
                         <td>{{ mensalidade.status }}</td>
                         <td>
                             {% if mensalidade.dia_pagamento_realizado %}
@@ -93,6 +97,7 @@
                     {% endfor %}
                 </tbody>
             </table>
+        </div>
         </div>
 
         <script>

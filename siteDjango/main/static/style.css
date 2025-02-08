@@ -67,13 +67,21 @@ nav a:hover {
     border-bottom: 2px solid #ffdd57; /* Linha abaixo do link ativo */
 }
 
-.alunoDetalhes {
+.parteCima {
+    background: #cecbcb;
+    margin: auto;
+
+}
+
+.parteCima .alunoDetalhes {
+    display: flex;
+    margin: auto;
     max-width: 500px;
-    margin: 20px auto;
+    margin: 1rem;
     padding: 20px;
-    background: #ffffff;
+    background: #17879b8a;
     border-radius: 12px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgb(0, 0, 0);
     font-family: Arial, sans-serif;
 }
 
@@ -367,8 +375,9 @@ li a{
     cursor: pointer;
 }
 
-/* Ajustes gerais para tabelas */
+/* ---------------------- >>>>>>>>>>>>>>>>>>>>>>>> Ajustes gerais para TABELAS <<<<<<<<<<<<<<<<-------------------------------------- */
 .table {
+    table-layout: fixed;
     border-collapse: collapse;
     width: 100%;
     margin-top: 20px;
@@ -410,7 +419,7 @@ li a{
 }
 
 .alunosTable tr:hover {
-    background-color: rgba(0, 123, 255, 0.1); /* Leve destaque ao passar o mouse */
+    background-color: rgba(0, 123, 255, 0.1);
 }
 
 .alunosTable a {
@@ -464,7 +473,24 @@ li a{
     margin: 0 auto;
 }
 
-/* Estilos para as seções */
+ /* --------------------------------------------------------------------- FORMULÁRIOS --------------------------------------------------------------------- */
+
+.addAlunoForm {
+    background-color: white;
+    align-items: center;
+    width: 100%;
+    margin: 0 auto;
+    padding: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+}
+
+ 
+ /* Estilos para as seções */
 #form-wrapper, #turmas-list {
     background: #fdfbfb;
     padding: 20px;
@@ -519,7 +545,7 @@ li a{
     width: 100%;
 }
 
-/* ------------------------- FORMULÁRIO DO REGISTRO --------------- É possivel usar esse estilo para todos os formulários----------- */
+/* ------------------------- FORMULÁRIO DO REGISTRO (LOGIN)--------------- É possivel usar esse estilo para todos os formulários----------- */
 
 /* Estilos para o formulário */
 
@@ -951,12 +977,12 @@ li a{
    }
 
 
-   /* ------------------------------------------------ From Uiverse.io by iconicchandu */ 
+   /* ------------------------------------------------ CARD DO INDEX <<<<<<<<<<<<<<<<<<<<<< */ 
 .card {
     --white: hsl(0, 0%, 100%);
-    --black: hsl(177, 78%, 44%);
+    --black: hsl(0, 0%, 100%);
     --paragraph: hsl(0, 0%, 83%);
-    --primary: hsl(189, 92%, 58%);
+    --primary: hsl(202, 79%, 36%);
   
     position: relative;
     display: flex;
@@ -978,61 +1004,49 @@ li a{
       radial-gradient(at 100% 99%, hsla(188, 94%, 13%, 0.568) 0px, transparent 85%);
   
     border-radius: 1rem;
+    margin: 1rem;
     box-shadow: 0px -16px 24px 0px rgba(255, 255, 255, 0.25) inset;
   }
 
-  .list_text {
-    font-size: 20px;
-    text-align: justify;
+  .card .card__list_item .list_text {
+    display: inline-block;
+    font-size: 14px!important; /* Define o tamanho da fonte */
+    color: #ffffff; /* Define a cor do texto */
   }
 
-  .card_paragraph {
-    align-items: center;
-    position: relative;
-    margin-left: 2rem;
-  }
+
   .card .card__border {
     overflow: hidden;
     pointer-events: none;
-  
     position: absolute;
     z-index: -10;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-  
     width: calc(100% + 2px);
     height: calc(100% + 2px);
-    background-image: linear-gradient(
-      0deg,
-      hsl(0, 0%, 100%) -50%,
-      hsl(0, 0%, 40%) 100%
-    );
-  
+    background-image: linear-gradient(0deg,hsl(0, 0%, 100%) -50%,#13685d8e);
     border-radius: 1rem;
   }
   
   .card .card__border::before {
     content: "";
     pointer-events: none;
-  
     position: fixed;
     z-index: 200;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%), rotate(0deg);
     transform-origin: left;
-  
     width: 200%;
     height: 10rem;
     background-image: linear-gradient(
       0deg,
-      hsla(0, 89%, 51%, 0.733) 0%,
+      hsla(83, 75%, 51%, 0.733) 0%,
       hsl(189, 100%, 50%) 40%,
-      hsl(189, 100%, 50%) 60%,
-      hsla(59, 83%, 49%, 0.993) 100%
+      hsla(83, 75%, 51%, 0.733) 0%,
+      hsl(78, 73%, 54%) 100%
     );
-  
     animation: rotate 8s linear infinite;
   }
   
@@ -1043,34 +1057,38 @@ li a{
   }
   
   .card .card_title__container .card_title {
-    font-size: 1rem;
+    display: block;
+    font-size: 1.5rem;
     color: var(--white);
   }
-  
-  .card .card_title__container .card_paragraph {
-    margin-top: 0.25rem;
-    width: 65%;
-  
-    font-size: 0.5rem;
-    color: var(--paragraph);
-  }
-  
+
   .card .line {
     width: 100%;
     height: 0.1rem;
     background-color: var(--line);
     border: none;
   }
+
+.card_paragraph {
+    display: inline-block;
+    justify-content: left!important;
+    margin-top: 0.25rem;
+    width: 65%;
+    font-size: 1rem;
+    color: rgb(255, 255, 255);
+  }
   
+  /* ---------------------------- LISTA DOS CHECKS -------------------------------*/
   .card .card__list {
     display: flex;
     flex-direction: column;
+    align-items:last baseline; /* Alinha os itens no centro da coluna */
+    justify-content: center; /* Pode ser necessário ajustar se a altura não for suficiente */
     gap: 0.5rem;
   }
-  
   .card .card__list .card__list_item {
     display: flex;
-    align-items: center;
+    align-items: left;
     gap: 0.5rem;
   }
   
@@ -1090,28 +1108,33 @@ li a{
     fill: var(--black);
   }
   
-  .card .card__list .card__list_item .list_text {
+  .card .card__list .card__list_item {
     font-size: 0.75rem;
     color: var(--white);
   }
   
-  .card .button {
+  .card .buttonAcesso {
     cursor: pointer;
-    padding: 0.5rem;
-    width: 100%;
-    background-image: linear-gradient(0deg,hsl(189, 92%, 58%),hsl(189, 99%, 26%) 100%);
-    font-size: 0.75rem;
-    color: var(--white);
     border: 0;
-    border-radius: 9999px;
-    box-shadow: inset 0 -2px 25px -4px var(--white);
+    padding: 0.5rem 1rem;
+    min-width: 120px; /* Defina o tamanho mínimo desejado */
+    min-height: 40px; /* Defina a altura mínima desejada */
+    border-radius: 20px;
+    background-image: linear-gradient(0deg, hsl(189, 92%, 58%), hsl(189, 99%, 26%) 100%);
+    box-shadow: white;
+    transition: all 1s;
+    box-sizing: border-box;
   }
-  
-  .buttonAcesso {
-
-
-  }
-
   .buttonAcesso:hover {
-    background-image: linear-gradient(0deg,hsl(189, 92%, 58%),hsl(189, 99%, 26%) 100%);
+    scale: 105%;
+    background-image: radial-gradient(
+        at 88% 40%,
+        rgba(49, 232, 245, 0.842) 0px,
+        transparent 85%
+      ),
+      radial-gradient(at 49% 30%, rgba(19, 100, 86, 0.897) 0px, transparent 85%),
+      radial-gradient(at 14% 26%, rgba(139, 201, 23, 0.932) 0px, transparent 85%),
+      radial-gradient(at 0% 64%, hsl(189, 98%, 26%) 0px, transparent 85%),
+      radial-gradient(at 41% 94%, hsl(189, 97%, 36%) 0px, transparent 85%),
+      radial-gradient(at 100% 99%, hsl(188, 94%, 13%) 0px, transparent 85%);
   }

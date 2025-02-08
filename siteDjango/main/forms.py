@@ -9,11 +9,11 @@ class AlunoForm(forms.ModelForm):
         fields = ['nome', 'idade', 'dia_pagamento',
                   'responsavel']  # Altere para 'dia_pagamento'
         widgets = {
-            'nome': forms.TextInput(attrs={'maxlength': 100}),
+            'nome': forms.TextInput(attrs={'maxlength': 100, 'placeholder': 'Nome completo:'}),
             'idade': forms.NumberInput(attrs={'min': 1}),
             # Limite entre 1 e 31
-            'dia_pagamento': forms.NumberInput(attrs={'min': 1, 'max': 25,}),
-            'responsavel': forms.TextInput(attrs={'maxlength': 100})
+            'dia_pagamento': forms.NumberInput(attrs={'min': 1, 'max': 25,'placeholder': 'Selecione o melhor dia para pagamento.'}),
+            'responsavel': forms.TextInput(attrs={'maxlength': 100, 'placeholder': 'Nome completo:'})
         }
 
 
