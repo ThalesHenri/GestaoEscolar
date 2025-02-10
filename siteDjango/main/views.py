@@ -1,6 +1,8 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404, redirect
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
+from django.db.models.functions import ExtractMonth
+from django.db.models import Q
 from django.contrib.auth.models import User
 from django.contrib import messages
 from .models import Turma, Aluno, Mensalidade, Feed
@@ -201,7 +203,7 @@ def addAluno(request, turma_id):
                     Mensalidade.objects.create(
                         aluno=aluno,
                         data_vencimento=data_vencimento,  # Usa apenas o campo data_vencimento
-                        valor=turma.valorMensalidade,  # Valor da mensalidade registrado na turma
+                        valor_base=turma.valorMensalidade,  # Valor da mensalidade registrado na turma
                         status="Em Aberto"  # Define o status inicial
                     )
 
@@ -223,8 +225,8 @@ def alunoDetalhes(request, aluno_id):
 
     # Atualiza status das mensalidades
     for mensalidade in mensalidades:
-        if mensalidade.valor is None:
-            mensalidade.valor = mensalidade.aluno.turma.valorMensalidade
+        if mensalidade.valor_base is None:
+            mensalidade.valor_base = mensalidade.aluno.turma.valorMensalidade
             mensalidade.save()
 
         # Verifica se a mensalidade está "Em Atraso"
@@ -247,7 +249,7 @@ def alunoDetalhes(request, aluno_id):
         if acao == "marcar_pago":
             mensalidade.status = "Pago"
             mensalidade.dia_pagamento_realizado = hoje
-            feed = Feed(acao=f"Mensalidade {mensalidade.data_vencimento.strftime('%Y-%m-%d')} do aluno(a) {aluno.nome} foi paga!", data=timezone.now())
+            feed = Feed(acao=f"Mensalidade {mensalidade.data_vencimento.strftime('%m')} do aluno(a) {aluno.nome} foi paga!", data=timezone.now())
             feed.save()
             mensalidade.forma_pagamento = forma_pagamento
         elif acao == "desmarcar_pago":
@@ -261,28 +263,33 @@ def alunoDetalhes(request, aluno_id):
 
 
 @login_required
-def aplicarDesconto(request, aluno_id, mensalidade_id):
+def aplicarDesconto(request, aluno_id): 
     aluno = get_object_or_404(Aluno, id=aluno_id)
-    mensalidade = get_object_or_404(Mensalidade, id=mensalidade_id)
+    
+    # Filtra as mensalidades, excluindo janeiro (mês 1)
+    mensalidades = aluno.mensalidades.annotate(
+        mes=ExtractMonth('data_vencimento')
+    ).exclude(mes=1)
 
     if request.method == "POST":
         form = DescontoForm(request.POST)
         if form.is_valid():
             desconto = form.cleaned_data['desconto']
-            mensalidade.calcular_valor_desconto(desconto)
-            # Aplica o desconto
+            for mensalidade in mensalidades:
+                if hasattr(mensalidade, 'valor_base'):  # Verifica se o campo existe
+                    mensalidade.aplicar_desconto(desconto)  
+
             feed = Feed(
-                acao=f"Desconto de {desconto}% para o aluno {aluno.nome} aplicado com sucesso!", data=timezone.now())
+                acao=f"Desconto de {desconto}% aplicado a todas as mensalidades do aluno(a) {aluno.nome}!",
+                data=timezone.now()
+            )
             feed.save()
-            # Salva a mensalidade com o valor atualizado
-            # Redireciona de volta para a página do aluno
             return redirect('alunoDetalhes', aluno_id=aluno.id)
     else:
         form = DescontoForm()
 
-    context = {'aluno': aluno, 'mensalidade': mensalidade, 'form': form}
+    context = {'aluno': aluno, 'form': form}
     return render(request, 'desconto.html', context=context)
-
 
 @login_required
 def excluirAluno(request, aluno_id):

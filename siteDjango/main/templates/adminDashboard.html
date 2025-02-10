@@ -30,7 +30,8 @@
         </tr>
         {% endfor %}
     </table>
-    <a href="{% url "limparFeed" %}"><button onclick="return confirm('Tem certeza que deseja limpar o feed?');">Limpar feed</button></a>
+    <div class="feed__empty" style="display: flex; justify-content: center;">
+    <a href="{% url "limparFeed" %}"><button class="button" onclick="return confirm('Tem certeza que deseja limpar o feed?');">Limpar feed</button></a></div>
 </div>
 
 {% endblock content %}

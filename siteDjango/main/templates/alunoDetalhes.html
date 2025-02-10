@@ -21,30 +21,26 @@
                         <td><strong>Responsável:</strong></td>
                         <td>{{ aluno.responsavel }}</td>
                     </tr>
+                        <td><strong>Telefone:</strong></td>
+                        <td>{{ aluno.telefone }}</td>
                     <tr>
-            <div class="tabelaDesconto">
-            <table class="table table-striped2"><tr><td><strong>Ações:</strong></td>
-                        <td>
-                            {% for mensalidade in mensalidades %}
-                            <a href="{% url 'aplicarDesconto' aluno.id mensalidade.id %}">
-                                <button style="width: 150px;">Aplicar desconto</button>
-                            </a>
-                            <p>mês {{ mensalidade.mes }}</p>
-                            {% empty %}
-                            <p>Sem mensalidades para aplicar desconto.</p>
-                            {% endfor %}
+                    <tr>
+                        <td><strong>Ações:</strong></td><td>
+                        <!-- Botão único para aplicar desconto -->
+                            <a href="{% url 'aplicarDesconto' aluno.id %}"><button class="blueButton">Aplicar desconto</button></a>
                         </td>
                     </tr>
                 </table>
-            </div>
         </div>
         </div>
             <h2 style="font-size: 30px;">Mensalidades</h2>
-            <table class="table table-striped2">
+            <table class="tabelaMensalidades">
                 <thead>
                     <tr>
+                        <th></th>
                         <th>Mês</th>
                         <th>Valor</th>
+                        <th>Desconto</th>
                         <th>Data de Vencimento</th>
                         <th>Status</th>
                         <th>Data do Pagamento</th>
@@ -55,8 +51,10 @@
                 <tbody>
                     {% for mensalidade in mensalidades %}
                     <tr class="{% if mensalidade.status == 'Pago' %}status-pago{% elif mensalidade.status == 'Em Atraso' %}status-atrasado{% else %}status-pendente{% endif %}">
+                        <td>{{ forloop.counter }}</td>
                         <td>{{ mensalidade.data_vencimento|date:"F" }}</td>
-                        <td>R$ {{ mensalidade.valor }}</td>
+                        <td>R$ {{ mensalidade.valor_final|default:"0.00" }}</td>
+                        <td>{{ mensalidade.desconto_percentual|floatformat:0 }} %</td>
                         <td>{{ mensalidade.data_vencimento|date:"d/m/Y" }}</td>
                         <td>{{ mensalidade.status }}</td>
                         <td>
@@ -123,9 +121,9 @@
             }
         </script>
 
-                    <div style="display: flex; justify-content: center; gap: 10px;">
+                    <div style="display: flex; justify-content: center; gap: 10px; margin-top: 3rem; margin-bottom: 1rem;">
                 <a href="{% url 'turmaDetalhes' aluno.turma.id %}" style="text-decoration: none;">
-                    <button class="blueButton" style="margin-bottom: 25px;">Voltar</button>
+                    <button class="voltareButton" style="margin-bottom: 25px;">Voltar</button>
                 </a>
                 <form method="post" action="{% url 'excluirAluno' aluno.id %}" style="margin: 0;">
                     {% csrf_token %}

@@ -3,7 +3,7 @@
     --background-color: #f8f9fa;
     --text-color: #343a40;
     --primary-color: #007bff;
-    --secondary-color: #343a40;
+    --secondary-color: #117888;
     --white-color: #ffffff;
     --errorColor:#FF2929;
     --successColor:#00C851;
@@ -67,19 +67,22 @@ nav a:hover {
     border-bottom: 2px solid #ffdd57; /* Linha abaixo do link ativo */
 }
 
+
 .parteCima {
-    background: #cecbcb;
-    margin: auto;
+    margin: 0 auto;
+    max-width: 500px;
+    background: #128091;
+    margin: 0 auto;
 
 }
 
+
 .parteCima .alunoDetalhes {
-    display: flex;
-    margin: auto;
+    margin: 0 auto;
     max-width: 500px;
     margin: 1rem;
     padding: 20px;
-    background: #17879b8a;
+    background: #feffff;
     border-radius: 12px;
     box-shadow: 0 4px 8px rgb(0, 0, 0);
     font-family: Arial, sans-serif;
@@ -97,8 +100,10 @@ nav a:hover {
 }
 
 .alunoDetalhes td:first-child {
+    margin: 0 auto;
+    max-width: 700px;
     font-weight: bold;
-    color: #333;
+    color: #0f6e7c;
     width: 40%;
 }
 
@@ -110,9 +115,8 @@ nav a:hover {
     border-bottom: none;
 }
 
-.alunoDetalhes table tr:hover {
-    background: #f9f9f9;
-}
+
+
 
 main {
     padding: 2rem;
@@ -205,21 +209,21 @@ main {
     background: #d6e4ff;
     transition: 0.3s;
 }
-
+/* --------------------------------------------------------------------------- ( BOTÕES ) -----------------------------------------------------*/
 button {
-    margin-top: 2.5rem;
     background-color: #128091;
-    color: var(--white-color);
-    padding: 0.5rem 1rem;
+    color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     font-weight: 500;
     width: 200px;
     height: 50px;
-    transition: 500ms linear; 
+    overflow: hidden; /* Evita áreas invisíveis de clique */
+    transition: background-color 0.3s;  /* Transição suave para cor de fundo */
     
 }
+
 button:hover {
     background-color: #0f6b79;
 }
@@ -230,6 +234,7 @@ button:hover {
     margin-inline: flex;
 
 }
+
 .excluirButton:hover {
     background-color: #970707;
 }
@@ -237,11 +242,74 @@ button:hover {
 
 .blueButton {
     background-color: #128091;
+    color: white;
     border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    overflow: hidden; /* Evita áreas invisíveis de clique */
+
 }
 
 .blueButton:hover {
-    background-color: #106e7c;
+    background-color: #0056b3;
+}
+
+.voltarButton {
+    background-color: #128091;
+    color: white;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    overflow: hidden; /* Evita áreas invisíveis de clique */
+
+}
+
+.voltarButton:hover {
+    background-color: #0056b3;
+}
+
+a {
+    display: flex; /* Garante que o link não ocupe mais espaço do que o botão */
+    text-decoration: none; /* Remove sublinhado do link */
+    width: fit-content;
+}
+
+/* Botões */
+.btn {
+    padding: 8px 12px;
+    font-size: 14px;
+    border-radius: 5px;
+    cursor: pointer;
+    border: none;
+}
+
+.button .btn-adicionar {
+    padding: 10px 20px;         /* Adiciona um pouco de espaço interno ao botão */
+    background-color: #2de61c;  /* Cor de fundo do botão */
+    color: white;               /* Cor do texto */
+    border: none;               /* Remove a borda padrão */
+    border-radius: 5px;         /* Borda arredondada */
+    font-size: 16px;            /* Tamanho da fonte */
+    cursor: pointer;           /* Mostra um ponteiro ao passar o mouse */
+    transition: background-color 0.3s;  /* Transição suave para cor de fundo */
+}
+
+#btn-adicionar:hover {
+    background-color: #0056b3;
+}
+
+.btn-info {
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.btn-info:hover {
+    background-color: #064991;
 }
 
 
@@ -277,36 +345,7 @@ footer {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     height: 500px;
 } 
-.erroButton{
-    margin-top: 2.5rem;
-    background-color: var(--secondary-color);
-    color: var(--white-color);
-    padding: 0.5rem 1rem;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: 500;
-    width: 200px;
-    height: 50px;
-}
-.erroButton:hover{
-    background-color: var(--errorColor);
-}
-.sucessoButton{
-    margin-top: 2.5rem;
-    background-color: var(--secondary-color);
-    color: var(--white-color);
-    padding: 0.5rem 1rem;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;    
-    font-weight: 500;
-    width: 200px;
-    height: 50px;
-}
-.sucessoButton:hover{
-    background-color: var(--successColor);
-}
+
 ul{
     display: flex;
     flex-direction: column;
@@ -325,31 +364,7 @@ li a{
     background-color: #ced4da;
 }
 
-/* Ajuste específico para o botão "Close" */
-.btn-close {
-    font-size: 12px; /* Diminui o tamanho da fonte */
-    padding: 4px;    /* Reduz o preenchimento interno */
-    width: 20px;     /* Define uma largura fixa */
-    height: 20px;    /* Define uma altura fixa */
-    line-height: 1;  /* Ajusta o espaçamento interno */
-    background: none; /* Remove qualquer fundo padrão */
-    border: none;    /* Remove a borda padrão */
-    outline: none;   /* Remove o contorno ao clicar */
-    cursor: pointer; /* Adiciona o cursor de "mão" ao passar por cima */
-}
 
-/* Ajuste do ícone de fechamento, se necessário */
-.btn-close::before {
-    content: "×"; /* Adiciona o símbolo de fechamento (alternativo ao ícone padrão) */
-    font-weight: bold;
-}
-
-/* Personaliza a aparência do botão ao passar o mouse */
-.btn-close:hover {
-    color: #ff0000; /* Muda a cor ao passar o mouse */
-    background-color: #f0f0f0; /* Fundo sutil ao passar o mouse */
-    border-radius: 50%; /* Botão arredondado */
-}
 
 /* Estilos para os diferentes status de pagamento */
 .status-pago {
@@ -393,6 +408,89 @@ li a{
     background-color: var(--primary-color);
     color: var(--white-color);
 }
+
+
+.tabelaMensalidades{
+    background-color: var(--white-color);
+    table-layout:fixed;
+    padding: 15px;
+    border: 20px solid #ffffff;
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.tabelaMensalidades th {
+    text-align: center;
+    font-weight: bold;
+    padding: 15px;
+    border: 1px solid #ddd;
+}
+
+.tabelaMensalidades td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+.tabelaMensalidades th {
+    background-color: var(--primary-color);
+    color: var(--white-color);
+}
+
+.tabelaMensalidades td:last-child button {
+    max-width: 100%; /* Garante que o botão não ultrapasse a célula */
+    width: auto; /* Permite que o botão se ajuste ao conteúdo */
+    padding: 5px 10px; /* Reduz o espaço interno do botão */
+    font-size: 14px; /* Reduz um pouco o tamanho do texto */
+    white-space: nowrap; /* Evita quebra de linha dentro do botão */
+}
+
+.tabelaMensalidades td:nth-last-child(8) {
+    font-weight: bold; /* Deixa o texto em negrito */
+    color: #333; /* Define a cor do texto */
+    text-align: center; /* Alinha o texto ao centro */
+    width: 150px; /* Define uma largura fixa (ajuste conforme necessário) */
+}
+
+.tabelaMensalidades th:first-child,
+.tabelaMensalidades td:first-child {
+    width: 50px; /* Ajuste conforme necessário */
+    min-width: 50px; /* Garante que a largura mínima seja mantida */
+    max-width: 50px; /* Evita que a coluna aumente */
+    text-align: center; /* Centraliza o número */
+    white-space: nowrap; /* Impede quebras de linha */
+}
+
+
+.tabelaTurmas{
+    background-color: var(--white-color);
+    table-layout:fixed;
+    padding: 10px;
+    border-collapse: collapse;
+    width: 100%;
+    gap: 5px;
+    margin-top: 20px;
+}
+
+.tabelaTurmas th {
+    background-color: var(--primary-color);
+    color: rgba(255, 255, 255, 0.822);
+    text-align: center;
+    font-weight: bold;
+    padding: 9px;
+    border: 1px solid #ffffffd0;
+}
+
+.tabelaTurmas th:first-child,
+.tabelaTurmas td:first-child {
+    width: 50px; /* Ajuste conforme necessário */
+    min-width: 50px; /* Garante que a largura mínima seja mantida */
+    max-width: 50px; /* Evita que a coluna aumente */
+    text-align: center; /* Centraliza o número */
+    white-space: nowrap; /* Impede quebras de linha */
+}
+
 
 .alunosTable {
     width: 100%;
@@ -473,6 +571,7 @@ li a{
     margin: 0 auto;
 }
 
+
  /* --------------------------------------------------------------------- FORMULÁRIOS --------------------------------------------------------------------- */
 
 .addAlunoForm {
@@ -518,6 +617,7 @@ li a{
     flex-direction: column;
     gap: 15px;
 }
+
 
 .form-group {
     display: flex;
@@ -653,7 +753,7 @@ li a{
 
 .registrarForm {
     max-width: 400px; /* Largura máxima do formulário */
-    margin: 0 auto; /* Centraliza o formulário na tela */
+    margin: 0 auto; /* Centraliza o formulário na tela  -*/
     margin-top: 30px;
     margin-bottom: 20px;
     padding: 20px;
@@ -719,69 +819,6 @@ li a{
 
 .table-striped tbody tr:nth-of-type(odd) {
     background-color: #e0dede;
-}
-
-/* Botões */
-.btn {
-    padding: 8px 12px;
-    font-size: 14px;
-    border-radius: 5px;
-    cursor: pointer;
-    border: none;
-}
-
-.btn-adicionar {
-    padding: 10px 20px;         /* Adiciona um pouco de espaço interno ao botão */
-    background-color: #007bff;  /* Cor de fundo do botão */
-    color: white;               /* Cor do texto */
-    border: none;               /* Remove a borda padrão */
-    border-radius: 5px;         /* Borda arredondada */
-    font-size: 16px;            /* Tamanho da fonte */
-    cursor: pointer;           /* Mostra um ponteiro ao passar o mouse */
-    transition: background-color 0.3s;  /* Transição suave para cor de fundo */
-}
-
-#btn-adicionar:hover {
-    background-color: #0056b3;
-}
-
-.btn-info {
-    background-color: #007bff;
-    color: white;
-    text-decoration: none;
-    padding: 5px 10px;
-    border-radius: 5px;
-}
-
-.btn-info:hover {
-    background-color: #064991;
-}
-
-#btn-voltar {
-    display: block;
-    margin-top: 10px;
-    background-color: #6c757d;
-    color: white;
-    padding: 10px;
-    border-radius: 5px;
-    text-align: center;
-    width: 100%;
-}
-
-#btn-voltar:hover {
-    background-color: #444a4e;
-}
-
-/* Responsividade */
-@media (max-width: 768px) {
-    #turmas-container {
-        width: 100%;
-        padding: 10px;
-    }
-
-    .form-row {
-        flex-direction: column;
-    }
 }
 
 

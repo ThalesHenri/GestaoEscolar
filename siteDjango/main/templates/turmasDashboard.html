@@ -16,14 +16,14 @@
                 </div>
             </div>
             <div class="container">
-            <button type="submit" class="btn btn-primary" id="btn-adicionar">Adicionar</button></div>
+            <button type="submit" class="btn btn-primary" id="btn-adicionar" style="margin-top: 1rem;">Adicionar</button></div>
         </form>
     </div>
 
 
     <div id="turmas-list">
         <h1 class="titulo-secao">Turmas Cadastradas: {{ turmas.count }}</h1>
-        <table class="table table-striped">
+        <table class="tabelaTurmas">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -54,8 +54,11 @@
         </table>
     </div>
 
+
+    <div style="display: flex; justify-content: center; padding-top: 40px;">
     <a href="{% url 'adminDashboard' %}" style="text-decoration: none;color: var(--white-color);"><button
-            class="blueButton" style="margin-bottom: 50px">Voltar</button></a>
+            class="blueButton">Voltar</button></a></div>
+
 </div>
 
 <!-- SCRIPT PARA O VALOR DA MENSALIDADE NO FORMULÁRIO -->

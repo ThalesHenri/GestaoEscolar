@@ -10,7 +10,8 @@ from datetime import date, timedelta
 
 class Aluno(models.Model):
     nome = models.CharField(max_length=100)
-    responsavel = models.CharField(max_length=100)
+    responsavel = models.CharField(max_length=100, verbose_name="Responsável")
+    telefone = models.DecimalField(max_digits=11, decimal_places=0, verbose_name="Telefone")
     idade = models.PositiveIntegerField()
     dia_pagamento = models.PositiveIntegerField()
     turma = models.ForeignKey(
@@ -31,10 +32,16 @@ class Aluno(models.Model):
                     ultimo_dia_mes = date(hoje.year, mes + 1, 1) - timezone.timedelta(days=1)
                     data_vencimento = ultimo_dia_mes
 
+                # Define o valor da mensalidade
+                if mes == 1:  # Janeiro (matrícula)
+                    valor = self.turma.valorMatricula
+                else:  # Outros meses (mensalidades)
+                    valor = self.turma.valorMensalidade
+
                 Mensalidade.objects.create(
                     aluno=self,
                     data_vencimento=data_vencimento,  # Usa apenas o campo data_vencimento
-                    valor=self.turma.valorMensalidade,  # Valor da mensalidade da turma
+                    valor_base=valor,  # Valor da mensalidade ou matrícula
                     status="Em Aberto"  # Define o status inicial
                 )
 
@@ -53,8 +60,8 @@ class Turma(models.Model):
     ]
     nome = models.CharField(max_length=100)
     turno = models.CharField(max_length=5, choices=TURNO_CHOICES)
-    valorMensalidade = models.DecimalField(
-        max_digits=8, decimal_places=2, verbose_name="Valor Mensalidade")
+    valorMensalidade = models.DecimalField(max_digits=8, decimal_places=2, verbose_name="Mensalidade")
+    valorMatricula = models.DecimalField(max_digits=8, decimal_places=2, verbose_name="Matrícula")  # Valor da matrícula
 
     def saldo_total(self):
         return self.valorMensalidade * self.alunos.count()
@@ -114,36 +121,41 @@ class Mensalidade(models.Model):
         ('PIX', 'PIX'),
     ]
 
-    aluno = models.ForeignKey(
-        'Aluno', on_delete=models.CASCADE, related_name='mensalidades')
+    aluno = models.ForeignKey('Aluno', on_delete=models.CASCADE, related_name='mensalidades')
     data_vencimento = models.DateField()  # Data de vencimento
     status = models.CharField(
         max_length=20,
-        choices=[('Em Aberto', 'Em Aberto'), ('Pago', 'Pago'),
-                 ('Em Atraso', 'Em Atraso')],
+        choices=[('Em Aberto', 'Em Aberto'), ('Pago', 'Pago'), ('Em Atraso', 'Em Atraso')],
         default='Em Aberto'
     )
     dia_pagamento_realizado = models.DateField(null=True, blank=True)
-    valor = models.DecimalField(
-        max_digits=8, decimal_places=2, null=True, blank=True)
-    forma_pagamento = models.CharField(
-        max_length=10, choices=FORMA_PAGAMENTO_CHOICES, null=True, blank=True)
-    desconto = models.DecimalField(
-        max_digits=8, decimal_places=2, null=True, blank=True)
+    valor_base = models.DecimalField(max_digits=8, decimal_places=2)  # Valor original sem desconto
+    valor_final = models.DecimalField(max_digits=8, decimal_places=2, null=True, blank=True)  # Valor com desconto aplicado
+    forma_pagamento = models.CharField(max_length=10, choices=FORMA_PAGAMENTO_CHOICES, null=True, blank=True)
+    desconto_percentual = models.DecimalField(max_digits=5, decimal_places=2, default=0)  # Percentual do desconto
 
-    def calcular_valor_desconto(self, desconto):
-        """Calcula o valor final da mensalidade com desconto percentual."""
-        if self.valor is not None and desconto:
-            self.valor -= (desconto / 100) * self.valor
-            # ✅ Salva apenas o campo 'valor'pp
-            self.save(update_fields=['valor'])
+    def aplicar_desconto(self, percentual):
+        """Aplica um desconto percentual na mensalidade (exceto matrícula)."""
+        if percentual > 0 and self.valor_base:
+            self.desconto_percentual = percentual
+            desconto_aplicado = (percentual / 100) * self.valor_base
+            self.valor_final = self.valor_base - desconto_aplicado
+        else:
+            self.valor_final = self.valor_base  # Sem desconto
+
+        self.save(update_fields=['desconto_percentual', 'valor_final'])
+        
 
     def save(self, *args, **kwargs):
-        """Atualiza o status da mensalidade com base na data de vencimento."""
+        """Atualiza o status da mensalidade e aplica o desconto ao salvar."""
         hoje = timezone.now().date()
 
         if self.status == 'Em Aberto' and self.data_vencimento < hoje:
             self.status = 'Em Atraso'
+
+        # Se ainda não tem um valor final definido, garantir que seja igual ao valor base
+        if self.valor_final is None:
+            self.valor_final = self.valor_base
 
         super().save(*args, **kwargs)
 
