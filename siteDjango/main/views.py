@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404, redirect
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.db.models.functions import ExtractMonth
-from django.db.models import Q
+from django.db.models import Q, Sum, F, Case, When
 from django.contrib.auth.models import User
 from django.contrib import messages
 from .models import Turma, Aluno, Mensalidade, Feed
@@ -103,7 +103,7 @@ def addTurma(request):
 
 
 @login_required
-def turmasDashboard(request):
+def turmasDashboard(request): 
     if request.method == 'POST':
         form = TurmaForm(request.POST)
         if form.is_valid():
@@ -113,8 +113,34 @@ def turmasDashboard(request):
         form = TurmaForm()
 
     turmas = Turma.objects.all()
-    return render(request, 'turmasDashboard.html', {'turmas': turmas, 'form': form})
 
+    # Criar dicionários para armazenar os saldos
+    saldo_anual_por_turma = {}
+    saldo_mensal_por_turma = {}
+
+    for turma in turmas:
+        # Cálculo do saldo anual: soma todas as mensalidades (matrícula + 11 meses)
+        saldo_anual = turma.alunos.aggregate(
+            total=Sum('mensalidades__valor_final')
+        )['total'] or 0  # Retorna 0 se não houver valores
+
+        # Filtra as mensalidades de DEZEMBRO (mês 12)
+        saldo_mensal = turma.alunos.filter(
+            mensalidades__data_vencimento__month=12  # Forma correta de filtrar o mês
+        ).aggregate(
+            total=Sum('mensalidades__valor_final')
+        )['total'] or 0
+
+        # Armazena nos dicionários
+        saldo_anual_por_turma[turma.id] = saldo_anual
+        saldo_mensal_por_turma[turma.id] = saldo_mensal
+
+    return render(request, 'turmasDashboard.html', {
+        'turmas': turmas,
+        'form': form,
+        'saldo_anual_por_turma': saldo_anual_por_turma,
+        'saldo_mensal_por_turma': saldo_mensal_por_turma
+    })
 
 @login_required
 def turmaDetalhes(request, turma_id):

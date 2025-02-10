@@ -121,9 +121,9 @@
             }
         </script>
 
-                    <div style="display: flex; justify-content: center; gap: 10px; margin-top: 3rem; margin-bottom: 1rem;">
+                    <div style="display: flex; justify-content: center; gap: 10px; margin-top: 3rem; margin-bottom: 2rem;">
                 <a href="{% url 'turmaDetalhes' aluno.turma.id %}" style="text-decoration: none;">
-                    <button class="voltareButton" style="margin-bottom: 25px;">Voltar</button>
+                    <button class="voltareButton">Voltar</button>
                 </a>
                 <form method="post" action="{% url 'excluirAluno' aluno.id %}" style="margin: 0;">
                     {% csrf_token %}

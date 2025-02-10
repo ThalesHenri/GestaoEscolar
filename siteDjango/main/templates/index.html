@@ -22,13 +22,14 @@
         <h2>Bem-vindo ao Sistema de Gestão Escolar</h2>
         <p>Aqui você pode gerenciar todas as operações administrativas da sua escola de forma prática e eficiente.</p>
         <div class="comece">
-            <h2>Como Começar</h2>
+            <h2>Faça o login ou Crie sua conta!</h2>
             <p>Seja bem-vindo ao Gestão Escolar! Para comecar, clique no botão "Começar" logo abaixo.</p>
-            <a href="/login/"><button>Começar</button></a>
+            <div style="display: flex; justify-content: center; margin-top: 20px;">
+            <a href="/login/"><button class="blueButton">Começar</button></a></div>
         </div>
         <div class="Sobre">
             <h2>Sobre o Sistema</h2>
-            <p>Bem-vindo ao Sistema de Gestão Escolar, uma plataforma desenvolvida para transformar a maneira como as
+            <!-- <p>Bem-vindo ao Sistema de Gestão Escolar, uma plataforma desenvolvida para transformar a maneira como as
                 escolas gerenciam suas operações diárias. Nosso objetivo é fornecer uma solução prática, eficiente e
                 intuitiva para atender às necessidades de instituições de ensino de todos os tamanhos.
 
@@ -42,17 +43,22 @@
                 Trabalhamos continuamente para oferecer as melhores ferramentas e funcionalidades para facilitar o seu
                 dia a dia.
 
-                Junte-se a nós nessa jornada de inovação e excelência na gestão escolar!</p>
+                Junte-se a nós nessa jornada de inovação e excelência na gestão escolar!</p> -->
         </div>
-        <div class="TESTE"style="display: flex; justify-content: center;">
+        <div class="card1"style="display: flex; justify-content: left;">
             <div class="primeiroCard">
                 <div class="card2">
+                  <p class="card2__title">Quais são as vantagens?</p>
+                  <p class="card2__paragraph"><p>Bem-vindo ao Sistema de Gestão Escolar, uma plataforma desenvolvida para transformar a maneira como as
+                    escolas gerenciam suas operações diárias. Nosso objetivo é fornecer uma solução prática, eficiente e
+                    intuitiva para atender às necessidades de instituições de ensino de todos os tamanhos.</p>
                 </div>
               </div>
+        </div>
 
 
         <!--  ----------------------- COMEÇO DO NOVO CARD -------------------------  --> 
-        <div class="card">
+        <div class="card" style="display: flex; justify-content: center;">
             <div class="card__border"></div>
             <div class="card_title__container">
               <span class="card_title">Quais são as vantagens?</span>
@@ -146,8 +152,8 @@
                 <span class="list_text" style="font-size: 14px;">Tenha auxílio contra a inadiplência!</span>
               </li>
             </ul>
-            <div>
-            <a href="/login/"><button class="buttonAcesso">Garanta já seu Acesso!</button></a></div>
+            <div style="display: flex; justify-content: center;">
+            <a href="/registrar/"><button class="buttonAcesso">Garanta já seu Acesso!</button></a></div>
           </div>
         {% endblock %}
     </main>

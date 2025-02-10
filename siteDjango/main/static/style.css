@@ -212,6 +212,7 @@ main {
 /* --------------------------------------------------------------------------- ( BOTÕES ) -----------------------------------------------------*/
 button {
     background-color: #128091;
+    justify-content: center;
     color: white;
     border: none;
     border-radius: 5px;
@@ -240,9 +241,10 @@ button:hover {
 }
 
 
-.blueButton {
+.button .blueButton {
     background-color: #128091;
     color: white;
+    justify-content: center;
     border-radius: 5px;
     font-size: 16px;
     cursor: pointer;
@@ -325,16 +327,7 @@ footer {
     box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); /* Sombra para efeito visual */
     z-index: 1000; /* Garante que o footer fique acima de outros elementos */
 }
-.login{
-    background-color: var(--white-color);
-    padding: 2rem;
-    margin-left: 20%;
-    margin-right: 20%;
-    margin-top: 2rem;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    height: 500px;
-}
+
 .Box{
     background-color: var(--white-color);
     padding: 2rem;
@@ -390,7 +383,7 @@ li a{
     cursor: pointer;
 }
 
-/* ---------------------- >>>>>>>>>>>>>>>>>>>>>>>> Ajustes gerais para TABELAS <<<<<<<<<<<<<<<<-------------------------------------- */
+/* ---------------------- >>>>>>>>>>>>>>>>>>>>>>>> TABELAS / TABELAS <<<<<<<<<<<<<<<<-------------------------------------- */
 .table {
     table-layout: fixed;
     border-collapse: collapse;
@@ -411,6 +404,7 @@ li a{
 
 
 .tabelaMensalidades{
+    
     background-color: var(--white-color);
     table-layout:fixed;
     padding: 15px;
@@ -475,12 +469,19 @@ li a{
 
 .tabelaTurmas th {
     background-color: var(--primary-color);
-    color: rgba(255, 255, 255, 0.822);
+    color: rgba(255, 255, 255, 0.952);
     text-align: center;
     font-weight: bold;
     padding: 9px;
     border: 1px solid #ffffffd0;
 }
+
+.tabelaTurmas td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
 
 .tabelaTurmas th:first-child,
 .tabelaTurmas td:first-child {
@@ -489,6 +490,17 @@ li a{
     max-width: 50px; /* Evita que a coluna aumente */
     text-align: center; /* Centraliza o número */
     white-space: nowrap; /* Impede quebras de linha */
+}
+
+.tabelaTurmas td:last-child button {
+    display: flex;
+    justify-content: center;
+    margin: 1rem;
+    max-width: 100%; /* Garante que o botão não ultrapasse a célula */
+    width: auto; /* Permite que o botão se ajuste ao conteúdo */
+    padding: 5px 10px; /* Reduz o espaço interno do botão */
+    font-size: 14px; /* Reduz um pouco o tamanho do texto */
+    white-space: nowrap; /* Evita quebra de linha dentro do botão */
 }
 
 
@@ -649,6 +661,7 @@ li a{
 
 /* Estilos para o formulário */
 
+
 /* Estilo do contêiner do formulário */
 .login {
     max-width: 400px;
@@ -749,6 +762,41 @@ li a{
 .loginButton:active {
     transform: scale(0.98); /* Reduz ligeiramente o tamanho do botão */
 }
+
+.buttonEntrar {
+    width: 9em;
+    height: 3em;
+    border-radius: 8px;
+    font-size: 15px;
+    margin-top: 50px;
+    margin-bottom: 20px;
+    font-family: inherit;
+    border: none;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    box-shadow: 6px 6px 12px #c5c5c5,
+                -6px -6px 12px #ffffff;
+   }
+   
+   .buttonEntrar::before {
+    content: '';
+    color: black;
+    width: 0;
+    height: 3em;
+    border-radius: 8px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-image: linear-gradient(to right, #dbfa50a8 0%,#007bffc7 100% );
+    transition: .5s ease;
+    display: block;
+    z-index: -1;
+   }
+   
+   .buttonEntrar:hover::before {
+    width: 9em;
+   }
 
 
 .registrarForm {
@@ -893,42 +941,6 @@ li a{
     box-shadow: 0 0 5px var(--highlight-color);
 }
 
-
-/* ------------------------------------------ Botão LOGIN --------------------------------------------*/
-
-
-.buttonEntrar {
-    width: 9em;
-    height: 3em;
-    border-radius: 8px;
-    font-size: 15px;
-    font-family: inherit;
-    border: none;
-    position: relative;
-    overflow: hidden;
-    z-index: 1;
-    box-shadow: 6px 6px 12px #c5c5c5,
-                -6px -6px 12px #ffffff;
-   }
-   
-   .buttonEntrar::before {
-    content: '';
-    color: black;
-    width: 0;
-    height: 3em;
-    border-radius: 8px;
-    position: absolute;
-    top: 0;
-    left: 0;
-    background-image: linear-gradient(to right, #dbfa50a8 0%,#007bffc7 100% );
-    transition: .5s ease;
-    display: block;
-    z-index: -1;
-   }
-   
-   .buttonEntrar:hover::before {
-    width: 9em;
-   }
   
    .buttonPago { 
     width: 200px;
@@ -1150,7 +1162,7 @@ li a{
     color: var(--white);
   }
   
-  .card .buttonAcesso {
+  .buttonAcesso {
     cursor: pointer;
     border: 0;
     padding: 0.5rem 1rem;
@@ -1162,6 +1174,7 @@ li a{
     transition: all 1s;
     box-sizing: border-box;
   }
+
   .buttonAcesso:hover {
     scale: 105%;
     background-image: radial-gradient(

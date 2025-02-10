@@ -1,4 +1,5 @@
 {% extends "index.html" %}
+{% load custom_filters %}
 {% block inicio %}
     <a href="{% url 'adminDashboard' %}"><i class="fas fa-home"></i> Início</a>
     <a href="{% url 'perfil' %}"><i class="fas fa-user"></i> Perfil</a>
@@ -31,22 +32,22 @@
                     <th>Turno</th>
                     <th>Mensalidade</th>
                     <th>Qtd Alunos</th>
-                    <th>Saldo Total</th>
+                    <th>Saldo Mensal</th>
                     <th>Ações</th>
                 </tr>
             </thead>
             <tbody>
                 {% for turma in turmas %}
-                
                 <tr>
                     <td>{{ forloop.counter }}</td>  <!-- ID Sequencial -->
                     <td>{{ turma.nome }}</td>
-                    <td>{{ turma.turno }}</td> <!-- ADD Colunas em branco pra inserir novos dados futuramente -->
+                    <td>{{ turma.turno }}</td> 
                     <td> R$ {{ turma.valorMensalidade }}</td>
                     <td>{{ turma.alunos.count }}</td>
-                    <td>R$ {{ turma.saldo_total|floatformat:2 }}</td>
+                    <td>R$ {{ saldo_mensal_por_turma|get_item:turma.id|default:"0.00" }}</td>    
+                     <!-- PARA SALDO ANUAL -------------  <td>R$ {{ saldo_mensal_por_turma|get_item:turma.id|default:"0.00" }}</td> -------------- -->
                     <td>
-                        <a href="{% url 'turmaDetalhes' turma.id %}" class="btn btn-info btn-sm">Detalhes</a>
+                        <a href="{% url 'turmaDetalhes' turma.id %}" class="btn btn-info btn-sm" style="max-width: 80%; width: auto; justify-content: center; display: flex;">Detalhes</a>
                     </td>
                 </tr>
                 {% endfor %}
