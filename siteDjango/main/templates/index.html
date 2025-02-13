@@ -19,6 +19,7 @@
     </nav>
     <main>
         {% block content %}
+      <div>
         <h2>Bem-vindo ao Sistema de Gestão Escolar</h2>
         <p>Aqui você pode gerenciar todas as operações administrativas da sua escola de forma prática e eficiente.</p>
         <div class="comece">
@@ -27,9 +28,9 @@
             <div style="display: flex; justify-content: center; margin-top: 20px;">
             <a href="/login/"><button class="blueButton">Começar</button></a></div>
         </div>
-        <div class="Sobre">
+       <!-- <div class="Sobre">
             <h2>Sobre o Sistema</h2>
-            <!-- <p>Bem-vindo ao Sistema de Gestão Escolar, uma plataforma desenvolvida para transformar a maneira como as
+             <p>Bem-vindo ao Sistema de Gestão Escolar, uma plataforma desenvolvida para transformar a maneira como as
                 escolas gerenciam suas operações diárias. Nosso objetivo é fornecer uma solução prática, eficiente e
                 intuitiva para atender às necessidades de instituições de ensino de todos os tamanhos.
 
@@ -43,9 +44,9 @@
                 Trabalhamos continuamente para oferecer as melhores ferramentas e funcionalidades para facilitar o seu
                 dia a dia.
 
-                Junte-se a nós nessa jornada de inovação e excelência na gestão escolar!</p> -->
-        </div>
-        <div class="card1"style="display: flex; justify-content: left;">
+                Junte-se a nós nessa jornada de inovação e excelência na gestão escolar!</p> 
+        </div>-->
+        <!-- <div class="card1"style="display: flex; justify-content: left;">
             <div class="primeiroCard">
                 <div class="card2">
                   <p class="card2__title">Quais são as vantagens?</p>
@@ -53,16 +54,17 @@
                     escolas gerenciam suas operações diárias. Nosso objetivo é fornecer uma solução prática, eficiente e
                     intuitiva para atender às necessidades de instituições de ensino de todos os tamanhos.</p>
                 </div>
-              </div>
-        </div>
+              </div> 
+        </div>-->
 
 
         <!--  ----------------------- COMEÇO DO NOVO CARD -------------------------  --> 
-        <div class="card" style="display: flex; justify-content: center;">
+        <div class="card" style="margin-bottom: 30px;">
+          <p class="parte_esquerda" style="display:flex; font-size: 20px ; text-align: left; margin-left: 10rem;">Conheça nossa aplicação!</p>
             <div class="card__border"></div>
             <div class="card_title__container">
               <span class="card_title">Quais são as vantagens?</span>
-              <p class="card_paragraph" style="font-size: 15px;">Tenha uma variedade de ferramentas para gerir sua escola!</p>
+              <p class="card_paragraph" style="font-size: 18px;">Tenha uma variedade de ferramentas para gerir sua escola!</p>
             </div>
             <hr class="line" />
             <ul class="card__list">
@@ -81,7 +83,7 @@
                     ></path>
                   </svg>
                 </span>
-                <span class="list_text" style="font-size: 14px;text-align: right;">Monitore as finanças da sua escola!</span>
+                <span class="list_text" style="text-align: right; font-size: 30px;">Monitore as finanças da sua escola!</span>
               </li>
               <li class="card__list_item">
                 <span class="check">
@@ -98,7 +100,7 @@
                     ></path>
                   </svg>
                 </span>
-                <span class="list_text" style="font-size: 14px;">Receba alertas importantes no seu feed!</span>
+                <span class="list_text">Receba alertas importantes no seu feed!</span>
               </li>
               <li class="card__list_item">
                 <span class="check">
@@ -115,7 +117,7 @@
                     ></path>
                   </svg>
                 </span>
-                <span class="list_text" style="font-size: 14px;">Fique por dentro de todas as movimentações!</span>
+                <span class="list_text">Fique por dentro de todas as movimentações!</span>
               </li>
               <li class="card__list_item">
                 <span class="check">
@@ -132,7 +134,7 @@
                     ></path>
                   </svg>
                 </span>
-                <span class="list_text" style="font-size: 14px;">Gerencie seus alunos com facilidade!</span>
+                <span class="list_text">Gerencie seus alunos com facilidade!</span>
               </li>
               <li class="card__list_item">
                 <span class="check">
@@ -149,12 +151,14 @@
                     ></path>
                   </svg>
                 </span>
-                <span class="list_text" style="font-size: 14px;">Tenha auxílio contra a inadiplência!</span>
+                <span class="list_text">Tenha auxílio contra a inadiplência!</span>
               </li>
             </ul>
             <div style="display: flex; justify-content: center;">
             <a href="/registrar/"><button class="buttonAcesso">Garanta já seu Acesso!</button></a></div>
           </div>
+      </div>
+      
         {% endblock %}
     </main>
     <footer>
