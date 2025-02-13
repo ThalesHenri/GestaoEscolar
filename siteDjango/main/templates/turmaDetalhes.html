@@ -6,7 +6,7 @@
 {% block content %}
 
 <div id="alunos-container">
-    <div id="form-wrapper">
+    <div id="form-wrapper" style="margin-bottom: 1rem;">
         <h2 class="titulo-secao">Adicionar Novo Aluno</h2>
         <form method="POST" id="form-aluno">
             {% csrf_token %}
@@ -15,12 +15,13 @@
                     {{ form.as_p }}
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary" id="btn-adicionar">Adicionar</button>
+            <button type="submit" class="btn btn-primary" id="btn-adicionar" style="margin-top: 2rem;">Adicionar</button>
         </form>
     </div>
 
     <div id="aluno-list">
-        <h2 class="titulo-secao">Alunos Cadastrados: {{ alunos.count }}</h2>
+        <h2 class="titulo-secao">{{ turma.nome }}</h2>
+        <h3 class="subtitulo-secao">Alunos Cadastrados: {{ alunos.count }} - Mensalidade: R$ {{ turma.valorMensalidade }}</h3>
         {% if alunos %}
         <table class="table table-striped">
             <thead>
@@ -28,7 +29,7 @@
                     <th> ID </th>
                     <th>Nome</th>
                     <th>Status</th>
-                    <th>Ações</th>  <!-- Mantendo para futuras funcionalidades -->
+                    <th>Ações</th> 
                 </tr>
             </thead>
             <tbody>
@@ -55,9 +56,8 @@
         {% endif %}
     </div>
     
-    <div style="display: flex; justify-content: center; gap: 10px; padding-top: 50px;">
-    <a href="{% url 'turmasDashboard' %}" style="text-decoration: none;color: var(--white-color);"><button class="blueButton" style="margin-bottom: 50px">Voltar</button></a>
-        <!-- Botão de Excluir Turma -->
+    <div style="display: flex; justify-content: center; gap: 10px; padding-top: 50px; margin-bottom: 20px;">
+    <a href="{% url 'turmasDashboard' %}"><button class="voltarButton">Voltar</button></a>
         <form method="POST" action="{% url 'excluirTurma' turma.id %}" onsubmit="return confirmarExclusao();">
             {% csrf_token %}
             <button type="submit" class="excluirButton">Excluir Turma</button>

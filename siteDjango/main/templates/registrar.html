@@ -16,16 +16,17 @@
     <label for="senha">Senha: </label>
     <input type="password" name="senha" placeholder="Senha">
     <br>
-    <button type="submit">Registrar</button>
+    <button type="submit" class="loginButton">Registrar</button>
 
 </form>
 
-    <div style="padding-top: 20px; font-size: 120%;"
-        <h2>Já possui conta?<a href={% url "login" %}> Faça o login</a></h2>
+    <div style="display: flex; margin: 40px; justify-content: center; font-size: 12px;">
+        <h2>Já possui conta?</h2>
+        <a href="{% url 'login' %}"style="margin-left: 10px; font-size: 16px; text-decoration: underline;"> Faça o login</a>
     </div>
 
 
-    <div>
-        <a href="{% url "home" %}"><button class="blueButton"> Voltar</button></a></div>
+    <div style="display: flex; justify-content: center; margin-bottom: 20px;">
+        <a href="{% url 'home' %}"><button class="blueButton"> Voltar</button></a></div>
 
 {% endblock content %}

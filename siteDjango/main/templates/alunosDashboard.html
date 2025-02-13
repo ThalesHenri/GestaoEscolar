@@ -5,8 +5,9 @@
 {% endblock inicio %}
 
 {% block content %}
-<table class="alunosTable">
+<table class="tabelaTurmas">
     <tr>
+        <th></th>
         <th>Nome</th>
         <th>Telefone</th>
         <th>Idade</th>
@@ -15,6 +16,7 @@
     </tr>
     {% for aluno in alunos %}
     <tr>
+        <td>{{ forloop.counter }}</td>
         <td><a href="{% url 'alunoDetalhes' aluno_id=aluno.id %}">{{ aluno.nome }}</a></td>
         <td>{{ aluno.telefone }}</td>
         <td>{{ aluno.idade }}</td>
@@ -32,7 +34,7 @@
     {% endfor %}
 </table>
 
-<div style="padding-bottom: 40px;">
+<div style="padding-bottom: 20px; padding-top: 20px; justify-content: center; display: flex;">
     <a href="{% url 'adminDashboard' %}"><button class="blueButton"> Voltar</button></a>
 </div>
 {% endblock content %}

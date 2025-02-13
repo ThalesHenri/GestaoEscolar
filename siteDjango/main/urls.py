@@ -1,6 +1,7 @@
 from django.urls import path
 from . import views
 from .views import excluir_turma
+from .views import aplicarDesconto
 
 urlpatterns = [
     path('', views.home, name='home'),
@@ -20,4 +21,6 @@ urlpatterns = [
     path('pagamentoDashboard/', views.pagamentoDashboard, name='pagamentoDashboard'),
     path('limparFeed/', views.limparFeed, name='limparFeed'),
     path('perfil/', views.perfil, name="perfil"),
+    path('aluno/<int:aluno_id>/aplicar_desconto/', aplicarDesconto, name='aplicarDesconto'),
+    
 ]

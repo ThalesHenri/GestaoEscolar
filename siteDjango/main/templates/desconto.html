@@ -1,0 +1,26 @@
+{% extends "index.html" %}
+{% block inicio %}
+    <a href="{% url 'adminDashboard' %}"><i class="fas fa-home"></i> Início</a>
+    <a href="{% url 'perfil' %}"><i class="fas fa-user"></i> Perfil</a>
+{% endblock inicio %}
+{% block content %}
+<div class="registrarForm" style="text-align: justify;">
+    <div style="text-align: center; margin-bottom: 1rem;">
+    <h2>Aplicar Desconto</h2></div>
+    <p>O desconto será aplicado a todas as mensalidades do aluno(a) <strong>{{ aluno.nome }}</strong>.</p>
+    <form method="POST" style="margin-top: 1rem;">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div style="text-align: center;">
+        <button type="submit" class="btn btn-success" style="margin: 2rem;" onclick="return confirm('Confirma o Desconto?')">Aplicar Desconto</button></div>
+    </form>
+    <br>
+    
+    <!-- Botão "Voltar" com URL dinâmica -->
+
+</div>
+<div style="display: flex; justify-content: center; gap: 10px; padding-top: 50px; margin-bottom: 20px;">  
+    <a href="{% url 'alunoDetalhes' aluno.id %}">
+        <button class="button">Voltar</button></div>  
+    </a>
+{% endblock content %}

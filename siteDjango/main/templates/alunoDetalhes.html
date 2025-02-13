@@ -6,17 +6,41 @@
 {% block content %}
     <body>
         <div class="container mt-4">
+            <div class="parteCima">
             <div class="alunoDetalhes">
-                <h1>Aluno - {{ aluno.nome }}</h1>
-                <p>Idade: {{ aluno.idade }} anos</p>
-                <p>Responsável: {{ aluno.responsavel }}</p>
-            </div>
-            <h2>Mensalidades</h2>
-            <table class="table table-striped2">
+                <table>
+                    <tr>
+                        <td><strong>Aluno:</strong></td>
+                        <td>{{ aluno.nome }}</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Idade:</strong></td>
+                        <td>{{ aluno.idade }} anos</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Responsável:</strong></td>
+                        <td>{{ aluno.responsavel }}</td>
+                    </tr>
+                        <td><strong>Telefone:</strong></td>
+                        <td>{{ aluno.telefone }}</td>
+                    <tr>
+                    <tr>
+                        <td><strong>Ações:</strong></td><td>
+                        <!-- Botão único para aplicar desconto -->
+                            <a href="{% url 'aplicarDesconto' aluno.id %}"><button class="blueButton">Aplicar desconto</button></a>
+                        </td>
+                    </tr>
+                </table>
+        </div>
+        </div>
+            <h2 style="font-size: 30px;">Mensalidades</h2>
+            <table class="tabelaMensalidades">
                 <thead>
                     <tr>
+                        <th></th>
                         <th>Mês</th>
                         <th>Valor</th>
+                        <th>Desconto</th>
                         <th>Data de Vencimento</th>
                         <th>Status</th>
                         <th>Data do Pagamento</th>
@@ -27,9 +51,11 @@
                 <tbody>
                     {% for mensalidade in mensalidades %}
                     <tr class="{% if mensalidade.status == 'Pago' %}status-pago{% elif mensalidade.status == 'Em Atraso' %}status-atrasado{% else %}status-pendente{% endif %}">
-                        <td>{{ mensalidade.mes_nome }}</td>
-                        <td>R$ {{ mensalidade.valor }}</td>
-                        <td>{{ mensalidade.data_vencimento }}</td>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ mensalidade.data_vencimento|date:"F" }}</td>
+                        <td>R$ {{ mensalidade.valor_final|default:"0.00" }}</td>
+                        <td>{{ mensalidade.desconto_percentual|floatformat:0 }} %</td>
+                        <td>{{ mensalidade.data_vencimento|date:"d/m/Y" }}</td>
                         <td>{{ mensalidade.status }}</td>
                         <td>
                             {% if mensalidade.dia_pagamento_realizado %}
@@ -59,8 +85,8 @@
                                         Desmarcar Pagamento
                                     </button>
                                 {% else %}
-                                    <button type="submit" name="acao" value="marcar_pago" class="btn btn-success" onclick="return validarPagamento(this)">
-                                        Marcar como Pago
+                                    <button type="submit" name="acao" value="marcar_pago" class="buttonPago" onclick="return validarPagamento(this)">
+                                        Marcar como Pago<svg class="svgIcon" viewBox="0 0 576 512"><path d="M512 80c8.8 0 16 7.2 16 16v32H48V96c0-8.8 7.2-16 16-16H512zm16 144V416c0 8.8-7.2 16-16 16H64c-8.8 0-16-7.2-16-16V224H528zM64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H512c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zm56 304c-13.3 0-24 10.7-24 24s10.7 24 24 24h48c13.3 0 24-10.7 24-24s-10.7-24-24-24H120zm128 0c-13.3 0-24 10.7-24 24s10.7 24 24 24H360c13.3 0 24-10.7 24-24s-10.7-24-24-24H248z"></path></svg>
                                     </button>
                                 {% endif %}
                             </form>
@@ -69,6 +95,7 @@
                     {% endfor %}
                 </tbody>
             </table>
+        </div>
         </div>
 
         <script>
@@ -94,9 +121,9 @@
             }
         </script>
 
-                    <div style="display: flex; justify-content: center; gap: 10px;">
+                    <div style="display: flex; justify-content: center; gap: 10px; margin-top: 3rem; margin-bottom: 2rem;">
                 <a href="{% url 'turmaDetalhes' aluno.turma.id %}" style="text-decoration: none;">
-                    <button class="blueButton" style="margin-bottom: 25px;">Voltar</button>
+                    <button class="voltareButton">Voltar</button>
                 </a>
                 <form method="post" action="{% url 'excluirAluno' aluno.id %}" style="margin: 0;">
                     {% csrf_token %}

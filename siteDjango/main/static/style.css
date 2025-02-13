@@ -3,7 +3,7 @@
     --background-color: #f8f9fa;
     --text-color: #343a40;
     --primary-color: #007bff;
-    --secondary-color: #343a40;
+    --secondary-color: #117888;
     --white-color: #ffffff;
     --errorColor:#FF2929;
     --successColor:#00C851;
@@ -20,7 +20,7 @@
 body {
     font-family: 'Roboto', sans-serif;
     background: rgb(34,193,195);
-    background: linear-gradient(0deg, rgba(34,193,195,1) 0%, rgb(219, 250, 80) 65%);
+    background: linear-gradient(0deg, rgba(34,193,195,1) 0%, #dbfa50 65%);
     color: var(--text-color);
     line-height: 1.6;
     margin: 0; /* Remove margens padrão */
@@ -66,6 +66,57 @@ nav a:hover {
     font-weight: bold; /* Destaque o link ativo */
     border-bottom: 2px solid #ffdd57; /* Linha abaixo do link ativo */
 }
+
+
+.parteCima {
+    margin: 0 auto;
+    max-width: 500px;
+    background: #128091;
+    margin: 0 auto;
+
+}
+
+
+.parteCima .alunoDetalhes {
+    margin: 0 auto;
+    max-width: 500px;
+    margin: 1rem;
+    padding: 20px;
+    background: #feffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgb(0, 0, 0);
+    font-family: Arial, sans-serif;
+}
+
+.alunoDetalhes table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.alunoDetalhes td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    font-size: 20px; /* Increased font size */
+}
+
+.alunoDetalhes td:first-child {
+    margin: 0 auto;
+    max-width: 700px;
+    font-weight: bold;
+    color: #0f6e7c;
+    width: 40%;
+}
+
+.alunoDetalhes td:last-child {
+    color: #555;
+}
+
+.alunoDetalhes tr:last-child td {
+    border-bottom: none;
+}
+
+
+
 
 main {
     padding: 2rem;
@@ -158,21 +209,22 @@ main {
     background: #d6e4ff;
     transition: 0.3s;
 }
-
+/* --------------------------------------------------------------------------- ( BOTÕES ) -----------------------------------------------------*/
 button {
-    margin-top: 2.5rem;
     background-color: #128091;
-    color: var(--white-color);
-    padding: 0.5rem 1rem;
+    justify-content: center;
+    color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     font-weight: 500;
     width: 200px;
     height: 50px;
-    transition: 500ms linear; 
+    overflow: hidden; /* Evita áreas invisíveis de clique */
+    transition: background-color 0.3s;  /* Transição suave para cor de fundo */
     
 }
+
 button:hover {
     background-color: #0f6b79;
 }
@@ -183,18 +235,83 @@ button:hover {
     margin-inline: flex;
 
 }
+
 .excluirButton:hover {
     background-color: #970707;
 }
 
 
-.blueButton {
+.button .blueButton {
     background-color: #128091;
+    color: white;
+    justify-content: center;
     border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    overflow: hidden; /* Evita áreas invisíveis de clique */
+
 }
 
 .blueButton:hover {
-    background-color: #106e7c;
+    background-color: #0056b3;
+}
+
+.voltarButton {
+    background-color: #128091;
+    color: white;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    overflow: hidden; /* Evita áreas invisíveis de clique */
+
+}
+
+.voltarButton:hover {
+    background-color: #0056b3;
+}
+
+a {
+    display: flex; /* Garante que o link não ocupe mais espaço do que o botão */
+    text-decoration: none; /* Remove sublinhado do link */
+    width: fit-content;
+}
+
+/* Botões */
+.btn {
+    padding: 8px 12px;
+    font-size: 14px;
+    border-radius: 5px;
+    cursor: pointer;
+    border: none;
+}
+
+.button .btn-adicionar {
+    padding: 10px 20px;         /* Adiciona um pouco de espaço interno ao botão */
+    background-color: #2de61c;  /* Cor de fundo do botão */
+    color: white;               /* Cor do texto */
+    border: none;               /* Remove a borda padrão */
+    border-radius: 5px;         /* Borda arredondada */
+    font-size: 16px;            /* Tamanho da fonte */
+    cursor: pointer;           /* Mostra um ponteiro ao passar o mouse */
+    transition: background-color 0.3s;  /* Transição suave para cor de fundo */
+}
+
+#btn-adicionar:hover {
+    background-color: #0056b3;
+}
+
+.btn-info {
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.btn-info:hover {
+    background-color: #064991;
 }
 
 
@@ -210,16 +327,7 @@ footer {
     box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); /* Sombra para efeito visual */
     z-index: 1000; /* Garante que o footer fique acima de outros elementos */
 }
-.login{
-    background-color: var(--white-color);
-    padding: 2rem;
-    margin-left: 20%;
-    margin-right: 20%;
-    margin-top: 2rem;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    height: 500px;
-}
+
 .Box{
     background-color: var(--white-color);
     padding: 2rem;
@@ -230,36 +338,7 @@ footer {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     height: 500px;
 } 
-.erroButton{
-    margin-top: 2.5rem;
-    background-color: var(--secondary-color);
-    color: var(--white-color);
-    padding: 0.5rem 1rem;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: 500;
-    width: 200px;
-    height: 50px;
-}
-.erroButton:hover{
-    background-color: var(--errorColor);
-}
-.sucessoButton{
-    margin-top: 2.5rem;
-    background-color: var(--secondary-color);
-    color: var(--white-color);
-    padding: 0.5rem 1rem;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;    
-    font-weight: 500;
-    width: 200px;
-    height: 50px;
-}
-.sucessoButton:hover{
-    background-color: var(--successColor);
-}
+
 ul{
     display: flex;
     flex-direction: column;
@@ -278,31 +357,7 @@ li a{
     background-color: #ced4da;
 }
 
-/* Ajuste específico para o botão "Close" */
-.btn-close {
-    font-size: 12px; /* Diminui o tamanho da fonte */
-    padding: 4px;    /* Reduz o preenchimento interno */
-    width: 20px;     /* Define uma largura fixa */
-    height: 20px;    /* Define uma altura fixa */
-    line-height: 1;  /* Ajusta o espaçamento interno */
-    background: none; /* Remove qualquer fundo padrão */
-    border: none;    /* Remove a borda padrão */
-    outline: none;   /* Remove o contorno ao clicar */
-    cursor: pointer; /* Adiciona o cursor de "mão" ao passar por cima */
-}
 
-/* Ajuste do ícone de fechamento, se necessário */
-.btn-close::before {
-    content: "×"; /* Adiciona o símbolo de fechamento (alternativo ao ícone padrão) */
-    font-weight: bold;
-}
-
-/* Personaliza a aparência do botão ao passar o mouse */
-.btn-close:hover {
-    color: #ff0000; /* Muda a cor ao passar o mouse */
-    background-color: #f0f0f0; /* Fundo sutil ao passar o mouse */
-    border-radius: 50%; /* Botão arredondado */
-}
 
 /* Estilos para os diferentes status de pagamento */
 .status-pago {
@@ -328,8 +383,9 @@ li a{
     cursor: pointer;
 }
 
-/* Ajustes gerais para tabelas */
+/* ---------------------- >>>>>>>>>>>>>>>>>>>>>>>> TABELAS / TABELAS <<<<<<<<<<<<<<<<-------------------------------------- */
 .table {
+    table-layout: fixed;
     border-collapse: collapse;
     width: 100%;
     margin-top: 20px;
@@ -345,6 +401,108 @@ li a{
     background-color: var(--primary-color);
     color: var(--white-color);
 }
+
+
+.tabelaMensalidades{
+    
+    background-color: var(--white-color);
+    table-layout:fixed;
+    padding: 15px;
+    border: 20px solid #ffffff;
+    border-collapse: collapse;
+    width: 100%;
+    margin-top: 20px;
+}
+
+.tabelaMensalidades th {
+    text-align: center;
+    font-weight: bold;
+    padding: 15px;
+    border: 1px solid #ddd;
+}
+
+.tabelaMensalidades td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+.tabelaMensalidades th {
+    background-color: var(--primary-color);
+    color: var(--white-color);
+}
+
+.tabelaMensalidades td:last-child button {
+    max-width: 100%; /* Garante que o botão não ultrapasse a célula */
+    width: auto; /* Permite que o botão se ajuste ao conteúdo */
+    padding: 5px 10px; /* Reduz o espaço interno do botão */
+    font-size: 14px; /* Reduz um pouco o tamanho do texto */
+    white-space: nowrap; /* Evita quebra de linha dentro do botão */
+}
+
+.tabelaMensalidades td:nth-last-child(8) {
+    font-weight: bold; /* Deixa o texto em negrito */
+    color: #333; /* Define a cor do texto */
+    text-align: center; /* Alinha o texto ao centro */
+    width: 150px; /* Define uma largura fixa (ajuste conforme necessário) */
+}
+
+.tabelaMensalidades th:first-child,
+.tabelaMensalidades td:first-child {
+    width: 50px; /* Ajuste conforme necessário */
+    min-width: 50px; /* Garante que a largura mínima seja mantida */
+    max-width: 50px; /* Evita que a coluna aumente */
+    text-align: center; /* Centraliza o número */
+    white-space: nowrap; /* Impede quebras de linha */
+}
+
+
+.tabelaTurmas{
+    background-color: var(--white-color);
+    table-layout:fixed;
+    padding: 10px;
+    border-collapse: collapse;
+    width: 100%;
+    gap: 5px;
+    margin-top: 20px;
+}
+
+.tabelaTurmas th {
+    background-color: var(--primary-color);
+    color: rgba(255, 255, 255, 0.952);
+    text-align: center;
+    font-weight: bold;
+    padding: 9px;
+    border: 1px solid #ffffffd0;
+}
+
+.tabelaTurmas td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+
+.tabelaTurmas th:first-child,
+.tabelaTurmas td:first-child {
+    width: 50px; /* Ajuste conforme necessário */
+    min-width: 50px; /* Garante que a largura mínima seja mantida */
+    max-width: 50px; /* Evita que a coluna aumente */
+    text-align: center; /* Centraliza o número */
+    white-space: nowrap; /* Impede quebras de linha */
+}
+
+.tabelaTurmas td:last-child button {
+    display: flex;
+    justify-content: center;
+    margin: 1rem;
+    max-width: 100%; /* Garante que o botão não ultrapasse a célula */
+    width: auto; /* Permite que o botão se ajuste ao conteúdo */
+    padding: 5px 10px; /* Reduz o espaço interno do botão */
+    font-size: 14px; /* Reduz um pouco o tamanho do texto */
+    white-space: nowrap; /* Evita quebra de linha dentro do botão */
+}
+
 
 .alunosTable {
     width: 100%;
@@ -371,7 +529,7 @@ li a{
 }
 
 .alunosTable tr:hover {
-    background-color: rgba(0, 123, 255, 0.1); /* Leve destaque ao passar o mouse */
+    background-color: rgba(0, 123, 255, 0.1);
 }
 
 .alunosTable a {
@@ -425,7 +583,25 @@ li a{
     margin: 0 auto;
 }
 
-/* Estilos para as seções */
+
+ /* --------------------------------------------------------------------- FORMULÁRIOS --------------------------------------------------------------------- */
+
+.addAlunoForm {
+    background-color: white;
+    align-items: center;
+    width: 100%;
+    margin: 0 auto;
+    padding: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+}
+
+ 
+ /* Estilos para as seções */
 #form-wrapper, #turmas-list {
     background: #fdfbfb;
     padding: 20px;
@@ -454,6 +630,7 @@ li a{
     gap: 15px;
 }
 
+
 .form-group {
     display: flex;
     flex-direction: column;
@@ -480,9 +657,10 @@ li a{
     width: 100%;
 }
 
-/* ------------------------- FORMULÁRIO DO REGISTRO --------------- É possivel usar esse estilo para todos os formulários----------- */
+/* ------------------------- FORMULÁRIO DO REGISTRO (LOGIN)--------------- É possivel usar esse estilo para todos os formulários----------- */
 
 /* Estilos para o formulário */
+
 
 /* Estilo do contêiner do formulário */
 .login {
@@ -502,7 +680,9 @@ li a{
     opacity: 0; /* Inicialmente invisível */
     transform: translateY(20px); /* Move o formulário 20px para baixo */
     animation: fadeInUp 0.5s ease-out forwards; /* Animação de aparecer */
+    box-shadow: 20px 20px 60px #bebebe, -20px -20px 60px #ffffff;
 }
+
 
 /* Animação de aparecer */
 @keyframes fadeInUp {
@@ -511,6 +691,7 @@ li a{
         transform: translateY(0); /* Move o formulário para a posição original */
     }
 }
+
 
 /* Estilo do título "Login" */
 .login h2 {
@@ -582,10 +763,45 @@ li a{
     transform: scale(0.98); /* Reduz ligeiramente o tamanho do botão */
 }
 
+.buttonEntrar {
+    width: 9em;
+    height: 3em;
+    border-radius: 8px;
+    font-size: 15px;
+    margin-top: 50px;
+    margin-bottom: 20px;
+    font-family: inherit;
+    border: none;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    box-shadow: 6px 6px 12px #c5c5c5,
+                -6px -6px 12px #ffffff;
+   }
+   
+   .buttonEntrar::before {
+    content: '';
+    color: black;
+    width: 0;
+    height: 3em;
+    border-radius: 8px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-image: linear-gradient(to right, #dbfa50a8 0%,#007bffc7 100% );
+    transition: .5s ease;
+    display: block;
+    z-index: -1;
+   }
+   
+   .buttonEntrar:hover::before {
+    width: 9em;
+   }
+
 
 .registrarForm {
     max-width: 400px; /* Largura máxima do formulário */
-    margin: 0 auto; /* Centraliza o formulário na tela */
+    margin: 0 auto; /* Centraliza o formulário na tela  -*/
     margin-top: 30px;
     margin-bottom: 20px;
     padding: 20px;
@@ -651,69 +867,6 @@ li a{
 
 .table-striped tbody tr:nth-of-type(odd) {
     background-color: #e0dede;
-}
-
-/* Botões */
-.btn {
-    padding: 8px 12px;
-    font-size: 14px;
-    border-radius: 5px;
-    cursor: pointer;
-    border: none;
-}
-
-.btn-adicionar {
-    padding: 10px 20px;         /* Adiciona um pouco de espaço interno ao botão */
-    background-color: #007bff;  /* Cor de fundo do botão */
-    color: white;               /* Cor do texto */
-    border: none;               /* Remove a borda padrão */
-    border-radius: 5px;         /* Borda arredondada */
-    font-size: 16px;            /* Tamanho da fonte */
-    cursor: pointer;           /* Mostra um ponteiro ao passar o mouse */
-    transition: background-color 0.3s;  /* Transição suave para cor de fundo */
-}
-
-#btn-adicionar:hover {
-    background-color: #0056b3;
-}
-
-.btn-info {
-    background-color: #007bff;
-    color: white;
-    text-decoration: none;
-    padding: 5px 10px;
-    border-radius: 5px;
-}
-
-.btn-info:hover {
-    background-color: #064991;
-}
-
-#btn-voltar {
-    display: block;
-    margin-top: 10px;
-    background-color: #6c757d;
-    color: white;
-    padding: 10px;
-    border-radius: 5px;
-    text-align: center;
-    width: 100%;
-}
-
-#btn-voltar:hover {
-    background-color: #444a4e;
-}
-
-/* Responsividade */
-@media (max-width: 768px) {
-    #turmas-container {
-        width: 100%;
-        padding: 10px;
-    }
-
-    .form-row {
-        flex-direction: column;
-    }
 }
 
 
@@ -788,3 +941,273 @@ li a{
     box-shadow: 0 0 5px var(--highlight-color);
 }
 
+  
+   .buttonPago { 
+    width: 200px;
+    height: 40px;
+    display: flex;
+    align-items: center; /* Alinha verticalmente no centro */
+    justify-content: center; /* Alinha horizontalmente no centro */
+    background-color: #18940daf;
+    border: none;
+    color: white;
+    font-weight: 600;
+    gap: 8px;
+    cursor: pointer;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.103);
+    position: relative;
+    overflow: hidden;
+    transition-duration: .3s;
+
+
+}
+  
+  .svgIcon {
+    width: 20px;
+  }
+  
+  .svgIcon path {
+    fill: white;
+  }
+  
+  .buttonPago::before {
+    width: 200px;
+    height: 140px;
+    position: absolute;
+    content: "";
+    background-color: rgb(14, 114, 22);
+    border-radius: 50%;
+    left: -100%;
+    top: 0;
+    transition-duration: .3s;
+    mix-blend-mode:color;
+  }
+  
+  .buttonPago:hover::before {
+    transition-duration: .3s;
+    transform: translate(100%,-50%);
+    border-radius: 0;
+  }
+  
+  .buttonPago:active {
+    transform: translate(0px,0px);
+    transition-duration: .3s;
+  }
+
+  /*---------------------------------------------------- NOVO "SOBRE" ----------------------------------*/
+
+/* From Uiverse.io by Tiagoadag */ 
+.primeiroCard {
+    width: 50%;
+    border-color: #ffffff;
+    height: 100%;
+    background-image: linear-gradient(163deg, #00ff75 0%, #3700ff 100%);
+    border-radius: 20px;
+    transition: all .3s;
+
+    margin: 1rem;
+   }
+   
+   .card2 {
+    width: 100%;
+    height: 254px;
+    background-color: #38d4c0d2;
+    border-radius:20px;
+    transition: all .2s;
+   }
+   
+   .card2:hover {
+    transform: scale(0.98);
+    border-radius: 20px;
+   }
+   
+   .primeiroCard:hover {
+    box-shadow: 0px 0px 30px 1px rgba(0, 255, 117, 0.30);
+   }
+
+
+   /* ------------------------------------------------ CARD DO INDEX <<<<<<<<<<<<<<<<<<<<<< */ 
+.card {
+    --white: hsl(0, 0%, 100%);
+    --black: hsl(0, 0%, 100%);
+    --paragraph: hsl(0, 0%, 83%);
+    --primary: hsl(202, 79%, 36%);
+
+    position: relative;
+    justify-items: center;
+
+
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+    width: 100%;
+    height: 90%;
+    background-color: rgba(19, 104, 93, 0.555);
+    background-image: radial-gradient(
+        at 88% 40%,
+        rgba(28, 148, 156, 0.664) 0px,
+        transparent 85%
+      ),
+      radial-gradient(at 49% 30%, rgba(19, 100, 86, 0.699) 0px, transparent 85%),
+      radial-gradient(at 14% 26%, rgba(139, 201, 23, 0.603) 0px, transparent 85%),
+      radial-gradient(at 0% 64%, hsla(189, 98%, 26%, 0.63) 0px, transparent 85%),
+      radial-gradient(at 41% 94%, hsl(189, 97%, 36%) 0px, transparent 85%),
+      radial-gradient(at 100% 99%, hsla(188, 94%, 13%, 0.568) 0px, transparent 85%);
+  
+    border-radius: 1rem;
+    margin-top: 1rem;
+    box-shadow: 0px -16px 24px 0px rgba(255, 255, 255, 0.25) inset;
+  }
+
+  .card .card__list_item .list_text {
+    display: inline-block;
+    font-size: 18px!important; /* Define o tamanho da fonte */
+    color: #ffffff; /* Define a cor do texto */
+  }
+
+
+  .card .card__border {
+    overflow: hidden;
+    pointer-events: none;
+    position: absolute;
+    z-index: -10;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: calc(100% + 2px);
+    height: calc(100% + 2px);
+    background-image: linear-gradient(0deg,hsl(0, 0%, 100%) -50%,#13685d8e);
+    border-radius: 1rem;
+  }
+  
+  .card .card__border::before {
+    content: "";
+    pointer-events: none;
+    position: fixed;
+    z-index: 200;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%), rotate(0deg);
+    transform-origin: left;
+    width: 200%;
+    height: 10rem;
+    background-image: linear-gradient(
+      0deg,
+      hsla(83, 75%, 51%, 0.733) 0%,
+      hsl(189, 100%, 50%) 40%,
+      hsla(83, 75%, 51%, 0.733) 0%,
+      hsl(78, 73%, 54%) 100%
+    );
+    animation: rotate 8s linear infinite;
+  }
+  
+  @keyframes rotate {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  
+  .card .card_title__container .card_title {
+    display: flex;
+    justify-content: right;
+    margin-right: 15rem;
+    margin-top: 1rem;
+    font-size: 1.5rem;
+    color: var(--white);
+  }
+
+  .card .line {
+    width: 100%;
+    height: 0.1rem;
+    background-color: var(--line);
+    border: none;
+  }
+
+.card_paragraph {
+    display: flex;
+    justify-content: right;
+    margin-top: 0.25rem;
+    margin-right: 8rem;
+    font-size: 1rem;
+    color: rgb(255, 255, 255);
+  }
+
+  .parte_esquerda{
+    display: flex;
+    justify-content: left;
+    margin-top: 0.5rem;
+    margin-right: 8rem;
+    font-size: 1rem;
+    color: rgb(255, 255, 255);
+  }
+  
+  /* ---------------------------- LISTA DOS CHECKS -------------------------------*/
+
+  
+
+.card .card__list {
+    display: flex;
+    flex-direction: column;
+    align-items:last baseline; /* Alinha os itens no centro da coluna */
+    justify-content: center; /* Pode ser necessário ajustar se a altura não for suficiente */
+    margin-right: 10rem;
+    gap: 0.5rem;
+
+}
+.card .card__list .card__list_item {
+    display: flex;
+    align-items: left;
+    gap: 0.5rem;
+
+  }
+  
+.card .card__list .card__list_item .check {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 1rem;
+    height: 1rem;
+    background-color: var(--primary);
+    border-radius: 50%;
+    margin-top: 0.4rem;
+  }
+  
+  .card .card__list .card__list_item .check .check_svg {
+    width: 0.75rem;
+    height: 0.75rem;
+    fill: var(--black);
+  }
+  
+  .card .card__list .card__list_item {
+    font-size: 0.75rem;
+    color: var(--white);
+
+  }
+  
+  .buttonAcesso {
+    cursor: pointer;
+    border: 0;
+    padding: 0.5rem 1rem;
+    min-width: 120px; /* Defina o tamanho mínimo desejado */
+    min-height: 40px; /* Defina a altura mínima desejada */
+    border-radius: 20px;
+    background-image: linear-gradient(0deg, hsl(189, 92%, 58%), hsl(189, 99%, 26%) 100%);
+    box-shadow: white;
+    transition: all 1s;
+    box-sizing: border-box;
+  }
+
+  .buttonAcesso:hover {
+    scale: 105%;
+    background-image: radial-gradient(
+        at 88% 40%,
+        rgba(49, 232, 245, 0.842) 0px,
+        transparent 85%
+      ),
+      radial-gradient(at 49% 30%, rgba(19, 100, 86, 0.897) 0px, transparent 85%),
+      radial-gradient(at 14% 26%, rgba(139, 201, 23, 0.932) 0px, transparent 85%),
+      radial-gradient(at 0% 64%, hsl(189, 98%, 26%) 0px, transparent 85%),
+      radial-gradient(at 41% 94%, hsl(189, 97%, 36%) 0px, transparent 85%),
+      radial-gradient(at 100% 99%, hsl(188, 94%, 13%) 0px, transparent 85%);
+  }
