@@ -24,11 +24,13 @@
         <td>
             <form action="{% url 'excluirAluno' aluno_id=aluno.id %}" method="POST" style="display: inline; background: none;text-decoration: none ;cursor: pointer;">
                 {% csrf_token %}
-                <button type="submit" onclick="return confirm('Tem certeza que deseja excluir {{ aluno.nome }}?');" style="background: none; color: var(--primary-color); border: none; cursor: pointer; text-decoration: none; font-weight: bold;font-size: 16px;">
+                <button type="submit" onclick="return confirm('Tem certeza que deseja excluir {{ aluno.nome }}?');" style="height: 30px; background-color: red; color: white;">
                     Excluir
                 </button>
             </form>
-            <a href="{% url 'editarAluno' aluno_id=aluno.id %}">Editar</a>
+            <button style="background-color: var(--primary-color);height: 30px">
+                <a href="{% url 'editarAluno' aluno_id=aluno.id %}"style="text-decoration: none; color: white;">Editar</a>
+            </button>
         </td>
     </tr>
     {% endfor %}

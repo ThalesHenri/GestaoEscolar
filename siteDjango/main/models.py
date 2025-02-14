@@ -85,6 +85,16 @@ def validar_senha_forte(senha):
     return True
 
 
+
+class EscolaPerfil(models.Model):
+    nome = models.CharField(max_length=100)
+    cnpj = models.CharField(max_length=14,null=True)
+    telefone = models.DecimalField(max_digits=11, decimal_places=0, verbose_name="Telefone")
+    responsavel = models.CharField(max_length=100, verbose_name="Responsável")
+    def __str__(self):
+        return self.nome
+
+
 class Usuario(models.Model):
     nome = models.CharField(max_length=100)
     email = models.EmailField(unique=True)
@@ -161,3 +171,4 @@ class Mensalidade(models.Model):
 
     def __str__(self):
         return f"Mensalidade {self.data_vencimento.strftime('%Y-%m-%d')} - {self.aluno.nome}"
+    

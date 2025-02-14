@@ -209,6 +209,23 @@ main {
     background: #d6e4ff;
     transition: 0.3s;
 }
+
+.second_content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.card_title__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  .card{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 /* --------------------------------------------------------------------------- ( BOTÕES ) -----------------------------------------------------*/
 button {
     background-color: #128091;
@@ -276,6 +293,15 @@ a {
     display: flex; /* Garante que o link não ocupe mais espaço do que o botão */
     text-decoration: none; /* Remove sublinhado do link */
     width: fit-content;
+}
+
+
+/* PERFIL */
+.perfil_content{
+    border: 1px solid #ccc;
+    background-color: #fff;
+    height: 500px;
+    width: 100%;
 }
 
 /* Botões */
