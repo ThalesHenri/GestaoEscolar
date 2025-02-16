@@ -19,6 +19,7 @@
             <tr>
                 <th>ID</th>
                 <th>Aluno</th>
+                <th>Turma</th>
                 <th>Mês</th>
                 <th>Valor</th>
                 <th>Data de Vencimento</th>
@@ -31,6 +32,7 @@
             <tr>
                 <td>{{ forloop.counter }}</td>
                 <td>{{ mensalidade.aluno.nome }}</td>
+                <td>{{ mensalidade.aluno.turma.nome }}</td>
                 <td>{{ mensalidade.data_vencimento|date:"F" }}</td>
                 <td>{{ mensalidade.valor_final|default:"0.00" }}</td>
                 <td>{{ mensalidade.data_vencimento|date:"d/m/Y" }}</td>
@@ -77,6 +79,7 @@
             <tr>
                 <th>ID</th>
                 <th>Aluno</th>
+                <th>Turma</th>
                 <th>Mês</th>
                 <th>Valor</th>
                 <th>Data de Vencimento</th>
@@ -89,6 +92,7 @@
             <tr>
                 <td>{{ forloop.counter }}</td>
                 <td>{{ mensalidade.aluno.nome }}</td>
+                <td>{{ mensalidade.aluno.turma.nome }}</td>
                 <td>{{ mensalidade.data_vencimento|date:"F" }}</td>
                 <td>{{ mensalidade.valor_final|default:"0.00" }}</td>
                 <td>{{ mensalidade.data_vencimento|date:"d/m/Y" }}</td>

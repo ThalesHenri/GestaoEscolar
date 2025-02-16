@@ -10,6 +10,7 @@ from datetime import date
 from django.utils.timezone import now
 from .forms import *
 from .forms import AlunoForm
+from .models import Perfil
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
@@ -22,6 +23,23 @@ def home(request):
 def perfil(request):
     return render(request, 'perfil.html')
 
+@login_required
+def editar_perfil(request):
+    perfil, created = Perfil.objects.get_or_create(usuario=request.user)  # Cria o perfil se não existir
+
+    if request.method == 'POST':
+        perfil.nome_escola = request.POST.get('nome_escola')
+        perfil.client_id = request.POST.get('client_id', '') or None  # Se vazio, salva como None
+        perfil.client_secret = request.POST.get('client_secret', '') or None  # Se vazio, salva como None
+        perfil.chave_pix = request.POST.get('chave_pix', '') or None  # Se vazio, salva como None
+        feed = Feed(acao="Perfil foi editado!", data=timezone.now())
+        feed.save()
+        perfil.save()
+
+        return redirect('adminDashboard')  # Redireciona após salvar
+
+    return render(request, 'editar_perfil.html', {'perfil': perfil})
+
 
 def registrar(request):
     if request.method == 'POST':
@@ -33,11 +51,9 @@ def registrar(request):
             return render(request, 'erro.html', {'mensagem': 'Todos os campos são obrigatórios!'})
 
         try:
-            User.objects.create_user(
-                username=usuario, email=email, password=senha)
-            feed = Feed(acao="Usuário registrado com sucesso!",
-                        data=timezone.now())
-            feed.save()
+            user = User.objects.create_user(username=usuario, email=email, password=senha)
+            Perfil.objects.create(usuario=user, nome_escola="Minha Escola")  # Cria perfil com nome padrão
+
             return render(request, 'sucesso.html')
         except Exception as e:
             return render(request, 'erro.html', {'mensagem': str(e)})
@@ -306,7 +322,7 @@ def aplicarDesconto(request, aluno_id):
                     mensalidade.aplicar_desconto(desconto)  
 
             feed = Feed(
-                acao=f"Desconto de {desconto}% aplicado a todas as mensalidades do aluno(a) {aluno.nome}!",
+                acao=f"Desconto de {desconto}% aplicado ao aluno(a) {aluno.nome}!",
                 data=timezone.now()
             )
             feed.save()
@@ -327,10 +343,12 @@ def excluirAluno(request, aluno_id):
             acao=f"Aluno {aluno.nome} excluído com sucesso!", data=timezone.now())
         feed.save()
         # Redireciona para o dashboard dos alunos
-        return redirect('alunosDashboard')
+        origem = request.POST.get('origem', 'alunosDashboard')
+        return redirect(origem)
 
     # Caso o método não seja POST, redirecione ou mostre erro
     messages.error(request, 'Método inválido para exclusão!')
+
     return redirect('alunosDashboard')
 
 

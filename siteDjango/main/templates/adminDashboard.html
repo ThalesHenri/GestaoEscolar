@@ -3,6 +3,7 @@
     <a href="{% url 'adminDashboard' %}"><i class="fas fa-home"></i> Início</a>
     <a href="{% url 'perfil' %}"><i class="fas fa-user"></i> Perfil</a>
 {% endblock inicio %}
+
 {% block content %}
 <h1>Seja bem-vindo, {{ usuario }}</h1>
 <div class="adminDashboard">
@@ -11,6 +12,7 @@
         <li><a href="{% url 'pagamentoDashboard'%}"><button>Gerenciar Pagamentos</button></a></li>
         <li><a href="{% url 'turmasDashboard' %}"><button>Gerenciar Turmas</button></a></li>
         <li><a href="#"><button>Visualizar Relatórios </button></a></li>
+        <li><a href="{% url 'editar_perfil' %}"><button>Perfil</button></a></li>
         <li><a href="{% url 'logout' %}"><button>Logout</button></a></li>
     </ul>
 </div>

@@ -5,10 +5,11 @@
 {% endblock inicio %}
 
 {% block content %}
-<table class="tabelaTurmas">
+<table class="tabelaMensalidades">
     <tr>
         <th></th>
         <th>Nome</th>
+        <th>Turma</th>
         <th>Telefone</th>
         <th>Idade</th>
         <th>Responsável</th>
@@ -18,6 +19,7 @@
     <tr>
         <td>{{ forloop.counter }}</td>
         <td><a href="{% url 'alunoDetalhes' aluno_id=aluno.id %}">{{ aluno.nome }}</a></td>
+        <td>{{ aluno.turma.nome }}</td>
         <td>{{ aluno.telefone }}</td>
         <td>{{ aluno.idade }}</td>
         <td>{{ aluno.responsavel }}</td></td>

@@ -6,12 +6,29 @@ from django.utils.timezone import now
 from datetime import timedelta
 from django.utils import timezone
 from datetime import date, timedelta
+from django.contrib.auth.models import User
+
+
+class Perfil(models.Model):
+    usuario = models.OneToOneField(
+        User, on_delete=models.CASCADE)  # Ligação com o usuário
+    nome_escola = models.CharField(max_length=255)
+    client_id = models.CharField(
+        max_length=255, blank=True, null=True)  # Agora é opcional
+    client_secret = models.CharField(
+        max_length=255, blank=True, null=True)  # Agora é opcional
+    chave_pix = models.CharField(
+        max_length=255, blank=True, null=True)  # Agora é opcional
+
+    def __str__(self):
+        return self.nome_escola
 
 
 class Aluno(models.Model):
     nome = models.CharField(max_length=100)
     responsavel = models.CharField(max_length=100, verbose_name="Responsável")
-    telefone = models.DecimalField(max_digits=11, decimal_places=0, verbose_name="Telefone")
+    telefone = models.DecimalField(
+        max_digits=11, decimal_places=0, verbose_name="Telefone")
     idade = models.PositiveIntegerField()
     dia_pagamento = models.PositiveIntegerField()
     turma = models.ForeignKey(
@@ -29,7 +46,8 @@ class Aluno(models.Model):
                     data_vencimento = date(hoje.year, mes, self.dia_pagamento)
                 except ValueError:
                     # Se o dia de pagamento não for válido para o mês (ex: 31 de fevereiro), ajusta para o último dia do mês
-                    ultimo_dia_mes = date(hoje.year, mes + 1, 1) - timezone.timedelta(days=1)
+                    ultimo_dia_mes = date(
+                        hoje.year, mes + 1, 1) - timezone.timedelta(days=1)
                     data_vencimento = ultimo_dia_mes
 
                 # Define o valor da mensalidade
@@ -53,6 +71,7 @@ class Aluno(models.Model):
     def __str__(self):
         return self.nome
 
+
 class Turma(models.Model):
     TURNO_CHOICES = [
         ('Manhã', 'Manhã'),
@@ -60,8 +79,10 @@ class Turma(models.Model):
     ]
     nome = models.CharField(max_length=100)
     turno = models.CharField(max_length=5, choices=TURNO_CHOICES)
-    valorMensalidade = models.DecimalField(max_digits=8, decimal_places=2, verbose_name="Mensalidade")
-    valorMatricula = models.DecimalField(max_digits=8, decimal_places=2, verbose_name="Matrícula")  # Valor da matrícula
+    valorMensalidade = models.DecimalField(
+        max_digits=8, decimal_places=2, verbose_name="Mensalidade")
+    valorMatricula = models.DecimalField(
+        max_digits=8, decimal_places=2, verbose_name="Matrícula")  # Valor da matrícula
 
     def saldo_total(self):
         return self.valorMensalidade * self.alunos.count()
@@ -121,18 +142,24 @@ class Mensalidade(models.Model):
         ('PIX', 'PIX'),
     ]
 
-    aluno = models.ForeignKey('Aluno', on_delete=models.CASCADE, related_name='mensalidades')
+    aluno = models.ForeignKey(
+        'Aluno', on_delete=models.CASCADE, related_name='mensalidades')
     data_vencimento = models.DateField()  # Data de vencimento
     status = models.CharField(
         max_length=20,
-        choices=[('Em Aberto', 'Em Aberto'), ('Pago', 'Pago'), ('Em Atraso', 'Em Atraso')],
+        choices=[('Em Aberto', 'Em Aberto'), ('Pago', 'Pago'),
+                 ('Em Atraso', 'Em Atraso')],
         default='Em Aberto'
     )
     dia_pagamento_realizado = models.DateField(null=True, blank=True)
-    valor_base = models.DecimalField(max_digits=8, decimal_places=2)  # Valor original sem desconto
-    valor_final = models.DecimalField(max_digits=8, decimal_places=2, null=True, blank=True)  # Valor com desconto aplicado
-    forma_pagamento = models.CharField(max_length=10, choices=FORMA_PAGAMENTO_CHOICES, null=True, blank=True)
-    desconto_percentual = models.DecimalField(max_digits=5, decimal_places=2, default=0)  # Percentual do desconto
+    valor_base = models.DecimalField(
+        max_digits=8, decimal_places=2)  # Valor original sem desconto
+    valor_final = models.DecimalField(
+        max_digits=8, decimal_places=2, null=True, blank=True)  # Valor com desconto aplicado
+    forma_pagamento = models.CharField(
+        max_length=10, choices=FORMA_PAGAMENTO_CHOICES, null=True, blank=True)
+    desconto_percentual = models.DecimalField(
+        max_digits=5, decimal_places=2, default=0)  # Percentual do desconto
 
     def aplicar_desconto(self, percentual):
         """Aplica um desconto percentual na mensalidade (exceto matrícula)."""
@@ -144,7 +171,6 @@ class Mensalidade(models.Model):
             self.valor_final = self.valor_base  # Sem desconto
 
         self.save(update_fields=['desconto_percentual', 'valor_final'])
-        
 
     def save(self, *args, **kwargs):
         """Atualiza o status da mensalidade e aplica o desconto ao salvar."""

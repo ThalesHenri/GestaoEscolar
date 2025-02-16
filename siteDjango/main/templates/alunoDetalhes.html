@@ -125,7 +125,7 @@
                 <a href="{% url 'turmaDetalhes' aluno.turma.id %}" style="text-decoration: none;">
                     <button class="voltareButton">Voltar</button>
                 </a>
-                <form method="post" action="{% url 'excluirAluno' aluno.id %}" style="margin: 0;">
+                <form method="POST" action="{% url 'excluirAluno' aluno.id %}" style="margin: 0;">
                     {% csrf_token %}
                     <button type="submit" class="excluirButton" onclick="return confirm('Tem certeza que deseja excluir este aluno?')">Excluir Aluno</button>
                 </form>
