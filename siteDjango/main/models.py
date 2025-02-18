@@ -10,23 +10,19 @@ from django.contrib.auth.models import User
 
 
 class Perfil(models.Model):
-    usuario = models.OneToOneField(
-        User, on_delete=models.CASCADE)  # Ligação com o usuário
-    nome_escola = models.CharField(max_length=255)
-    client_id = models.CharField(
-        max_length=255, blank=True, null=True)  # Agora é opcional
-    client_secret = models.CharField(
-        max_length=255, blank=True, null=True)  # Agora é opcional
-    chave_pix = models.CharField(
-        max_length=255, blank=True, null=True)  # Agora é opcional
+    usuario = models.OneToOneField(User, on_delete=models.CASCADE)
+    nome_escola = models.CharField(max_length=255, blank=True, null=True)
+
+
 
     def __str__(self):
-        return self.nome_escola
+        return self.usuario.username
 
 
 class Aluno(models.Model):
     nome = models.CharField(max_length=100)
     responsavel = models.CharField(max_length=100, verbose_name="Responsável")
+    cpf_responsavel = models.CharField(max_length=14, verbose_name="CPF do Responsável", blank=True, null=True)  # Novo campo
     telefone = models.DecimalField(
         max_digits=11, decimal_places=0, verbose_name="Telefone")
     idade = models.PositiveIntegerField()

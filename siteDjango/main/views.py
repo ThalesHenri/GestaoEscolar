@@ -2,15 +2,17 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404, redirect
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.db.models.functions import ExtractMonth
+from django.http import JsonResponse
+import json
+import os
 from django.db.models import Q, Sum, F, Case, When
 from django.contrib.auth.models import User
 from django.contrib import messages
-from .models import Turma, Aluno, Mensalidade, Feed
+from .models import Turma, Aluno, Mensalidade, Perfil, Feed
 from datetime import date
 from django.utils.timezone import now
 from .forms import *
 from .forms import AlunoForm
-from .models import Perfil
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
@@ -20,23 +22,53 @@ def home(request):
     return render(request, 'index.html')
 
 
+@login_required
 def perfil(request):
-    return render(request, 'perfil.html')
+    perfil = get_object_or_404(Perfil, usuario=request.user)
+    return render(request, "perfil.html", {"perfil": perfil})
+
 
 @login_required
 def editar_perfil(request):
-    perfil, created = Perfil.objects.get_or_create(usuario=request.user)  # Cria o perfil se não existir
+    perfil, created = Perfil.objects.get_or_create(usuario=request.user)
 
     if request.method == 'POST':
-        perfil.nome_escola = request.POST.get('nome_escola')
-        perfil.client_id = request.POST.get('client_id', '') or None  # Se vazio, salva como None
-        perfil.client_secret = request.POST.get('client_secret', '') or None  # Se vazio, salva como None
-        perfil.chave_pix = request.POST.get('chave_pix', '') or None  # Se vazio, salva como None
-        feed = Feed(acao="Perfil foi editado!", data=timezone.now())
-        feed.save()
+        # Atualiza o nome de usuário e o e-mail
+        novo_username = request.POST.get('nome', perfil.usuario.username)
+        novo_email = request.POST.get('email', perfil.usuario.email)
+        nova_senha = request.POST.get('senha', None)
+
+        # Verifica se o nome de usuário já existe
+        if User.objects.exclude(id=perfil.usuario.id).filter(username=novo_username).exists():
+            messages.error(request, "Nome de usuário já está em uso.")
+            return redirect('editar_perfil')
+
+        # Verifica se o email já existe
+        if User.objects.exclude(id=perfil.usuario.id).filter(email=novo_email).exists():
+            messages.error(request, "E-mail já está em uso.")
+            return redirect('editar_perfil')
+
+        perfil.usuario.username = novo_username
+        perfil.usuario.email = novo_email
+        perfil.usuario.save()  # Agora as alterações são salvas
+
+        # Atualiza o nome da escola, se fornecido
+        perfil.nome_escola = request.POST.get('nome_escola', perfil.nome_escola)
+
+        # Atualiza a senha, se uma nova senha for informada
+        if nova_senha:
+            perfil.usuario.set_password(nova_senha)
+            perfil.usuario.save()
+            messages.success(request, "Senha alterada com sucesso! Faça login novamente.")
+            return redirect('login')  # Redireciona para o login
+
         perfil.save()
 
-        return redirect('adminDashboard')  # Redireciona após salvar
+        # Registro no feed
+        Feed.objects.create(acao="O perfil foi atualizado!", data=timezone.now())
+
+        messages.success(request, "Dados atualizados com sucesso!")
+        return redirect('editar_perfil')
 
     return render(request, 'editar_perfil.html', {'perfil': perfil})
 
@@ -51,8 +83,10 @@ def registrar(request):
             return render(request, 'erro.html', {'mensagem': 'Todos os campos são obrigatórios!'})
 
         try:
-            user = User.objects.create_user(username=usuario, email=email, password=senha)
-            Perfil.objects.create(usuario=user, nome_escola="Minha Escola")  # Cria perfil com nome padrão
+            user = User.objects.create_user(
+                username=usuario, email=email, password=senha)
+            # Cria perfil com nome padrão
+            Perfil.objects.create(usuario=user, nome_escola="Minha Escola")
 
             return render(request, 'sucesso.html')
         except Exception as e:
@@ -119,7 +153,7 @@ def addTurma(request):
 
 
 @login_required
-def turmasDashboard(request): 
+def turmasDashboard(request):
     if request.method == 'POST':
         form = TurmaForm(request.POST)
         if form.is_valid():
@@ -157,6 +191,7 @@ def turmasDashboard(request):
         'saldo_anual_por_turma': saldo_anual_por_turma,
         'saldo_mensal_por_turma': saldo_mensal_por_turma
     })
+
 
 @login_required
 def turmaDetalhes(request, turma_id):
@@ -236,10 +271,12 @@ def addAluno(request, turma_id):
                 for mes in range(1, 13):  # Para cada mês do ano
                     try:
                         # Define a data de vencimento para o dia de pagamento no mês correspondente
-                        data_vencimento = date(hoje.year, mes, aluno.dia_pagamento)
+                        data_vencimento = date(
+                            hoje.year, mes, aluno.dia_pagamento)
                     except ValueError:
                         # Se o dia de pagamento não for válido para o mês (ex: 31 de fevereiro), ajusta para o último dia do mês
-                        ultimo_dia_mes = date(hoje.year, mes + 1, 1) - timezone.timedelta(days=1)
+                        ultimo_dia_mes = date(
+                            hoje.year, mes + 1, 1) - timezone.timedelta(days=1)
                         data_vencimento = ultimo_dia_mes
 
                     Mensalidade.objects.create(
@@ -258,6 +295,7 @@ def addAluno(request, turma_id):
 
     return render(request, 'addAluno.html', {'form': form, 'turma': turma})
 
+
 @login_required
 def alunoDetalhes(request, aluno_id):
     aluno = get_object_or_404(Aluno, id=aluno_id)
@@ -274,11 +312,13 @@ def alunoDetalhes(request, aluno_id):
         # Verifica se a mensalidade está "Em Atraso"
         if (
             mensalidade.data_vencimento  # Ignora se data_vencimento for None
-            and mensalidade.data_vencimento < hoje  # Verifica se a data de vencimento já passou
+            # Verifica se a data de vencimento já passou
+            and mensalidade.data_vencimento < hoje
             and mensalidade.status == "Em Aberto"  # Verifica se ainda está em aberto
         ):
             mensalidade.status = "Em Atraso"
-            feed = Feed(acao=f"AVISO! Mensalidade {mensalidade.data_vencimento.strftime('%Y-%m-%d')} do aluno(a) {aluno.nome} em atraso!", data=timezone.now())
+            feed = Feed(
+                acao=f"AVISO! Mensalidade {mensalidade.data_vencimento.strftime('%Y-%m-%d')} do aluno(a) {aluno.nome} em atraso!", data=timezone.now())
             feed.save()
             mensalidade.save()
 
@@ -291,7 +331,8 @@ def alunoDetalhes(request, aluno_id):
         if acao == "marcar_pago":
             mensalidade.status = "Pago"
             mensalidade.dia_pagamento_realizado = hoje
-            feed = Feed(acao=f"Mensalidade {mensalidade.data_vencimento.strftime('%m')} do aluno(a) {aluno.nome} foi paga!", data=timezone.now())
+            feed = Feed(
+                acao=f"Mensalidade {mensalidade.data_vencimento.strftime('%m')} do aluno(a) {aluno.nome} foi paga!", data=timezone.now())
             feed.save()
             mensalidade.forma_pagamento = forma_pagamento
         elif acao == "desmarcar_pago":
@@ -305,9 +346,9 @@ def alunoDetalhes(request, aluno_id):
 
 
 @login_required
-def aplicarDesconto(request, aluno_id): 
+def aplicarDesconto(request, aluno_id):
     aluno = get_object_or_404(Aluno, id=aluno_id)
-    
+
     # Filtra as mensalidades, excluindo janeiro (mês 1)
     mensalidades = aluno.mensalidades.annotate(
         mes=ExtractMonth('data_vencimento')
@@ -319,7 +360,7 @@ def aplicarDesconto(request, aluno_id):
             desconto = form.cleaned_data['desconto']
             for mensalidade in mensalidades:
                 if hasattr(mensalidade, 'valor_base'):  # Verifica se o campo existe
-                    mensalidade.aplicar_desconto(desconto)  
+                    mensalidade.aplicar_desconto(desconto)
 
             feed = Feed(
                 acao=f"Desconto de {desconto}% aplicado ao aluno(a) {aluno.nome}!",
@@ -332,6 +373,7 @@ def aplicarDesconto(request, aluno_id):
 
     context = {'aluno': aluno, 'form': form}
     return render(request, 'desconto.html', context=context)
+
 
 @login_required
 def excluirAluno(request, aluno_id):

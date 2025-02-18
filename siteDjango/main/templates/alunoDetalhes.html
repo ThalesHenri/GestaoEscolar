@@ -21,9 +21,14 @@
                         <td><strong>Responsável:</strong></td>
                         <td>{{ aluno.responsavel }}</td>
                     </tr>
+                    <tr>
+                        <td><strong>CPF do Responsável:</strong></td>
+                        <td>{{ aluno.cpf_responsavel }}</td>
+                    </tr>
+                    <tr>
                         <td><strong>Telefone:</strong></td>
                         <td>{{ aluno.telefone }}</td>
-                    <tr>
+                    </tr>
                     <tr>
                         <td><strong>Ações:</strong></td><td>
                         <!-- Botão único para aplicar desconto -->
@@ -75,6 +80,7 @@
                                 </select>
                             {% endif %}
                         </td>
+
                         <td>
                             <form method="POST">
                                 {% csrf_token %}
@@ -120,6 +126,36 @@
                 return confirm("Confirme o pagamento.");
             }
         </script>
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                document.querySelectorAll(".btn-pix").forEach(button => {
+                    button.addEventListener("click", function () {
+                        let mensalidadeId = this.getAttribute("data-mensalidade");
+    
+                        fetch(`/pix/gerar_qr/${mensalidadeId}/`)
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.qrcode) {
+                                    document.getElementById("pix_qrcode").src = data.qrcode;
+                                    document.getElementById("pix_copia_cola").value = data.pix_copia_cola;
+                                    document.getElementById("pix_modal").style.display = "block";
+                                } else {
+                                    alert("Erro ao gerar PIX: " + data.erro);
+                                }
+                            });
+                    });
+                });
+            });
+        </script>
+
+    <div id="pix_modal" style="display:none;">
+        <h3>Escaneie o QR Code ou copie o código PIX</h3>
+        <img id="pix_qrcode" src="" alt="QR Code PIX">
+        <input id="pix_copia_cola" type="text" readonly>
+        <button onclick="document.getElementById('pix_modal').style.display='none'">Fechar</button>
+    </div>
+
+        
 
                     <div style="display: flex; justify-content: center; gap: 10px; margin-top: 3rem; margin-bottom: 2rem;">
                 <a href="{% url 'turmaDetalhes' aluno.turma.id %}" style="text-decoration: none;">

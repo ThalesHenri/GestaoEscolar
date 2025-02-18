@@ -1,30 +1,32 @@
 {% extends "index.html" %}
 {% block inicio %}
-    <a href="{% url 'adminDashboard' %}"><i class="fas fa-home"></i> Início</a>
-    <a href="{% url 'perfil' %}"><i class="fas fa-user"></i> Perfil</a>
+<a href="{% url 'adminDashboard' %}"><i class="fas fa-home"></i> Início</a>
+<a href="{% url 'perfil' %}"><i class="fas fa-user"></i> Perfil</a>
 
 {% endblock inicio %}
 {% block content %}
 
 <div class="registrarForm">
-<form method="post">
-    {% csrf_token %}
-    <label>Nome da Escola:</label>
-    <input type="text" name="nome_escola" value="{{ perfil.nome_escola }}" required>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <label for="nome">Nome:</label>
+        <input type="text" name="nome" value="{{ perfil.usuario.username }}" required>
+
+        <label for="nome_escola">Nome da Escola:</label>
+        <input type="text" name="nome_escola" value="{{ perfil.nome_escola }}" required>
+
+        <label for="email">Email:</label> 
+        <input type="email" name="email" value="{{ perfil.email }}" required>
+
+        <label for="senha">Senha:</label>
+        <input type="password" name="senha" value="{{ perfil.senha }}" required>
     
-    <h2 style="margin: 20px;">Função PIX(Opcional):</h2>
-
-    <label>Client ID:</label>
-    <input type="text" name="client_id" value="{{ perfil.client_id|default_if_none:'' }}">
-
-    <label>Client Secret:</label>
-    <input type="text" name="client_secret" value="{{ perfil.client_secret|default_if_none:'' }}">
-
-    <label>Chave Pix:</label>
-    <input type="text" name="chave_pix" value="{{ perfil.chave_pix|default_if_none:'' }}">
-
-    <button type="submit">Salvar</button>
-</form>
+        <button type="submit">Salvar</button>
+    </form>
+    
 </div>
 
 {% endblock content %}
+
+<!--   <h2 style="margin: 20px;">Função PIX(Opcional):</h2>  -->

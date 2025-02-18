@@ -3,6 +3,7 @@ from . import views
 from .views import excluir_turma
 from .views import aplicarDesconto, editar_perfil
 
+
 urlpatterns = [
     path('', views.home, name='home'),
     path('login/', views.login, name='login'),
