@@ -1,19 +1,52 @@
 {% extends "index.html" %}
+{% load static %} 
 {% block inicio %}
     <a href="{% url 'adminDashboard' %}"><i class="fas fa-home"></i> Início</a>
     <a href="{% url 'perfil' %}"><i class="fas fa-user"></i> Perfil</a>
 {% endblock inicio %}
+
 {% block content %}
-<h1>Seja bem-vindo, {{ usuario }}</h1>
-<div class="adminDashboard">
-    <ul>
-        <li><a href="{% url 'alunosDashboard'%}"><button>Gerenciar Alunos</button></a></li>
-        <li><a href="{% url 'pagamentoDashboard'%}"><button>Gerenciar Pagamentos</button></a></li>
-        <li><a href="{% url 'turmasDashboard' %}"><button>Gerenciar Turmas</button></a></li>
-        <li><a href="#"><button>Visualizar Relatórios </button></a></li>
-        <li><a href="{% url 'logout' %}"><button>Logout</button></a></li>
-    </ul>
+<div class="page-container">
+    
+<div id="welcomeAnimation" class="notification">
+    <div class="notiglow"></div>
+    <div class="notiborderglow"></div>
+    <div class="notititle">Seja bem-vindo, <span class="username">{{ usuario }}</span></div>
+    <div class="notibody">O que você gostaria de fazer hoje?</div>
 </div>
+
+
+<div class="dashboard-container">
+    <div class="banner1">
+        <img src="{% static '/img/logobanner.png' %}" alt="Logo da Aplicação" class="banner-logo">
+        
+    </div>
+
+<div class="radioFirst"style="display: flex; justify-content: center;">
+<div class="radio-inputs" style="display: flex; justify-content: center; gap: 15px; font-size: 15px; ">
+    <label class="radio">
+        <input type="radio" name="dashboard" data-url="{% url 'alunosDashboard' %}" />
+        <span class="name">Gerenciar Alunos</span>
+    </label>
+    <label class="radio">
+        <input type="radio" name="dashboard" data-url="{% url 'pagamentoDashboard' %}" />
+        <span class="name">Gerenciar Pagamentos</span>
+    </label>
+    <label class="radio">
+        <input type="radio" name="dashboard" data-url="{% url 'turmasDashboard' %}" />
+        <span class="name">Gerenciar Turmas</span>
+    </label>
+    <label class="radio">
+        <input type="radio" name="dashboard" data-url="{% url 'perfil' %}" />
+        <span class="name">Perfil</span>
+    </label>
+    <label class="radio">
+        <input type="radio" name="dashboard" data-url="{% url 'logout' %}" />
+        <span class="name">Logout</span>
+    </label>
+</div>
+</div>
+
 <div class="feed">
     <h2>Feed de Notícias</h2>
     <table>
@@ -33,5 +66,38 @@
     <div class="feed__empty" style="display: flex; justify-content: center;">
     <a href="{% url "limparFeed" %}"><button class="button" onclick="return confirm('Tem certeza que deseja limpar o feed?');">Limpar feed</button></a></div>
 </div>
+</div>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const welcomePopup = document.getElementById('welcomeAnimation');
 
+    // Verifica se a animação já foi exibida
+    if (!sessionStorage.getItem('welcomeShown')) {
+        // Exibe o pop-up
+        welcomePopup.style.display = 'flex';
+
+        // Define a flag no sessionStorage
+        sessionStorage.setItem('welcomeShown', true);
+
+        // Remove o pop-up após 4 segundos
+        setTimeout(() => {
+            welcomePopup.remove();
+        }, 4000); // 4000ms = 4 segundos
+    } else {
+        // Se a animação já foi exibida, remove o elemento
+        welcomePopup.remove();
+    }
+
+    // Script para a barra de funções
+    document.querySelectorAll('.radio-inputs .radio input').forEach((radio) => {
+        radio.addEventListener('change', () => {
+            if (radio.checked) {
+                const url = radio.getAttribute('data-url');
+                window.location.href = url;
+            }
+        });
+    });
+});
+</script>
 {% endblock content %}

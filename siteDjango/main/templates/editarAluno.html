@@ -2,6 +2,7 @@
 {% block inicio %}
     <a href="{% url 'adminDashboard' %}"><i class="fas fa-home"></i> Início</a>
     <a href="{% url 'perfil' %}"><i class="fas fa-user"></i> Perfil</a>
+
 {% endblock inicio %}
 {% block content %}
 <div class="registrarForm">
@@ -9,12 +10,12 @@
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit" class="btn btn-primary">Salvar</button>
+        <button type="submit" class="blueButton" style= "margin-top: 1rem; margin-bottom: -1rem;">Salvar</button>
     </form>
 </div>
 </body>
 
-<div>
+<div style="display: flex; justify-content: center; margin: 1rem;">
     <a href="{% url 'alunosDashboard' %}"><button class="blueButton"> Voltar</button></a>
 </div>
 

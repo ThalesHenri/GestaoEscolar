@@ -5,20 +5,31 @@
 {% endblock inicio %}
 {% block content %}
 
-<head>
-    <title>Página de Perfil</title>
-
-</head>
-<body>
-
-    <div class="content">
-        <h1>Essa página deve conter as opções de perfil.</h1>
+<div class="profile-container">
+    <div class="profile-header">
+        <h1>Perfil do Usuário</h1>
     </div>
-    <div><p>Editar Perfil / Alterar Nome de Usuário / Alterar Senha e email.</p></div>
-    <div><p>O Fale Conosco/Contato pode ficar no rodapé.</p></div>
 
-</body>
-</html>
+    <!-- Seção de Informações do Usuário -->
+    <div class="profile-section">
+        <h2>Informações Pessoais</h2>
+        <div class="profile-info">
+            <p><strong>Nome:</strong> {{ perfil.usuario.username }}</p>
+            <p><strong>Email:</strong> {{ perfil.usuario.email }}</p>
+            <p><strong>Nome da Escola:</strong> {{ perfil.nome_escola|default:"Nome não definido" }}</p>
+        </div>
+    </div>
 
+    <!-- Botão para editar perfil -->
+
+<div style="display: flex; justify-content: center;">
+    <div class="profile-actions">
+        <a href="{% url 'editar_perfil' %}"><button class="blueButton">Editar Perfil</button></a>
+    </div>
+</div>
+</div>
+
+<div style="padding-bottom: 20px; padding-top: 20px; justify-content: center; display: flex;">
+    <a href="{% url 'adminDashboard' %}"><button>Voltar</button></a></div>
 
 {% endblock content %}

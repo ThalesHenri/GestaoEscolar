@@ -7,7 +7,7 @@ class AlunoForm(forms.ModelForm):
     class Meta:
         model = Aluno
         fields = ['nome', 'idade', 'dia_pagamento',
-                  'responsavel','telefone']  # Altere para 'dia_pagamento'
+                  'responsavel', 'cpf_responsavel', 'telefone']  # Altere para 'dia_pagamento'
         widgets = {
             'nome': forms.TextInput(attrs={'maxlength': 100, 'placeholder': 'Nome completo:'}),
             'idade': forms.NumberInput(attrs={'min': 1}),
@@ -15,6 +15,7 @@ class AlunoForm(forms.ModelForm):
             'dia_pagamento': forms.NumberInput(attrs={'min': 1, 'max': 25,'placeholder': 'Selecione o melhor dia para pagamento.'}),
             'responsavel': forms.TextInput(attrs={'maxlength': 100, 'placeholder': 'Nome completo:'}),
             'telefone': forms.NumberInput(attrs={'min': 11, 'max': 99999999999, 'placeholder': '(00) 00000-0000'}),
+            'cpf_responsavel': forms.TextInput(attrs={'maxlength': 14, 'placeholder': '000.000.000-00'}),  # Novo campo
         }
 
 
