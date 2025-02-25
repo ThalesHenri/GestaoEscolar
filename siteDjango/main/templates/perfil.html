@@ -5,22 +5,31 @@
 {% endblock inicio %}
 {% block content %}
 
-<div class="feed" style="padding-bottom: 20px;">
-    <h1>Perfil do Usuário</h1>
-    <hr>
+<div class="profile-container">
+    <div class="profile-header">
+        <h1>Perfil do Usuário</h1>
+    </div>
 
     <!-- Seção de Informações do Usuário -->
-    <h2>Informações Pessoais</h2>
-    <p><strong>Nome:</strong> {{ perfil.usuario.username }}</p>
-    <p><strong>Email:</strong> {{ perfil.usuario.email }}</p>
-    <p><strong>Nome da Escola:</strong> {{ perfil.nome_escola|default:"Nome não definido" }}</p>
-
-    <hr>
-
-
-</div>
+    <div class="profile-section">
+        <h2>Informações Pessoais</h2>
+        <div class="profile-info">
+            <p><strong>Nome:</strong> {{ perfil.usuario.username }}</p>
+            <p><strong>Email:</strong> {{ perfil.usuario.email }}</p>
+            <p><strong>Nome da Escola:</strong> {{ perfil.nome_escola|default:"Nome não definido" }}</p>
+        </div>
+    </div>
 
     <!-- Botão para editar perfil -->
-    <div style="padding-bottom: 20px; padding-top: 20px; justify-content: center; display: flex;">
-    <a href="{% url 'editar_perfil' %}"><button class="blueButton">Editar Perfil</button></a></div>
+
+<div style="display: flex; justify-content: center;">
+    <div class="profile-actions">
+        <a href="{% url 'editar_perfil' %}"><button class="blueButton">Editar Perfil</button></a>
+    </div>
+</div>
+</div>
+
+<div style="padding-bottom: 20px; padding-top: 20px; justify-content: center; display: flex;">
+    <a href="{% url 'adminDashboard' %}"><button>Voltar</button></a></div>
+
 {% endblock content %}

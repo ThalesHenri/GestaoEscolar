@@ -17,23 +17,39 @@
     padding: 0;
     box-sizing: border-box;
 }
-body {
+body, html {
     font-family: 'Roboto', sans-serif;
-    background: rgb(34,193,195);
+    background: #22c1c3;
     background: linear-gradient(0deg, rgba(34,193,195,1) 0%, #dbfa50 65%);
+    background-attachment: fixed; /* Fixa o background para evitar quebras */
     color: var(--text-color);
     line-height: 1.6;
     margin: 0; /* Remove margens padrão */
     min-height: 100vh; /* Garante que o body ocupe toda a altura da tela */
     display: flex;
     flex-direction: column; /* Útil para layouts com footer */
-    padding-bottom: 20px;
+
+
+    padding: 0;
+    width: 100%;
+    height: 100%;
 }
 
 
 body p{
     font-size: 20px;
 }
+
+main {
+    display: flex;
+    min-height: 100vh; /* Ocupa toda a altura da tela */
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center;
+    margin-top: 2rem;
+}
+
+
 
  
 header {
@@ -49,9 +65,11 @@ header h1 {
 nav {
     display: flex;
     justify-content: center;
-    background-color: #1384a7c5;
+    background-color: #3086b8dc;
     box-shadow: #0056b3;
+    font-weight: bold; /* Destaque o link ativo */
 }
+
 nav a {
     color: var(--white-color);
     text-decoration: none;
@@ -59,7 +77,10 @@ nav a {
     font-weight: 500;
 }
 nav a:hover {
-    background-color: var(--primary-color);
+    background-color: white;
+
+    font-weight: 50px;
+    color: #3086b8dc;
 }
 
 .nav a.active {
@@ -67,12 +88,170 @@ nav a:hover {
     border-bottom: 2px solid #ffdd57; /* Linha abaixo do link ativo */
 }
 
+/* -------------------------------------------------------------------------------*/
+
+  
+  .nav .radio input + .name:hover {
+    scale: 120%;
+    color: #e4f316;
+  }
+  
+  .nav .radio input:hover + .name:hover {
+
+    color: #1d1d29;
+  }
+  
+  .nav .radio input:hover + .name::after,
+  .nav .radio input:hover + .name::before {
+    content: "";
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    bottom: 0;
+  }
+  
+  .nav .radio input:hover + .name::after {
+    right: -10px;
+    border-bottom-left-radius: 300px;
+    box-shadow: -3px 3px 0px 3px #fcfcfc;
+  }
+  
+  .nav .radio input:hover + .name::before {
+    left: -10px;
+    border-bottom-right-radius: 300px;
+    box-shadow: 3px 3px 0px 3px #fcfcfc;
+  }
+
+/* -------------------------------------------------------------------------------*/
+
+/* Estilos para o Banner */
+.banner1 {
+    width: 100%; /* Define a largura do banner */
+    max-height: 80%; /* Ajuste conforme necessário */
+    display: flex;
+    justify-content: center;
+    border-radius: 20px;
+    align-items: center;
+    overflow: hidden; /* Evita que o conteúdo extrapole o tamanho definido */
+    position: relative; /* Permite posicionar a mensagem de boas-vindas dentro do banner */
+}
+
+.banner-logo {
+    width: auto; /* Ajusta a largura proporcionalmente */
+    height: 200px; /* Ajuste conforme necessário */
+    border-radius: 20px;
+    max-width: 100%; /* Garante que a imagem não ultrapasse o container */
+}
+
+
+
+/* Estilos para o Pop-up de Boas-Vindas */
+/* Estilos para o Pop-up de Boas-Vindas */
+.notification {
+    display: flex;
+    flex-direction: column;
+    isolation: isolate;
+    position: fixed; /* Fixa o pop-up na tela */
+    top: 80px; /* Distância do topo */
+    right: 20px; /* Distância da direita */
+    width: 18rem; /* Largura do pop-up */
+    height: 8rem; /* Altura do pop-up */
+    background: #080808;
+    border-radius: 1rem;
+    overflow: hidden;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 16px;
+    --gradient: linear-gradient(to bottom, #2eadff, #3d83ff, #7e61ff);
+    --color: #32a6ff;
+    z-index: 1000; /* Garante que o pop-up fique acima de tudo */
+    animation: fadeInOut 8s ease-in-out forwards; /* Animação de entrada e saída */
+    display: none; /* Inicialmente oculto */
+}
+
+.notification:before {
+    position: absolute;
+    content: "";
+    inset: 0.0625rem;
+    border-radius: 0.9375rem;
+    background: #fefeff;
+    z-index: 2;
+}
+
+.notification:after {
+    position: absolute;
+    content: "";
+    width: 0.25rem;
+    inset: 0.65rem auto 0.65rem 0.5rem;
+    border-radius: 0.125rem;
+    background: var(--gradient);
+    transition: transform 300ms ease;
+    z-index: 4;
+}
+
+.notititle {
+    color: var(--color);
+    padding: 0.65rem 0.25rem 0.4rem 1.25rem;
+    font-weight: 500;
+    font-size: 1.1rem;
+    transition: transform 300ms ease;
+    z-index: 5;
+}
+
+.notibody {
+    color: #99999d;
+    padding: 0 1.25rem;
+    transition: transform 300ms ease;
+    z-index: 5;
+}
+
+.notiglow,
+.notiborderglow {
+    position: absolute;
+    width: 20rem;
+    height: 20rem;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle closest-side at center, white, transparent);
+    opacity: 0;
+    transition: opacity 300ms ease;
+}
+
+.notiglow {
+    z-index: 3;
+}
+
+.notiborderglow {
+    z-index: 1;
+}
+
+/* Animação de entrada e saída */
+@keyframes fadeInOut {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    20% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    80% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+}
+
+
+
 
 .parteCima {
     margin: 0 auto;
     max-width: 500px;
-    background: #128091;
+
     margin: 0 auto;
+
 
 }
 
@@ -91,12 +270,15 @@ nav a:hover {
 .alunoDetalhes table {
     width: 100%;
     border-collapse: collapse;
+    
 }
 
 .alunoDetalhes td {
     padding: 10px;
     border-bottom: 1px solid #ddd;
-    font-size: 20px; /* Increased font size */
+    font-size: 18px; /* Increased font size */
+    max-width: 100%; /* Garante que o botão não ultrapasse a célula */
+    padding: 5px 10px; /* Reduz o espaço interno do botão */
 }
 
 .alunoDetalhes td:first-child {
@@ -113,22 +295,43 @@ nav a:hover {
 
 .alunoDetalhes tr:last-child td {
     border-bottom: none;
+
 }
 
 
 
 
-main {
-    padding: 2rem;
-    text-align: center;
-}
+
+
+
+
+
 .comece {
-    background-color:#2fb3bd5d;
+    align-items: flex-start; /* Alinha os itens ao topo */
     padding: 2rem;
     margin-top: 2rem;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(165, 31, 31, 0.1);
+    width: 50%;
+    box-shadow: 20px 20px 60px #fafcfb25, -20px -20px 60px #21bcc773;
+    border-radius: 20px;
+    transition: background-color 1.5s ease, transform 0.3s ease; /* Transição suave */
+
 }
+
+.comece:hover {
+    transform: scale(1.00); /* Aumenta o tamanho em 5% */
+    background-color: #21bcc731; /* Altera a cor de fundo */
+
+    background-image: url('');
+} 
+
+.comeceLogo {
+    width: auto; /* Ajusta a largura proporcionalmente */
+    height: 100px; /* Ajuste conforme necessário */
+    border-radius: 20px;
+    max-width: 100%; /* Garante que a imagem não ultrapasse o container */
+
+}
+
 .comece p{
     margin-top: 2.5rem;
 }
@@ -157,6 +360,121 @@ main {
     gap: 30px;
 
 }
+
+.containerDescricao {
+    display: flex; /* Ativa o Flexbox */
+    justify-content: space-between; /* Espaço entre texto e card */
+    align-items: flex-start; /* Alinha os itens ao topo */
+    width: 100%; /* Ocupa toda a largura da página */
+    padding: 5rem; /* Espaçamento interno */
+    
+}
+
+/* Texto à esquerda */
+.descricao {
+    width: 50%; /* Ocupa 40% da largura */
+    text-align: justify;
+    color:#111313d7;
+    margin-top: 2rem;
+    margin-left: 5rem;
+    padding: 5rem; /* Padding interno 
+    background-color: #3fecb3c7;*/
+    
+    box-shadow: 20px 20px 60px #1bc46fa6, -20px -20px 60px #21bcc7b6;
+    border-radius: 20px;
+    transition: background-color 1.5s ease, transform 0.3s ease; /* Transição suave */
+}
+
+.descricao:hover {
+    transform: scale(1.01); /* Aumenta o tamanho em 5% */
+    background-color: #21bcc73b; /* Altera a cor de fundo */
+
+    background-image: url('');
+} 
+
+.descricao h1 {
+    
+    font-size: 1,5rem; /* Tamanho do título */
+    margin-bottom: 1rem; /* Espaçamento inferior */
+}
+
+.descricao p {
+    font-size: 18px; /* Tamanho do parágrafo */
+    line-height: 1.5; /* Espaçamento entre linhas */
+}
+
+
+
+/* >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Estilos BARRA DE FUNÇÕES <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< */
+.radio-inputs {
+    position: relative;
+    display: flex;
+    border-radius: 0.5rem;
+    background-color: #3086b8dc;
+    box-sizing: border-box;
+    font-size: 14px;
+    width: 80%;
+    padding: 1rem 1rem 0 1rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    font-weight: bold; /* Destaque o link ativo */
+    border-bottom: 2px solid #6196d3d5; /* Linha abaixo do link ativo */
+  }
+  
+  .radio-inputs .radio input {
+    display: none;
+  }
+  
+  .radio-inputs .radio .name {
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+    border: none;
+    padding: 0.5rem 0.8rem;
+    color: #f0f0f1;
+    transition: all 0.15s ease-in-out;
+    position: relative;
+  }
+  
+  .radio-inputs .radio input:hover + .name {
+    background-color: #fcfcfc;
+    font-weight: 600;
+  }
+  
+  .radio-inputs .radio input + .name:hover {
+    scale: 120%;
+    color: #e4f316;
+  }
+  
+  .radio-inputs .radio input:hover + .name:hover {
+
+    color: #3086b8dc;
+  }
+  
+  .radio-inputs .radio input:hover + .name::after,
+  .radio-inputs .radio input:hover + .name::before {
+    content: "";
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    bottom: 0;
+  }
+  
+  .radio-inputs .radio input:hover + .name::after {
+    right: -10px;
+    border-bottom-left-radius: 300px;
+    box-shadow: -3px 3px 0px 3px #fcfcfc;
+  }
+  
+  .radio-inputs .radio input:hover + .name::before {
+    left: -10px;
+    border-bottom-right-radius: 300px;
+    box-shadow: 3px 3px 0px 3px #fcfcfc;
+  }
+
 .feed {
     width: 80%;
     margin: 20px auto;
@@ -317,7 +635,7 @@ a {
 
 /* -------------------------------------------->>>>>>>>>>> FOOTER FOOTER FOOTER <<<<<<<< --------------------*/
 footer {
-    position: fixed; /* Fixa o footer na tela */
+    position: static; /* Fixa o footer na parte inferior da página */
     bottom: 0; /* Posiciona o footer na parte inferior */
     left: 0; /* Alinha o footer à esquerda */
     width: 100%; /* Ocupa toda a largura da tela */
@@ -326,6 +644,7 @@ footer {
     text-align: center; /* Centraliza o texto */
     box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1); /* Sombra para efeito visual */
     z-index: 1000; /* Garante que o footer fique acima de outros elementos */
+    margin: 0; /* Remove margens padrão */
 }
 
 .Box{
@@ -389,6 +708,7 @@ li a{
     border-collapse: collapse;
     width: 100%;
     margin-top: 20px;
+
 }
 
 .table th, .table td {
@@ -403,15 +723,17 @@ li a{
 }
 
 
-.tabelaMensalidades{
-    
+.tabelaMensalidades {
     background-color: var(--white-color);
-    table-layout:fixed;
+    table-layout: fixed;
     padding: 15px;
     border: 20px solid #ffffff;
     border-collapse: collapse;
-    width: 100%;
+    width: calc(100% - 8rem); /* Ajusta a largura para considerar as margens */
+    margin-left: 4rem;
+    margin-right: 4rem;
     margin-top: 20px;
+    box-sizing: border-box; /* Inclui padding e borda na largura total */
 }
 
 .tabelaMensalidades th {
@@ -611,6 +933,8 @@ li a{
 
 #form-wrapper, #aluno-list {
     background: #fffcfc;
+    margin-left: 4rem;
+    margin-right: 4rem;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
@@ -626,6 +950,7 @@ li a{
 /* Formulário */
 #form-turma {
     display: flex;
+    justify-content: center;
     flex-direction: column;
     gap: 15px;
 }
@@ -633,12 +958,14 @@ li a{
 
 .form-group {
     display: flex;
+    justify-content: center;
     flex-direction: column;
 }
 
 /* Alinhamento dos campos do formulário */
 .form-row {
     display: flex;
+    justify-content: center;
     flex-wrap: wrap;
     gap: 10px;
 }
@@ -664,23 +991,21 @@ li a{
 
 /* Estilo do contêiner do formulário */
 .login {
-    max-width: 400px;
-    margin: 0 auto;
-    margin-top: 30px;
-    margin-bottom: 20px;
-    padding: 50px 20px;
+    max-width: 100%; /* Largura máxima */
+    width: 400px; /* Largura fixa para o formulário */
+    margin: 0 auto; /* Centraliza o formulário */
+    margin-top: 50px; /* Espaçamento superior */
+    padding: 50px 20px; /* Reduzi o padding vertical */
+    
 
     background-color: #f9f9f9;
     border: 1px solid #ddd;
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    min-height: 200px; /* Define uma altura mínima */
-    max-height: 440px; /* Define uma altura máxima */
     text-align: center; /* Centraliza o texto */
     opacity: 0; /* Inicialmente invisível */
     transform: translateY(20px); /* Move o formulário 20px para baixo */
     animation: fadeInUp 0.5s ease-out forwards; /* Animação de aparecer */
-    box-shadow: 20px 20px 60px #bebebe, -20px -20px 60px #ffffff;
 }
 
 
@@ -714,7 +1039,12 @@ li a{
 
 .login .usuario-label {
     font-size: 20px; /* Tamanho da fonte */
-    margin-bottom: -17px; /* Ajuste do espaçamento */
+    margin-bottom: -12px; /* Ajuste do espaçamento */
+}
+
+.login .senha-label {
+    font-size: 20px; /* Tamanho da fonte */
+    margin-bottom: 5px; /* Ajuste do espaçamento */
 }
 
 
@@ -722,7 +1052,7 @@ li a{
 .login input {
     width: 100%; /* Ocupa toda a largura disponível */
     padding: 8px; /* Reduz o padding interno */
-    margin-bottom: 05px; /* Reduz o espaçamento abaixo do campo */
+    margin-bottom: 5px; /* Reduz o espaçamento abaixo do campo */
     border: 1px solid #ccc; /* Borda do campo */
     border-radius: 4px; /* Cantos arredondados */
     font-size: 6px; /* Tamanho da fonte */
@@ -800,18 +1130,16 @@ li a{
 
 
 .registrarForm {
-    max-width: 400px; /* Largura máxima do formulário */
-    margin: 0 auto; /* Centraliza o formulário na tela  -*/
-    margin-top: 30px;
-    margin-bottom: 20px;
-    padding: 20px;
-    padding-bottom: 40px;
-    background-color: #f9f9f9; /* Cor de fundo do formulário */
-    border: 1px solid #ddd; /* Borda ao redor do formulário */
-    border-radius: 8px; /* Cantos arredondados */
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    max-width: 100%; /* Largura máxima */
+    width: 400px; /* Largura fixa para o formulário */
+    margin: 0 auto; /* Centraliza o formulário */
+    margin-top: 20px; /* Espaçamento superior */
+    padding: 50px 20px; /* Reduzi o padding vertical */
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     text-align: center; /* Centraliza o texto */
-    padding-top: 30px;
     opacity: 0; /* Inicialmente invisível */
     transform: translateY(20px); /* Move o formulário 20px para baixo */
     animation: fadeInUp 0.5s ease-out forwards; /* Animação de aparecer */
@@ -824,6 +1152,14 @@ li a{
         transform: translateY(0); /* Move o formulário para a posição original */
     }
 }
+
+.registrarForm h1 {
+    display: flex;
+    justify-content: center;
+    margin-top: -40px; /* Move o título para cima, ajustando o valor conforme necessário */
+    margin-bottom: 10px;
+}
+
 
 .registrarForm label {
     display: flex; /* Faz o label ocupar a linha inteira */
@@ -839,7 +1175,7 @@ li a{
 .registrarForm input {
     width: 100%; /* Ocupa toda a largura disponível */
     padding: 10px; /* Espaçamento interno */
-    margin-bottom: 15px; /* Espaçamento abaixo do campo */
+    margin-bottom: 10px; /* Espaçamento abaixo do campo */
     border: 1px solid #ccc; /* Borda do campo */
     border-radius: 4px; /* Cantos arredondados */
     font-size: 16px; /* Tamanho da fonte */
@@ -918,7 +1254,8 @@ li a{
 .pagamento-select {
     position: relative;
     display: flex;
-    width: 57%;
+    width: 100%;
+    text-align: center;
     padding: 10px;
     border: 2px solid var(--primary-color);
     border-radius: 5px;
@@ -932,6 +1269,7 @@ li a{
 /* Efeito ao passar o mouse */
 .pagamento-select:hover {
     border-color: var(--secondary-color);
+    
 }
 
 /* Efeito ao focar */
@@ -939,6 +1277,8 @@ li a{
     outline: none;
     border-color: var(--highlight-color);
     box-shadow: 0 0 5px var(--highlight-color);
+    text-align: auto;
+    
 }
 
   
@@ -971,7 +1311,7 @@ li a{
   }
   
   .buttonPago::before {
-    width: 200px;
+    width: 100%;
     height: 140px;
     position: absolute;
     content: "";
@@ -1027,22 +1367,18 @@ li a{
 
 
    /* ------------------------------------------------ CARD DO INDEX <<<<<<<<<<<<<<<<<<<<<< */ 
-.card {
+   .card {
     --white: hsl(0, 0%, 100%);
     --black: hsl(0, 0%, 100%);
     --paragraph: hsl(0, 0%, 83%);
     --primary: hsl(202, 79%, 36%);
 
     position: relative;
-    justify-items: center;
-
-
     display: flex;
     flex-direction: column;
-    gap: 1rem;
-    padding: 1rem;
-    width: 100%;
-    height: 90%;
+    gap: 0.75rem; /* Reduzido o espaçamento entre elementos */
+    padding: 0.75rem; /* Reduzido o padding interno */
+    width: 40%; /* Reduzido a largura do card */
     background-color: rgba(19, 104, 93, 0.555);
     background-image: radial-gradient(
         at 88% 40%,
@@ -1057,12 +1393,15 @@ li a{
   
     border-radius: 1rem;
     margin-top: 1rem;
+    margin-left: auto; /* Card alinhado à direita */
     box-shadow: 0px -16px 24px 0px rgba(255, 255, 255, 0.25) inset;
-  }
+}
+
+
 
   .card .card__list_item .list_text {
     display: inline-block;
-    font-size: 18px!important; /* Define o tamanho da fonte */
+    font-size: 17px!important; /* Define o tamanho da fonte */
     color: #ffffff; /* Define a cor do texto */
   }
 
@@ -1111,7 +1450,7 @@ li a{
   .card .card_title__container .card_title {
     display: flex;
     justify-content: right;
-    margin-right: 15rem;
+    margin-right: 10rem;
     margin-top: 1rem;
     font-size: 1.5rem;
     color: var(--white);
@@ -1128,16 +1467,7 @@ li a{
     display: flex;
     justify-content: right;
     margin-top: 0.25rem;
-    margin-right: 8rem;
-    font-size: 1rem;
-    color: rgb(255, 255, 255);
-  }
-
-  .parte_esquerda{
-    display: flex;
-    justify-content: left;
-    margin-top: 0.5rem;
-    margin-right: 8rem;
+    margin-right: 5rem;
     font-size: 1rem;
     color: rgb(255, 255, 255);
   }
@@ -1151,10 +1481,11 @@ li a{
     flex-direction: column;
     align-items:last baseline; /* Alinha os itens no centro da coluna */
     justify-content: center; /* Pode ser necessário ajustar se a altura não for suficiente */
-    margin-right: 10rem;
+    margin-right: 5.5rem;
     gap: 0.5rem;
 
 }
+
 .card .card__list .card__list_item {
     display: flex;
     align-items: left;
@@ -1211,3 +1542,187 @@ li a{
       radial-gradient(at 41% 94%, hsl(189, 97%, 36%) 0px, transparent 85%),
       radial-gradient(at 100% 99%, hsl(188, 94%, 13%) 0px, transparent 85%);
   }
+
+
+
+
+
+
+
+
+
+/* Responsividade: em telas pequenas, os formulários ficam em coluna */
+@media (max-width: 768px) {
+    .editar-perfil-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .form-container {
+        width: 100%;
+        max-width: 100%;
+    }
+}
+
+
+.cardPagamento-container {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    margin: 2rem;
+  }
+  
+  .cardPagamento {
+    width: 190px;
+    height: 254px;
+    border-radius: 20px;
+    background: #f5f5f5;
+    position: relative;
+    padding: 1.8rem;
+    border: 4px solid #2baf0abd;
+    transition: 0.5s ease-out;
+    overflow: visible;
+  }
+  
+  .cardPagamentoAtrasado {
+    background: #fff0f0; /* Cor de fundo personalizada */
+    border-color: #ff6b6b; /* Cor da borda personalizada */
+  }
+  
+  .cardPagamentoAtrasado .text-title {
+    color: #ff6b6b; /* Cor do título personalizada */
+  }
+  
+  .cardPagamentoAtrasado .card-button {
+    background-color: #ff6b6b; /* Cor do botão personalizada */
+  }
+  
+  .cardPagamentoAtrasado:hover {
+    border-color: #ff6b6b; /* Cor da borda no hover */
+    box-shadow: 0 4px 18px 0 rgba(255, 107, 107, 0.25); /* Sombra no hover */
+  }
+  
+  .card-details {
+    color: black;
+    height: 100%;
+    gap: 0.5em;
+    display: grid;
+    place-content: center;
+    text-align: center;
+  }
+  
+  .card-button {
+    transform: translate(-50%, 125%);
+    width: 60%;
+    border-radius: 1rem;
+    border: none;
+    background-color: #008bf8;
+    color: #fff;
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    opacity: 0;
+    transition: 0.3s ease-out;
+    cursor: pointer;
+  }
+  
+  .text-body {
+    color: rgb(134, 134, 134);
+  }
+  
+  .text-title {
+    font-size: 1.5em;
+    font-weight: bold;
+  }
+  
+  /* Hover */
+  .cardPagamento:hover {
+    border-color: #008bf8;
+    box-shadow: 0 4px 18px 0 rgba(0, 0, 0, 0.25);
+  }
+  
+  .cardPagamento:hover .card-button {
+    transform: translate(-50%, 50%);
+    opacity: 1;
+  }
+
+
+/* Estilos gerais */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+.profile-container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.profile-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.profile-header h1 {
+    font-size: 2.5em;
+    color: #3086b8dc;
+    margin-bottom: 10px;
+}
+
+.profile-section {
+    margin-bottom: 30px;
+}
+
+.profile-section h2 {
+    font-size: 1.8em;
+    color: #333;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #008bf8;
+    padding-bottom: 5px;
+}
+
+.profile-info {
+    background-color: #f5f5f5;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.profile-info p {
+    font-size: 1.1em;
+    margin: 10px 0;
+    color: #555;
+}
+
+.profile-info strong {
+    color: #333;
+}
+
+.profile-actions {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.blueButton {
+    background-color: #008bf8;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1em;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.blueButton:hover {
+    background-color: #0073cc;
+}

@@ -1,16 +1,19 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404, redirect
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
+from django.contrib.auth import authenticate, update_session_auth_hash
 from django.db.models.functions import ExtractMonth
 from django.http import JsonResponse
 import json
 import os
 from django.db.models import Q, Sum, F, Case, When
 from django.contrib.auth.models import User
+from django.contrib.messages import get_messages
 from django.contrib import messages
 from .models import Turma, Aluno, Mensalidade, Perfil, Feed
 from datetime import date
 from django.utils.timezone import now
+
 from .forms import *
 from .forms import AlunoForm
 from django.contrib.auth.decorators import login_required
@@ -33,42 +36,62 @@ def editar_perfil(request):
     perfil, created = Perfil.objects.get_or_create(usuario=request.user)
 
     if request.method == 'POST':
-        # Atualiza o nome de usuário e o e-mail
-        novo_username = request.POST.get('nome', perfil.usuario.username)
-        novo_email = request.POST.get('email', perfil.usuario.email)
-        nova_senha = request.POST.get('senha', None)
+        # Verifica qual formulário foi enviado
+        if 'nome' in request.POST:  # Formulário de edição de perfil
+            # Atualiza o nome de usuário, nome da escola e e-mail
+            novo_username = request.POST.get('nome', perfil.usuario.username)
+            nome_escola = request.POST.get('nome_escola', perfil.nome_escola)
+            novo_email = request.POST.get('email', perfil.usuario.email)
 
-        # Verifica se o nome de usuário já existe
-        if User.objects.exclude(id=perfil.usuario.id).filter(username=novo_username).exists():
-            messages.error(request, "Nome de usuário já está em uso.")
-            return redirect('editar_perfil')
+            # Verifica se o nome de usuário já existe
+            if User.objects.exclude(id=perfil.usuario.id).filter(username=novo_username).exists():
+                messages.error(request, "Nome de usuário já está em uso.")
+                return redirect('editar_perfil')
 
-        # Verifica se o email já existe
-        if User.objects.exclude(id=perfil.usuario.id).filter(email=novo_email).exists():
-            messages.error(request, "E-mail já está em uso.")
-            return redirect('editar_perfil')
+            # Verifica se o email já existe
+            if User.objects.exclude(id=perfil.usuario.id).filter(email=novo_email).exists():
+                messages.error(request, "E-mail já está em uso.")
+                return redirect('editar_perfil')
 
-        perfil.usuario.username = novo_username
-        perfil.usuario.email = novo_email
-        perfil.usuario.save()  # Agora as alterações são salvas
-
-        # Atualiza o nome da escola, se fornecido
-        perfil.nome_escola = request.POST.get('nome_escola', perfil.nome_escola)
-
-        # Atualiza a senha, se uma nova senha for informada
-        if nova_senha:
-            perfil.usuario.set_password(nova_senha)
+            perfil.usuario.username = novo_username
+            perfil.usuario.email = novo_email
+            perfil.nome_escola = nome_escola
             perfil.usuario.save()
-            messages.success(request, "Senha alterada com sucesso! Faça login novamente.")
-            return redirect('login')  # Redireciona para o login
+            perfil.save()
 
-        perfil.save()
+            # Registro no feed
+            Feed.objects.create(
+                acao="O perfil do usuário foi atualizado!", data=timezone.now())
 
-        # Registro no feed
-        Feed.objects.create(acao="O perfil foi atualizado!", data=timezone.now())
+            messages.success(request, "Dados atualizados com sucesso!")
+            return redirect('editar_perfil')
 
-        messages.success(request, "Dados atualizados com sucesso!")
-        return redirect('editar_perfil')
+        elif 'senha_atual' in request.POST:  # Formulário de alteração de senha
+            senha_atual = request.POST.get('senha_atual')
+            nova_senha = request.POST.get('nova_senha')
+            confirmar_senha = request.POST.get('confirmar_senha')
+
+            # Verifica se a senha atual está correta
+            if not authenticate(username=request.user.username, password=senha_atual):
+                messages.error(request, "Senha atual incorreta.")
+                return redirect('editar_perfil')
+
+            # Verifica se a nova senha e a confirmação coincidem
+            if nova_senha != confirmar_senha:
+                messages.error(request, "As senhas não coincidem.")
+                return redirect('editar_perfil')
+
+            # Atualiza a senha
+            request.user.set_password(nova_senha)
+            request.user.save()
+            update_session_auth_hash(request, request.user)  # Mantém o usuário logado
+
+            # Registro no feed
+            Feed.objects.create(
+                acao="A senha do usuário foi alterada!", data=timezone.now())
+
+            messages.success(request, "Senha alterada com sucesso!")
+            return redirect('editar_perfil')
 
     return render(request, 'editar_perfil.html', {'perfil': perfil})
 
@@ -121,7 +144,7 @@ def logout(request):
     auth_logout(request)
     feed = Feed(acao="Usuário foi deslogado!", data=timezone.now())
     feed.save()
-    return redirect('login')
+    return render(request, 'logout_redirect.html')  # Usa o template de redirecionamento
 
 
 @login_required
@@ -300,6 +323,7 @@ def addAluno(request, turma_id):
 def alunoDetalhes(request, aluno_id):
     aluno = get_object_or_404(Aluno, id=aluno_id)
     mensalidades = aluno.mensalidades.order_by("data_vencimento").all()
+
 
     hoje = date.today()
 

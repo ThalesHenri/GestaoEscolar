@@ -23,8 +23,7 @@ class Aluno(models.Model):
     nome = models.CharField(max_length=100)
     responsavel = models.CharField(max_length=100, verbose_name="Responsável")
     cpf_responsavel = models.CharField(max_length=14, verbose_name="CPF do Responsável", blank=True, null=True)  # Novo campo
-    telefone = models.DecimalField(
-        max_digits=11, decimal_places=0, verbose_name="Telefone")
+    telefone = models.DecimalField(max_digits=11, decimal_places=0, verbose_name="Telefone")
     idade = models.PositiveIntegerField()
     dia_pagamento = models.PositiveIntegerField()
     turma = models.ForeignKey(

@@ -4,16 +4,33 @@
     <a href="{% url 'perfil' %}"><i class="fas fa-user"></i> Perfil</a>
 {% endblock inicio %}
 {% block content %}
-<div class="pagamento_options" style="display: flex; margin: 2rem; gap: 2rem; justify-content: center;">
 
-        <button onclick="mostrarTabela('atraso')">Em Atraso</button>
-        <!-- <button onclick="mostrarTabela('aberto')">Em Aberto</button> -->
-        <button onclick="mostrarTabela('pago')">Pago</button>
-    
+<div class="titulo-secao">
+    <h4>Verificação de Pagamentos</h4>
 </div>
 
+<div class="cardPagamento-container">
+    <div class="cardPagamento cardPagamentoAtrasado">
+      <div class="card-details">
+        <p class="text-title">Em Atraso</p>
+        <p class="text-body">Verifique os pagamentos em atraso</p>
+      </div>
+      <button class="card-button" onclick="mostrarTabela('atraso')">Ver Tabela</button>
+    </div>
+  
+    <div class="cardPagamento">
+      <div class="card-details">
+        <p class="text-title">Pago</p>
+        <p class="text-body">Verifique os pagamentos concluídos</p>
+      </div>
+      <button class="card-button" onclick="mostrarTabela('pago')">Ver Tabela</button>
+    </div>
+  </div>
+
+
+
 <div id="tabela-atraso" class="tabela-mensalidades" style="display: none;">
-    <h2>Mensalidades em Atraso</h2>
+    <h2>Mensalidades em Atraso:</h2>
     <table class="tabelaMensalidades">
         <thead>
             <tr>
@@ -25,6 +42,7 @@
                 <th>Data de Vencimento</th>
                 <th>Data do Pagamento</th>
                 <th>Status</th>
+                <!--<th>Ações</th>-->
             </tr>
         </thead>
         <tbody>
@@ -73,7 +91,7 @@
 </div> -->
 
 <div id="tabela-pago" class="tabela-mensalidades" style="display: none;">
-    <h2>Mensalidades Pagas</h2>
+    <h2>Mensalidades Pagas:</h2>
     <table class="tabelaMensalidades">
         <thead>
             <tr>
@@ -105,14 +123,18 @@
 </div>
 
 <script>
-    function mostrarTabela(status) {
-        // Esconde todas as tabelas
-        const tabelas = document.querySelectorAll('.tabela-mensalidades');
-        tabelas.forEach(tabela => tabela.style.display = 'none');
+function mostrarTabela(tipo) {
+  // Esconde todas as tabelas
+  document.querySelectorAll('[id^="tabela-"]').forEach(tabela => {
+    tabela.style.display = 'none';
+  });
 
-        // Mostra a tabela correspondente ao status
-        document.getElementById(`tabela-${status}`).style.display = 'block';
-    }
+  // Exibe a tabela correspondente ao tipo clicado
+  const tabela = document.getElementById(`tabela-${tipo}`);
+  if (tabela) {
+    tabela.style.display = 'block';
+  }
+}
 </script>
 <div style="padding-bottom: 20px; padding-top: 20px; justify-content: center; display: flex;">
 <a href="{% url 'adminDashboard' %}"><button>Voltar</button></a></div>

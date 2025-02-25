@@ -2,9 +2,15 @@
 {% block inicio %}
     <a href="{% url 'adminDashboard' %}"><i class="fas fa-home"></i> Início</a>
     <a href="{% url 'perfil' %}"><i class="fas fa-user"></i> Perfil</a>
+
 {% endblock inicio %}
 
 {% block content %}
+
+<div class="titulo-secao">
+    <h4>Lista de Alunos Cadastrados</h4>
+</div>
+
 <table class="tabelaMensalidades">
     <tr>
         <th></th>

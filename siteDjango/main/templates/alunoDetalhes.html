@@ -7,37 +7,42 @@
     <body>
         <div class="container mt-4">
             <div class="parteCima">
-            <div class="alunoDetalhes">
-                <table>
-                    <tr>
-                        <td><strong>Aluno:</strong></td>
-                        <td>{{ aluno.nome }}</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Idade:</strong></td>
-                        <td>{{ aluno.idade }} anos</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Responsável:</strong></td>
-                        <td>{{ aluno.responsavel }}</td>
-                    </tr>
-                    <tr>
-                        <td><strong>CPF do Responsável:</strong></td>
-                        <td>{{ aluno.cpf_responsavel }}</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Telefone:</strong></td>
-                        <td>{{ aluno.telefone }}</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Ações:</strong></td><td>
-                        <!-- Botão único para aplicar desconto -->
-                            <a href="{% url 'aplicarDesconto' aluno.id %}"><button class="blueButton">Aplicar desconto</button></a>
-                        </td>
-                    </tr>
-                </table>
-        </div>
-        </div>
+                <div class="alunoDetalhes">
+                    <table class="alunoTable">
+                        <tr>
+                            <td><strong>Aluno:</strong></td>
+                            <td>{{ aluno.nome }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Idade:</strong></td>
+                            <td>{{ aluno.idade }} anos</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Responsável:</strong></td>
+                            <td>{{ aluno.responsavel }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>CPF do Responsável:</strong></td>
+                            <td>{{ aluno.cpf_responsavel }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Telefone:</strong></td>
+                            <td>{{ aluno.telefone }}</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Ações:</strong></td>
+                            <td>
+                                <a href="{% url 'editarAluno' aluno_id=aluno.id %}">
+                                    <button class="button">Editar Aluno</button></a>
+                                <a href="{% url 'aplicarDesconto' aluno.id %}">
+                                    <button class="buttonPago" style="margin-top: 10px; margin-bottom: -10px;">Aplicar desconto</button>
+                                </a>
+                            </td>
+
+                        </tr>
+                    </table>
+                </div>
+            </div>
             <h2 style="font-size: 30px;">Mensalidades</h2>
             <table class="tabelaMensalidades">
                 <thead>
