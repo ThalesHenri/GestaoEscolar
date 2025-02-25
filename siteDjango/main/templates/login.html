@@ -4,6 +4,7 @@
 {% block content %}
 
 
+    
     <form method="post" class="login" action="{% url 'login' %}">
         <div class="bg"></div>
         <div class="blob"></div>
@@ -12,7 +13,7 @@
         <label for="username" class="usuario-label">Usuário:</label>
         <input type="text" name="nome" placeholder="Nome de Usuário" style="margin-top: 5%; font-size: 15px">
         <br>
-        <label for="password" style="font-size: 20px">Senha: </label>
+        <label for="password" class="senha-label" style="font-size: 20px">Senha: </label>
         <input type="password" name="senha" placeholder="Senha" style="font-size: 15px">
         <br>
         <button class="buttonEntrar" style="font-size: 20px">Entrar</button>
@@ -26,3 +27,8 @@
         <a href="{% url "home" %}"><button class="blueButton"> Voltar</button></a>
     </div>
 {% endblock content %}
+
+<script>
+    // Remove a flag do localStorage ao carregar a página de login
+    localStorage.removeItem('welcomeShown');
+</script>
