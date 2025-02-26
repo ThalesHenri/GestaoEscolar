@@ -24,5 +24,7 @@ urlpatterns = [
     path('perfil/', views.perfil, name="perfil"),
     path('aluno/<int:aluno_id>/aplicar_desconto/', aplicarDesconto, name='aplicarDesconto'),
     path('editar_perfil/', editar_perfil, name='editar_perfil'),
+    path('alterarSenha/', views.alterarSenha, name='alterarSenha'),
+    path('verificarUsuario/', views.verificarUsuario, name='verificarUsuario'),
     
 ]

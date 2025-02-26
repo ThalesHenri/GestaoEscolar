@@ -140,11 +140,52 @@ def login(request):
     return render(request, 'login.html')
 
 
+@login_required
 def logout(request):
     auth_logout(request)
     feed = Feed(acao="Usuário foi deslogado!", data=timezone.now())
     feed.save()
     return render(request, 'logout_redirect.html')  # Usa o template de redirecionamento
+
+
+def alterarSenha(request):
+    if request.method == "POST":
+        nome = request.POST.get("nome")
+        email = request.POST.get("email")
+        nova_senha = request.POST.get("nova_senha")
+        confirmar_senha = request.POST.get("confirmar_senha")
+
+        if not User.objects.filter(username=nome, email=email).exists():
+            messages.error(request, "Usuário não encontrado.")
+            return redirect("alterarSenha")
+
+        if nova_senha != confirmar_senha:
+            messages.error(request, "As senhas não coincidem.")
+            return redirect("alterarSenha")
+
+        usuario = User.objects.get(username=nome, email=email)
+        usuario.password = make_password(nova_senha)  # Hash da nova senha
+        usuario.save()
+
+        feed = Feed(acao= f"Senha do usuário {nome} alterada com sucesso!", data=timezone.now())
+        feed.save()
+        return render(request, 'sucesso.html') # Redireciona para a tela de login
+    return render(request, 'alterarSenha.html')
+
+
+
+def verificarUsuario(request):
+    if request.method == "POST":
+        nome = request.POST.get("nome")
+        email = request.POST.get("email")
+
+        if User.objects.filter(username=nome, email=email).exists():
+            return JsonResponse({"success": True})
+        else:
+            return JsonResponse({"failure": False})
+
+
+    return render(request, 'verificarUsuario.html')
 
 
 @login_required

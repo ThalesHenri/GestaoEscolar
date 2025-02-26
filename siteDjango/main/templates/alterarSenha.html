@@ -1,0 +1,47 @@
+{% extends "index.html" %}
+{% block content %}
+
+<h1>Altere a sua senha</h1>
+<form action="{% url 'alterarSenha' %}" method="POST" id="formSenha">
+    {% csrf_token %}
+    
+    <div class="alterarSenhaContainer">
+        <input type="text" name="nome" placeholder="Nome de Usuário" required>
+        <br>
+        <input type="email" name="email" placeholder="Email" required>
+        <br>
+        <button type="button" onclick="verificarUsuario()">Verificar</button>
+    </div>
+    <!-- So aparece quando verificar o usuario -->
+    <div id="novaSenhaSection" style="display: none;">
+        <input type="password" name="nova_senha" placeholder="Nova Senha" required>
+        <br>
+        <input type="password" name="confirmar_senha" placeholder="Confirmar Senha" required>
+        <br>
+        <button type="submit">Alterar Senha</button>
+    </div>
+</form>
+
+<script>
+    function verificarUsuario() {
+        const form = document.getElementById("formSenha");
+        const formData = new FormData(form);
+
+        fetch("{% url 'verificarUsuario' %}", {
+            method: "POST",
+            body: formData,
+            headers: {
+                "X-CSRFToken": "{{ csrf_token }}"
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                document.getElementById("novaSenhaSection").style.display = "block";
+            } else {
+                alert("Usuário não encontrado.");
+            }
+        });
+    }
+</script>
+{% endblock content %}

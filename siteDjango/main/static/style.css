@@ -1752,3 +1752,43 @@ body {
 .blueButton:hover {
     background-color: #0073cc;
 }
+
+
+.alterarSenhaContainer {
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+    height: 300px;
+    margin: 0 auto;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .alterarSenhaContainer input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .alterarSenhaContainer button {
+    width: 100%;
+    padding: 10px;
+    background-color: #008bf8;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  #novaSenhaSection{
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+    height: 300px;
+    margin: 0 auto;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
