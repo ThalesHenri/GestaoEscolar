@@ -40,7 +40,6 @@
                 <th>Mês</th>
                 <th>Valor</th>
                 <th>Data de Vencimento</th>
-                <th>Data do Pagamento</th>
                 <th>Status</th>
                 <!--<th>Ações</th>-->
             </tr>
@@ -54,7 +53,6 @@
                 <td>{{ mensalidade.data_vencimento|date:"F" }}</td>
                 <td>{{ mensalidade.valor_final|default:"0.00" }}</td>
                 <td>{{ mensalidade.data_vencimento|date:"d/m/Y" }}</td>
-                <td>{{ mensalidade.dia_pagamento_realizado }}</td>
                 <td>{{ mensalidade.status }}</td>
             </tr>
             {% endfor %}
