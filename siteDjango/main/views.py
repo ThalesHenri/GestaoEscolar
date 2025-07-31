@@ -329,7 +329,7 @@ def get_mensalidades(request):
 @login_required
 def adminDashboard(request):
     usuario = request.user
-    get_mensalidades()
+    get_mensalidades(request)
     feeds = Feed.objects.all()
     
     context = {
