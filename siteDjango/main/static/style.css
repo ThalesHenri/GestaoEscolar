@@ -1726,3 +1726,14 @@ body {
 .blueButton:hover {
     background-color: #0073cc;
 }
+.buttonCase{
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    cursor: pointer;
+    padding: 20px;
+    align-items: center;
+    justify-content: center;
+
+
+}
