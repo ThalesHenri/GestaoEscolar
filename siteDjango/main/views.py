@@ -147,16 +147,7 @@ def logout(request):
     return render(request, 'logout_redirect.html')  # Usa o template de redirecionamento
 
 
-@login_required
-def adminDashboard(request):
-    usuario = request.user
-    feeds = Feed.objects.all()
-    context = {
-        'usuario': usuario,
-        'feeds': feeds
-    }
-    print(f"aqui está o {usuario}")
-    return render(request, 'adminDashboard.html', context=context)
+
 
 
 @login_required
@@ -317,6 +308,36 @@ def addAluno(request, turma_id):
         form = AlunoForm()
 
     return render(request, 'addAluno.html', {'form': form, 'turma': turma})
+
+
+@login_required
+def get_mensalidades(request):
+    #carrega as mensalidades dos alunos que estão atrasadas
+    mensalidades = Mensalidade.objects.all()   
+    for mensalidade in mensalidades:
+        if mensalidade.data_vencimento < timezone.now():
+            mensalidade.status = "Atrasada"
+            feed = Feed(
+                acao=f"AVISO! Mensalidade {mensalidade.data_vencimento.strftime('%Y-%m-%d')} do aluno(a) {mensalidade.aluno.nome} em atraso!", data=timezone.now()
+                )
+            feed.save()
+            mensalidade.save()
+    #cria um feed para cada mensalidade atrasada
+    pass
+
+
+@login_required
+def adminDashboard(request):
+    usuario = request.user
+    get_mensalidades()
+    feeds = Feed.objects.all()
+    
+    context = {
+        'usuario': usuario,
+        'feeds': feeds
+    }
+    print(f"aqui está o {usuario}")
+    return render(request, 'adminDashboard.html', context=context)
 
 
 @login_required
