@@ -10,7 +10,7 @@ from django.db.models import Q, Sum, F, Case, When
 from django.contrib.auth.models import User
 from django.contrib.messages import get_messages
 from django.contrib import messages
-from .models import Turma, Aluno, Mensalidade, Perfil, Feed
+from .models import Turma, Aluno, Mensalidade, Perfil, Feed, ExecucaoTarefas
 from datetime import date
 from django.utils.timezone import now
 
@@ -122,6 +122,7 @@ def login(request):
     if request.method == 'POST':
         nome = request.POST.get('nome')
         senha = request.POST.get('senha')
+        
 
         # Tenta autenticar o usuário com o sistema padrão do Django
         usuario = authenticate(request, username=nome, password=senha)
@@ -147,16 +148,7 @@ def logout(request):
     return render(request, 'logout_redirect.html')  # Usa o template de redirecionamento
 
 
-@login_required
-def adminDashboard(request):
-    usuario = request.user
-    feeds = Feed.objects.all()
-    context = {
-        'usuario': usuario,
-        'feeds': feeds
-    }
-    print(f"aqui está o {usuario}")
-    return render(request, 'adminDashboard.html', context=context)
+
 
 
 @login_required
@@ -317,6 +309,39 @@ def addAluno(request, turma_id):
         form = AlunoForm()
 
     return render(request, 'addAluno.html', {'form': form, 'turma': turma})
+
+
+@login_required
+def get_mensalidades(request):
+    #carrega as mensalidades dos alunos que estão atrasadas
+    mensalidades = Mensalidade.objects.all()   
+    hoje = date.today()
+    
+    
+    for mensalidade in mensalidades:
+        if mensalidade.data_vencimento < hoje:
+            mensalidade.status = "Em Atraso"
+            #cria um feed para cada mensalidade atrasada
+            feed = Feed(
+                acao=f"AVISO! Mensalidade {mensalidade.data_vencimento.strftime('%Y-%m-%d')} do aluno(a) {mensalidade.aluno.nome} em atraso!", data=timezone.now()
+                )
+            feed.save()
+            mensalidade.save()
+    return redirect('adminDashboard')
+    
+
+
+@login_required
+def adminDashboard(request):
+    usuario = request.user
+    feeds = Feed.objects.all()
+    
+    context = {
+        'usuario': usuario,
+        'feeds': feeds
+    }
+    print(f"aqui está o {usuario}")
+    return render(request, 'adminDashboard.html', context=context)
 
 
 @login_required
