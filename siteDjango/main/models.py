@@ -128,6 +128,11 @@ class Usuario(models.Model):
 class Feed(models.Model):
     acao = models.CharField(max_length=100)
     data = models.DateTimeField(default=now)
+    
+
+class ExecucaoTarefas(models.Model):
+    nome = models.CharField(max_length=100, unique=True,default="ExecucaoTarefas")
+    ultima_execucao = models.DateTimeField()
 
 
 class Mensalidade(models.Model):

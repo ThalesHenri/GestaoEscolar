@@ -7,6 +7,7 @@ from .views import aplicarDesconto, editar_perfil
 urlpatterns = [
     path('', views.home, name='home'),
     path('login/', views.login, name='login'),
+    path('get_mensalidades/', views.get_mensalidades, name='get_mensalidades'),
     path('registrar/', views.registrar, name='registrar'),
     path('adminDashboard/', views.adminDashboard, name='adminDashboard'),
     path('addTurma/', views.addTurma, name='addTurma'),
