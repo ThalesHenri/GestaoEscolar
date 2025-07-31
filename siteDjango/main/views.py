@@ -314,16 +314,17 @@ def addAluno(request, turma_id):
 def get_mensalidades(request):
     #carrega as mensalidades dos alunos que estão atrasadas
     mensalidades = Mensalidade.objects.all()   
+    hoje = date.today()
     for mensalidade in mensalidades:
-        if mensalidade.data_vencimento < timezone.now():
+        if mensalidade.data_vencimento < hoje:
             mensalidade.status = "Atrasada"
+            #cria um feed para cada mensalidade atrasada
             feed = Feed(
                 acao=f"AVISO! Mensalidade {mensalidade.data_vencimento.strftime('%Y-%m-%d')} do aluno(a) {mensalidade.aluno.nome} em atraso!", data=timezone.now()
                 )
             feed.save()
             mensalidade.save()
-    #cria um feed para cada mensalidade atrasada
-    pass
+    
 
 
 @login_required
